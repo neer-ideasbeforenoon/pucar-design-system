@@ -29,6 +29,10 @@ instead of inventing new colors, spacing, or components per-project.
    first.
 4. **All new colors must support both light and dark mode.** Add the token to both `:root`
    and `.dark` in `globals.css`, never just one.
+5. **Components must be responsive in product UI.** Follow [`RESPONSIVE.md`](./RESPONSIVE.md)
+   when composing screens — mobile-first layouts, fluid widths, correct overlays
+   (Dialog / Sheet / Drawer / Sidebar). The docs site itself does not need to be responsive;
+   the components do.
 
 ## Token reference
 

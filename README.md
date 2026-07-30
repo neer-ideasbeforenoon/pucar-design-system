@@ -48,6 +48,9 @@ These are the rules that protect the system. Break them and the brand fragments.
 
 Agent-facing guidance lives in [`AGENTS.md`](./AGENTS.md) — keep that file aligned with these principles.
 
+Responsive composition rules for product UI (not the docs chrome) live in
+[`RESPONSIVE.md`](./RESPONSIVE.md).
+
 ---
 
 ## Stack
@@ -124,7 +127,7 @@ src/
 - **Designers** — Confirm that what ships matches the system, not a one-off mock.
 - **Engineers** — Pull tokens and components instead of reinventing UI per feature.
 - **Product / stakeholders** — Walk foundations and components in a shareable live site.
-- **AI coding agents** — Follow `AGENTS.md` so generated UI stays on-brand.
+- **AI coding agents** — Follow `AGENTS.md` and `RESPONSIVE.md` so generated UI stays on-brand and usable on mobile.
 
 ---
 
