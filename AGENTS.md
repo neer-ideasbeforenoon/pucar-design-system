@@ -3,3 +3,59 @@
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
+
+# Pucar Design System
+
+This repo is the source of truth for Pucar's design tokens and UI components. It exists so
+that both humans and AI coding agents build UI that matches Pucar's actual design system,
+instead of inventing new colors, spacing, or components per-project.
+
+## Stack
+
+- Next.js (App Router) + TypeScript
+- Tailwind CSS v4 (tokens defined as CSS custom properties in `src/app/globals.css`, mapped
+  via `@theme inline`)
+- shadcn/ui (Radix primitives) — real, upstream component code in `src/components/ui/`
+
+## Rules for building UI in this system
+
+1. **Never hardcode a color, spacing, or radius value.** Always use the Tailwind utility that
+   maps to a token (`bg-primary`, `text-muted-foreground`, `border-border`, `rounded-md`,
+   `gap-4`, etc.) — never a raw hex, oklch, or arbitrary Tailwind value like `bg-[#007e7e]`.
+2. **Never add a new shadcn component by hand-writing it.** Install it for real:
+   `npx shadcn@latest add <component>`. This keeps components upstream-correct and easy to
+   update.
+3. **Reuse an existing component before creating a new one.** Check `src/components/ui/`
+   first.
+4. **All new colors must support both light and dark mode.** Add the token to both `:root`
+   and `.dark` in `globals.css`, never just one.
+
+## Token reference
+
+| Token | Use |
+|---|---|
+| `background` / `foreground` | Page background / default text |
+| `primary` / `primary-foreground` | Highest-emphasis actions (teal brand color) |
+| `secondary` / `secondary-foreground` | Supporting actions, light fills |
+| `muted` / `muted-foreground` | De-emphasized backgrounds / secondary text |
+| `accent` / `accent-foreground` | Hover/highlight fills |
+| `destructive` / `destructive-foreground` | Irreversible/dangerous actions |
+| `success` / `success-foreground` | Positive status |
+| `warning` / `warning-foreground` | Caution status |
+| `info` / `info-foreground` | Informational status |
+| `border` / `input` | Default borders / form field borders |
+| `ring` | Focus ring color |
+| `card` / `popover` | Raised surface backgrounds |
+| `chart-1` … `chart-5` | Categorical data visualization palette |
+| `radius-xs` … `radius-4xl`, `radius-full` | Corner radius scale |
+
+**Brand note:** the primary color is **teal** (`#007e7e` light / `#0eb39e` dark). The
+original Figma file's internal token names said "green" in places — that was stale; the
+live values are teal. Treat this repo's values as authoritative.
+
+## Provenance
+
+Token values were extracted directly from the `PUCAR DS - Mohit` Figma file's live variable
+data (not from documentation, which was found to be out of date in places — see token names
+above). Components are the unmodified upstream shadcn/ui registry, themed via CSS variables
+only.

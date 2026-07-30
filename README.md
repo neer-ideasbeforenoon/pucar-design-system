@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pucar Design System
 
-## Getting Started
+Documentation website for Pucar's design tokens, foundations, and UI components.
+Built so product teams and AI coding agents share one visual language.
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router) + TypeScript
+- Tailwind CSS v4 (tokens in `src/app/globals.css`)
+- shadcn/ui components in `src/components/ui/`
+- Noto Sans for UI typography
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Use the header theme toggle to switch light and dark mode.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Site map
 
-## Learn More
+| Section | What you'll find |
+|---|---|
+| Introduction | Purpose, brand note (teal), stack |
+| Getting started | How to run and consume the system |
+| Principles | Token-first rules, reuse, light+dark |
+| Foundations | Colors, typography, radius, spacing |
+| Components | Live previews, when-to-use, token coupling |
 
-To learn more about Next.js, take a look at the following resources:
+## Rules
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Never hardcode colors, spacing, or radius — use token utilities (`bg-primary`, `rounded-md`, …).
+2. Never hand-write new shadcn components — install with `npx shadcn@latest add <name>`.
+3. Reuse `src/components/ui/` before creating anything new.
+4. Every new color must exist in both `:root` and `.dark`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Primary brand color is **teal** (`#007e7e` light / `#0eb39e` dark).
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev      # docs site
+npm run build    # production build
+npm run start    # serve production build
+npm run lint     # eslint
+```

@@ -1,26 +1,202 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Pucar semantic status colors — not part of default shadcn */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-brand-accent: var(--brand-accent);
+
+  /* Real radius scale (Tailwind's canonical steps, confirmed against the live Figma file) */
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+  --radius-4xl: 32px;
+  --radius-full: 9999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Neutral — Radix Slate, confirmed exact match against the live Figma file */
+  --neutral-1: #fcfcfd;
+  --neutral-2: #f9f9fb;
+  --neutral-3: #f0f0f3;
+  --neutral-4: #e8e8ec;
+  --neutral-5: #e0e1e6;
+  --neutral-6: #d9d9e0;
+  --neutral-7: #cdced6;
+  --neutral-8: #b9bbc6;
+  --neutral-9: #8b8d98;
+  --neutral-10: #80838d;
+  --neutral-11: #60646c;
+  --neutral-12: #1c2024;
+
+  --background: var(--neutral-1);
+  --foreground: var(--neutral-12);
+  --card: var(--neutral-1);
+  --card-foreground: var(--neutral-12);
+  --popover: var(--neutral-1);
+  --popover-foreground: var(--neutral-12);
+
+  /* Brand — teal, pulled directly from PUCAR DS - Mohit (NOT green, despite old token names) */
+  --primary: #007e7e;
+  --primary-foreground: #ffffff;
+  --brand-accent: #12a594;
+
+  --secondary: var(--neutral-3);
+  --secondary-foreground: var(--neutral-12);
+  --muted: var(--neutral-3);
+  --muted-foreground: var(--neutral-11);
+  --accent: var(--neutral-3);
+  --accent-foreground: var(--neutral-12);
+
+  --destructive: #c1232a;
+  --destructive-foreground: #ffffff;
+  --success: #217a3a;
+  --success-foreground: #ffffff;
+  --warning: #ffc53d;
+  --warning-foreground: #9d5c00;
+  --info: #0d74ce;
+  --info-foreground: #ffffff;
+
+  --border: var(--neutral-7);
+  --input: var(--neutral-7);
+  --ring: #007e7e;
+
+  --chart-1: #007e7e;
+  --chart-2: #0d74ce;
+  --chart-3: #6e56cf;
+  --chart-4: #e2a336;
+  --chart-5: #e93d82;
+
+  --radius: 0.375rem; /* radius-md, 6px — the real shadcn default used throughout the live file */
+
+  --sidebar: var(--neutral-1);
+  --sidebar-foreground: var(--neutral-12);
+  --sidebar-primary: #007e7e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--neutral-3);
+  --sidebar-accent-foreground: var(--neutral-12);
+  --sidebar-border: var(--neutral-7);
+  --sidebar-ring: #007e7e;
+}
+
+.dark {
+  --neutral-1: #111113;
+  --neutral-2: #18191b;
+  --neutral-3: #212225;
+  --neutral-4: #272a2d;
+  --neutral-5: #2e3135;
+  --neutral-6: #363a3f;
+  --neutral-7: #43484e;
+  --neutral-8: #5a6169;
+  --neutral-9: #696e77;
+  --neutral-10: #777b84;
+  --neutral-11: #b0b4ba;
+  --neutral-12: #edeef0;
+
+  --background: var(--neutral-1);
+  --foreground: var(--neutral-12);
+  --card: var(--neutral-1);
+  --card-foreground: var(--neutral-12);
+  --popover: var(--neutral-1);
+  --popover-foreground: var(--neutral-12);
+
+  --primary: #0eb39e;
+  --primary-foreground: #0a0a0a;
+  --brand-accent: #12a594;
+
+  --secondary: var(--neutral-3);
+  --secondary-foreground: var(--neutral-12);
+  --muted: var(--neutral-3);
+  --muted-foreground: var(--neutral-11);
+  --accent: var(--neutral-3);
+  --accent-foreground: var(--neutral-12);
+
+  --destructive: #ec5d5e;
+  --destructive-foreground: #0a0a0a;
+  --success: #46a758;
+  --success-foreground: #0a0a0a;
+  --warning: #ffc53d;
+  --warning-foreground: #ffca16;
+  --info: #3b9eff;
+  --info-foreground: #0a0a0a;
+
+  --border: var(--neutral-7);
+  --input: var(--neutral-7);
+  --ring: #0eb39e;
+
+  --chart-1: #0eb39e;
+  --chart-2: #3b9eff;
+  --chart-3: #9e8cff;
+  --chart-4: #ffce6a;
+  --chart-5: #ff8dab;
+
+  --sidebar: var(--neutral-1);
+  --sidebar-foreground: var(--neutral-12);
+  --sidebar-primary: #0eb39e;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: var(--neutral-3);
+  --sidebar-accent-foreground: var(--neutral-12);
+  --sidebar-border: var(--neutral-7);
+  --sidebar-ring: #0eb39e;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
 }
