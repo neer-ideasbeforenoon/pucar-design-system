@@ -15,14 +15,17 @@ export function Callout({
     <aside
       className={cn(
         "rounded-lg border px-4 py-3 text-sm leading-relaxed",
-        tone === "info" && "border-info/30 bg-info/5 text-foreground",
-        tone === "warning" && "border-warning/40 bg-warning/10 text-foreground",
-        tone === "success" && "border-success/30 bg-success/5 text-foreground",
+        tone === "info" &&
+          "border-info-muted bg-info-muted text-info-muted-foreground",
+        tone === "warning" &&
+          "border-warning-muted bg-warning-muted text-warning-muted-foreground",
+        tone === "success" &&
+          "border-success-muted bg-success-muted text-success-muted-foreground",
         className
       )}
     >
       {title ? <p className="mb-1 font-medium">{title}</p> : null}
-      <div className="text-muted-foreground [&_code]:rounded-sm [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_code]:text-foreground">
+      <div className="opacity-90 [&_code]:rounded-sm [&_code]:bg-background/60 [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_code]:text-foreground">
         {children}
       </div>
     </aside>

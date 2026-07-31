@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import {
   AlertCircleIcon,
   CheckCircle2Icon,
@@ -36,6 +37,24 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { Banner } from "@/components/ui/banner";
+import {
+  DescriptionDetails,
+  DescriptionList,
+  DescriptionRow,
+  DescriptionTerm,
+} from "@/components/ui/description-list";
+import { DocumentSlot } from "@/components/ui/document-slot";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { SessionTimeout } from "@/components/ui/session-timeout";
+import { Stepper, StepperItem } from "@/components/ui/stepper";
+import { Timeline, TimelineItem } from "@/components/ui/timeline";
 import {
   Card,
   CardContent,
@@ -169,6 +188,24 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import type { ComponentDoc } from "@/lib/component-doc-types";
 
+function SessionTimeoutDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <Button variant="outline" onClick={() => setOpen(true)}>
+        Show session timeout
+      </Button>
+      <SessionTimeout
+        open={open}
+        onOpenChange={setOpen}
+        secondsRemaining={119}
+        onStaySignedIn={() => setOpen(false)}
+        onSignOut={() => setOpen(false)}
+      />
+    </div>
+  );
+}
+
 function available(
   slug: string,
   title: string,
@@ -284,7 +321,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "border",
     ],
     usageNotes: [
-      "success / warning / info use the muted tint pair — badges are metadata, not an action, so they never carry the solid treatment.",
+      "success / warning / info / destructive use the muted tint pair — badges are metadata, not an action, so they never carry the solid treatment.",
       "Avoid nesting interactive controls inside badges.",
     ],
     preview: (
@@ -306,15 +343,23 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     slug: "alert",
     title: "Alert",
     description:
-      "Inline feedback that stays on the page. Use for persistent notices, not transient toasts.",
+      "Inline feedback that stays on the page. Use for persistent notices, not transient toasts. Prefer Banner for page-load standing conditions.",
     importPath: "@/components/ui/alert",
     whenToUse: [
       "Surface form or page-level messages the user should not miss.",
       "Explain system state without blocking the rest of the UI.",
+      "Use Banner for conditions that load with the page; Toast for auto-dismiss confirmations.",
     ],
-    tokens: ["card", "destructive", "success", "warning", "info", "border"],
+    tokens: [
+      "card",
+      "destructive",
+      "success-muted",
+      "warning-muted",
+      "info-muted",
+      "border",
+    ],
     usageNotes: [
-      "Destructive variant is built-in; success/warning/info use semantic token classes.",
+      "Destructive variant is built-in; success/warning/info use opaque muted token classes — never alpha fills.",
       "Keep titles short; put detail in the description.",
     ],
     preview: (
@@ -333,8 +378,8 @@ export const componentRegistry: Record<string, ComponentDoc> = {
             Check the card details and try again.
           </AlertDescription>
         </Alert>
-        <Alert className="border-success/30 bg-success/5 text-foreground">
-          <CheckCircle2Icon className="text-success" />
+        <Alert className="border-success-muted bg-success-muted text-success-muted-foreground">
+          <CheckCircle2Icon />
           <AlertTitle>Synced</AlertTitle>
           <AlertDescription>
             Changes were saved to the design system.
@@ -347,21 +392,41 @@ export const componentRegistry: Record<string, ComponentDoc> = {
   input: {
     slug: "input",
     title: "Input",
-    description: "Single-line text field. Always pair with a Label for accessibility.",
+    description:
+      "Single-line field at 40px. Border is input (neutral boundary). Prefilled is machine-read, human-unverified.",
     importPath: "@/components/ui/input",
     whenToUse: [
       "Collect short text: names, emails, search queries.",
       "Use Textarea for multi-line content.",
     ],
-    tokens: ["input", "border", "ring", "muted-foreground", "destructive"],
+    tokens: [
+      "input",
+      "border",
+      "ring",
+      "prefilled",
+      "muted-foreground",
+      "destructive",
+    ],
     usageNotes: [
+      "Default height is h-10 (40px).",
       "Focus uses the ring token (teal).",
-      "Mark invalid fields with aria-invalid for destructive styling.",
+      "Mark invalid fields with aria-invalid for destructive border + ring.",
+      "Pass prefilled for amber fill — border stays input; never signal prefilled with border color alone.",
     ],
     preview: (
-      <div className="flex w-full max-w-sm flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" placeholder="name@pucar.com" />
+      <div className="flex w-full max-w-sm flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" type="email" placeholder="name@pucar.com" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="cnr">CNR (prefilled)</Label>
+          <Input id="cnr" defaultValue="KLEK020012342026" prefilled />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="bad">Invalid</Label>
+          <Input id="bad" defaultValue="not-an-email" aria-invalid />
+        </div>
       </div>
     ),
   },
@@ -372,8 +437,11 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     description: "Multi-line text entry for notes, descriptions, and messages.",
     importPath: "@/components/ui/textarea",
     whenToUse: ["Anything longer than a single line of input."],
-    tokens: ["input", "border", "ring", "muted-foreground"],
-    usageNotes: ["Pairs with Label the same way Input does."],
+    tokens: ["input", "border", "ring", "prefilled", "muted-foreground"],
+    usageNotes: [
+      "Pairs with Label the same way Input does.",
+      "Supports the same prefilled prop as Input.",
+    ],
     preview: (
       <div className="flex w-full max-w-sm flex-col gap-2">
         <Label htmlFor="notes">Notes</Label>
@@ -486,38 +554,51 @@ export const componentRegistry: Record<string, ComponentDoc> = {
   table: {
     slug: "table",
     title: "Table",
-    description: "Structured data display. Keep columns scannable; use Badge for status cells.",
+    description:
+      "Structured data display. Header row uses muted surface; hover and selected rows use accent/muted — never invent row colors.",
     importPath: "@/components/ui/table",
-    whenToUse: ["Compare rows of structured records (invoices, users, jobs)."],
-    tokens: ["border", "muted", "foreground", "card"],
+    whenToUse: [
+      "Compare rows of structured records (cases, invoices, filings).",
+      "Pair Badge for status cells; Description list for single-record detail.",
+    ],
+    tokens: ["border", "muted", "foreground", "card", "accent"],
     usageNotes: [
       "Wrap in a bordered container for page-level tables.",
       "Right-align numeric columns.",
+      "Selected rows: data-state=selected on TableRow (muted/accent).",
+      "Sort affordance belongs in the header cell — keep sentence-case labels.",
     ],
     preview: (
       <div className="w-full overflow-hidden rounded-lg border border-border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Invoice</TableHead>
+              <TableHead>CNR</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead className="text-right">Hearings</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>INV-001</TableCell>
+            <TableRow data-state="selected">
+              <TableCell>KLEK020012342026</TableCell>
               <TableCell>
-                <Badge className="bg-success text-success-foreground">Paid</Badge>
+                <Badge variant="success">Listed</Badge>
               </TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell className="text-right">3</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>INV-002</TableCell>
+              <TableCell>KLEK020098762026</TableCell>
               <TableCell>
-                <Badge variant="secondary">Pending</Badge>
+                <Badge variant="warning">Pending</Badge>
               </TableCell>
-              <TableCell className="text-right">$150.00</TableCell>
+              <TableCell className="text-right">1</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>KLEK020055552026</TableCell>
+              <TableCell>
+                <Badge variant="secondary">Draft</Badge>
+              </TableCell>
+              <TableCell className="text-right">0</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -1061,21 +1142,336 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     ["primary", "muted"]
   ),
 
-  sonner: available(
-    "sonner",
-    "Sonner",
-    "Toast notifications for transient success and error feedback.",
-    <div className="flex flex-col items-center gap-3">
-      <Toaster />
-      <Button
-        variant="outline"
-        onClick={() => toast.success("Saved", { description: "Profile updated." })}
-      >
-        Show toast
-      </Button>
-    </div>,
-    ["popover", "success", "destructive"]
-  ),
+  sonner: {
+    slug: "sonner",
+    title: "Toast",
+    description:
+      "Non-blocking confirmation of background or completed actions. Auto-dismisses — never use for validation errors or anything requiring action.",
+    importPath: "@/components/ui/sonner",
+    whenToUse: [
+      "Confirm a completed action (Draft saved).",
+      "Never for validation errors — use FieldError / Alert.",
+      "Never for standing page conditions — use Banner.",
+      "Never for messages that require a decision — use Alert Dialog.",
+    ],
+    tokens: [
+      "popover",
+      "success-muted",
+      "info-muted",
+      "warning-muted",
+      "destructive-muted",
+    ],
+    usageNotes: [
+      "Variants: success, info, warning, error, loading — all use opaque muted token CSS variables on Toaster.",
+      "Mount <Toaster /> once near the app root.",
+    ],
+    preview: (
+      <div className="flex flex-col items-center gap-3">
+        <Toaster />
+        <div className="flex flex-wrap justify-center gap-2">
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast.success("Draft saved", {
+                description: "Your complaint draft is saved.",
+              })
+            }
+          >
+            Success
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast.info("Draft saved", {
+                description: "Your complaint draft is saved.",
+              })
+            }
+          >
+            Info
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast.warning("Draft saved", {
+                description: "Your complaint draft is saved.",
+              })
+            }
+          >
+            Warning
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast.error("Draft saved", {
+                description: "Your complaint draft is saved.",
+              })
+            }
+          >
+            Error
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast.loading("Draft saved", {
+                description: "Your complaint draft is saved.",
+              })
+            }
+          >
+            Loading
+          </Button>
+        </div>
+      </div>
+    ),
+  },
+
+  banner: {
+    slug: "banner",
+    title: "Banner",
+    description:
+      "Full-width standing notice that loads with the page — information, not feedback. Not action-triggered, not dismissible by default.",
+    importPath: "@/components/ui/banner",
+    whenToUse: [
+      "Page-load conditions that remain while true (court holiday, read-only mode).",
+      "Prefer Alert for contextual form/page feedback; Toast for auto-dismiss confirmations.",
+    ],
+    tokens: [
+      "info-muted",
+      "warning-muted",
+      "success-muted",
+      "muted",
+      "border",
+    ],
+    usageNotes: [
+      "Variants: info, warning, success, neutral — opaque muted fills only.",
+      "Optional action slot for a single quiet link/button (e.g. View order).",
+    ],
+    preview: (
+      <div className="flex w-full flex-col gap-3">
+        <Banner
+          variant="info"
+          action={
+            <Button variant="link" size="sm">
+              View order
+            </Button>
+          }
+        >
+          Standing notice text
+        </Banner>
+        <Banner variant="warning">Standing notice text</Banner>
+        <Banner variant="success">Standing notice text</Banner>
+        <Banner variant="neutral">Standing notice text</Banner>
+      </div>
+    ),
+  },
+
+  "description-list": {
+    slug: "description-list",
+    title: "Description list",
+    description:
+      "Key–value rows for preview summaries, scrutiny panels, and detail asides. Semantic dl with muted terms.",
+    importPath: "@/components/ui/description-list",
+    whenToUse: [
+      "Case detail panels (CNR, court, next hearing).",
+      "Any label-left / value-right scrutiny layout.",
+    ],
+    tokens: ["muted-foreground", "foreground", "border"],
+    usageNotes: [
+      "Compose DescriptionRow with DescriptionTerm + DescriptionDetails.",
+      "Keep terms short; values can wrap.",
+    ],
+    preview: (
+      <DescriptionList className="w-full max-w-md">
+        <DescriptionRow>
+          <DescriptionTerm>CNR number</DescriptionTerm>
+          <DescriptionDetails>KLEK020012342026</DescriptionDetails>
+        </DescriptionRow>
+        <DescriptionRow>
+          <DescriptionTerm>Case type</DescriptionTerm>
+          <DescriptionDetails>
+            Section 138 — cheque dishonour
+          </DescriptionDetails>
+        </DescriptionRow>
+        <DescriptionRow>
+          <DescriptionTerm>Complainant</DescriptionTerm>
+          <DescriptionDetails>Prateek Agrawal</DescriptionDetails>
+        </DescriptionRow>
+        <DescriptionRow>
+          <DescriptionTerm>Next hearing</DescriptionTerm>
+          <DescriptionDetails>14 August 2026</DescriptionDetails>
+        </DescriptionRow>
+        <DescriptionRow>
+          <DescriptionTerm>Court</DescriptionTerm>
+          <DescriptionDetails>Kollam magistrate court</DescriptionDetails>
+        </DescriptionRow>
+      </DescriptionList>
+    ),
+  },
+
+  stepper: {
+    slug: "stepper",
+    title: "Stepper",
+    description:
+      "One step in a multi-step flow. Complete = teal check; current = brand-muted ring + number; upcoming = hollow.",
+    importPath: "@/components/ui/stepper",
+    whenToUse: [
+      "E-filing and multi-step wizards (Grounds → Documents → Review).",
+    ],
+    tokens: ["primary", "brand-muted", "border", "input", "muted-foreground"],
+    usageNotes: [
+      "Trailing connector is teal only when the step is complete.",
+      "Statuses: complete, current, upcoming.",
+    ],
+    preview: (
+      <Stepper className="w-full max-w-xl">
+        <StepperItem status="complete" step={1} title="Grounds" />
+        <StepperItem status="current" step={2} title="Documents" />
+        <StepperItem status="upcoming" step={3} title="Review" />
+      </Stepper>
+    ),
+  },
+
+  timeline: {
+    slug: "timeline",
+    title: "Timeline",
+    description:
+      "One event in a case chronology. Past = muted dot; current = brand dot with soft halo; future = hollow.",
+    importPath: "@/components/ui/timeline",
+    whenToUse: ["Case chronologies and hearing histories."],
+    tokens: ["primary", "muted-foreground", "border", "input"],
+    usageNotes: [
+      "Ring alpha on current is exempt from the alpha-fill ban (focus/halo).",
+      "Statuses: past, current, future.",
+    ],
+    preview: (
+      <Timeline className="w-full max-w-sm">
+        <TimelineItem
+          status="past"
+          title="Respondent served"
+          description="2 May 2026"
+        />
+        <TimelineItem
+          status="current"
+          title="Evidence recording"
+          description="14 August 2026"
+        />
+        <TimelineItem
+          status="future"
+          title="Final arguments"
+          description="Scheduled"
+        />
+      </Timeline>
+    ),
+  },
+
+  "document-slot": {
+    slug: "document-slot",
+    title: "Document slot",
+    description:
+      "Upload anatomy from e-filing — one slot per expected document. Filled, processing, empty, optional, and poor-scan states.",
+    importPath: "@/components/ui/document-slot",
+    whenToUse: [
+      "E-filing document checklists.",
+      "Any required/optional file upload with quality feedback.",
+    ],
+    tokens: [
+      "card",
+      "surface-sunken",
+      "muted",
+      "success-muted",
+      "warning-muted",
+      "border",
+      "input",
+    ],
+    usageNotes: [
+      "Media: thumbnail | icon.",
+      "Statuses: filled, processing, empty, empty-optional, filled-poor.",
+    ],
+    preview: (
+      <div className="flex w-full max-w-md flex-col gap-3">
+        <DocumentSlot
+          status="filled"
+          media="icon"
+          label="Complaint copy"
+          filename="complaint-138.pdf"
+          meta="1.2 MB"
+          quality="good"
+        />
+        <DocumentSlot
+          status="empty"
+          media="icon"
+          label="Complaint copy"
+          required
+        />
+        <DocumentSlot
+          status="empty-optional"
+          media="icon"
+          label="Annexure"
+          optional
+        />
+        <DocumentSlot
+          status="filled-poor"
+          media="icon"
+          label="Complaint copy"
+          filename="scan.pdf"
+          meta="890 KB"
+          quality="poor"
+        />
+      </div>
+    ),
+  },
+
+  "session-timeout": {
+    slug: "session-timeout",
+    title: "Session timeout",
+    description:
+      "WCAG 2.2.1 timeout warning nested in Alert Dialog. Countdown is the information — sunken well with mono numerals.",
+    importPath: "@/components/ui/session-timeout",
+    whenToUse: [
+      "Warn before session expiry so users can keep a draft.",
+    ],
+    tokens: ["surface-sunken", "popover", "muted-foreground", "primary"],
+    usageNotes: [
+      "aria-live polite on the countdown.",
+      "Stay signed in is the primary action; Sign out is cancel.",
+    ],
+    preview: (
+      <SessionTimeoutDemo />
+    ),
+  },
+
+  field: {
+    slug: "field",
+    title: "Field",
+    description:
+      "Form field composition — label, control, description, and error in vertical or horizontal orientation.",
+    importPath: "@/components/ui/field",
+    whenToUse: [
+      "Any labeled form control that needs description or error messaging.",
+    ],
+    tokens: ["destructive", "muted-foreground", "brand-muted"],
+    usageNotes: [
+      "Use data-invalid on Field for invalid styling of the group.",
+      "Pair with Input prefilled for machine-read values.",
+    ],
+    preview: (
+      <FieldGroup className="w-full max-w-sm">
+        <Field>
+          <FieldLabel htmlFor="party">Party name</FieldLabel>
+          <Input id="party" placeholder="Complainant name" />
+          <FieldDescription>As it appears on the complaint.</FieldDescription>
+        </Field>
+        <Field data-invalid>
+          <FieldLabel htmlFor="email-bad">Email</FieldLabel>
+          <Input id="email-bad" defaultValue="not-valid" aria-invalid />
+          <FieldError>Enter a valid email address.</FieldError>
+        </Field>
+        <Field orientation="horizontal">
+          <FieldLabel htmlFor="cnr-h">CNR</FieldLabel>
+          <Input id="cnr-h" defaultValue="KLEK020012342026" prefilled />
+        </Field>
+      </FieldGroup>
+    ),
+  },
 
   toggle: available(
     "toggle",

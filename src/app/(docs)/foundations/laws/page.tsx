@@ -1,0 +1,98 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+import { Callout } from "@/components/docs/callout";
+import { DoDont } from "@/components/docs/do-dont";
+import { PageHeader } from "@/components/docs/page-header";
+import { DocsSection } from "@/components/docs/section";
+
+export const metadata: Metadata = {
+  title: "Laws",
+};
+
+export default function LawsPage() {
+  return (
+    <div className="flex flex-col gap-10">
+      <PageHeader
+        title="Laws"
+        description="Hard constraints from the Abhiram Figma Laws page. Breaking these is a defect, not a style preference."
+      />
+
+      <Callout tone="warning" title="Also in AGENTS.md">
+        Coding agents must follow these laws. Full product principles live on{" "}
+        <Link href="/principles" className="underline underline-offset-3">
+          Principles
+        </Link>
+        .
+      </Callout>
+
+      <DocsSection
+        title="No alpha status fills"
+        description="Status and brand tints use opaque *-muted tokens. Alpha is allowed only for focus rings, shadows, and scrims."
+      >
+        <DoDont
+          do={[
+            "bg-destructive-muted text-destructive-muted-foreground",
+            "bg-success-muted, bg-warning-muted, bg-info-muted, bg-brand-muted",
+          ]}
+          dont={[
+            "bg-destructive/10, bg-success/5, bg-primary/10 for fills",
+            "Inventing translucent status washes per screen",
+          ]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="Sentence case"
+        description="UI copy uses sentence case — not Title Case for labels and buttons."
+      >
+        <DoDont
+          do={["Save draft", "Next hearing", "Stay signed in"]}
+          dont={["Save Draft", "Next Hearing", "Stay Signed In"]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="Ration teal"
+        description="Primary teal is highest emphasis. One strong primary action per view."
+      >
+        <DoDont
+          do={[
+            "One bg-primary button per visual region",
+            "Status colors for status — never recolor brand for success",
+          ]}
+          dont={[
+            "Multiple competing primary buttons",
+            "Decorative teal icons or fills",
+          ]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="Control metrics"
+        description="Default controls are 40px tall with radius-lg (10px)."
+      >
+        <DoDont
+          do={["h-10 on Input, Select trigger, Button default", "rounded-lg on controls"]}
+          dont={[
+            "Arbitrary heights like h-[42px]",
+            "radius-md as the default control corner",
+          ]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="Prefilled is amber fill only"
+        description="Machine-read values use bg-prefilled. The border stays input — never signal prefilled with border color alone."
+      >
+        <DoDont
+          do={['<Input prefilled />', "Keep border-input"]}
+          dont={[
+            "Amber borders for prefilled",
+            "Using warning as a stand-in for prefilled",
+          ]}
+        />
+      </DocsSection>
+    </div>
+  );
+}
