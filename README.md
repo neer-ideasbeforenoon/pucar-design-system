@@ -68,7 +68,7 @@ Accessibility standards (**WCAG 2.1 AA**, WAI-ARIA 1.2, keyboard, contrast,
 | Icons | Lucide |
 | Theming | `next-themes` (class-based `.dark`) |
 
-Tokens were extracted from the live **PUCAR DS – Mohit** Figma variables. Components are upstream registry code, themed only through those variables.
+Tokens were extracted from the live **Pucar Design System — Abhiram** Figma file (cover: *Pucar · ON Court — Design system · Rajini 2.0*). Components are upstream registry code, themed only through those variables.
 
 ---
 
