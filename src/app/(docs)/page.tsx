@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
-import { Callout } from "@/components/docs/callout";
 import { PageHeader } from "@/components/docs/page-header";
 import { DocsSection } from "@/components/docs/section";
 import { Button } from "@/components/ui/button";
@@ -17,12 +16,6 @@ export default function IntroductionPage() {
         title="Pucar Design System"
         description="The source of truth for Pucar's visual language — tokens, foundations, and UI components — so every product surface stays consistent for humans and AI agents alike."
       />
-
-      <Callout title="Brand note" tone="info">
-        Primary is <strong className="text-foreground">teal</strong> (
-        <code>#007e7e</code> light / <code>#0eb39e</code> dark). This site is
-        the production mirror of Abhiram&apos;s live Rajini 2.0 design contract.
-      </Callout>
 
       <DocsSection
         title="What lives here"
