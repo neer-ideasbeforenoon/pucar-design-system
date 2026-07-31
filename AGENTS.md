@@ -34,14 +34,22 @@ instead of inventing new colors, spacing, or components per-project.
    (Dialog / Sheet / Drawer / Sidebar). The docs site itself does not need to be responsive;
    the components do.
 
-6. **Follow the Laws, not just the tokens.** See [Principles](/principles) and the
+6. **Meet the accessibility standards.** Follow [`ACCESSIBILITY.md`](./ACCESSIBILITY.md)
+   and `/foundations/accessibility`. Floor: **WCAG 2.1 Level AA** + **WAI-ARIA 1.2**.
+   Required: keyboard-only use; NVDA / JAWS / VoiceOver; visible focus (`ring`); text
+   contrast ≥ **4.5:1**; no critical info only on hover; touch targets ≥ **40×40px**;
+   voice-control-friendly visible labels (no placeholder-only fields); **200% text zoom**
+   without broken layout; **session timeout warnings** before expiry; multilingual /
+   Indic script support (Devanagari, Tamil, etc. per court).
+
+7. **Follow the Laws, not just the tokens.** See [Principles](/principles) and the
    [Typography](/foundations/typography) / [Colors](/foundations/colors) /
-   [Elevation](/foundations/elevation) pages for the non-negotiables: sentence case
-   everywhere, one rationed teal action per view, exactly three treatments per status
-   (solid / muted / ink — never a fourth, never alpha), the grey ladder (never a raw
-   `neutral-N`), depth via fill not borders, status never conveyed by colour alone, WCAG
-   2.2 AA as the floor, and fixed control metrics (40px default control height, 24px
-   container padding, 40px minimum touch target).
+   [Elevation](/foundations/elevation) / [Accessibility](/foundations/accessibility) pages
+   for the non-negotiables: sentence case everywhere, one rationed teal action per view,
+   exactly three treatments per status (solid / muted / ink — never a fourth, never alpha),
+   the grey ladder (never a raw `neutral-N`), depth via fill not borders, status never
+   conveyed by colour alone, WCAG 2.1 AA as the floor, and fixed control metrics (40px
+   default control height, 24px container padding, 40px minimum touch target).
 
 ## Token reference
 

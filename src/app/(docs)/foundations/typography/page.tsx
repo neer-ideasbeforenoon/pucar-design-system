@@ -82,6 +82,19 @@ export default function TypographyPage() {
             Never ALL-CAPS or Title Case. Exceptions: proper nouns (ON Court,
             Pucar) and legal abbreviations (CNR, FIR, S.138).
           </li>
+          <li>
+            Multilingual court UIs may need Devanagari, Tamil, and other Indic
+            scripts. Line heights must tolerate taller glyphs; product apps
+            extend the font stack with appropriate Unicode fonts — Helvetica
+            alone does not cover those scripts. See{" "}
+            <a
+              href="/foundations/accessibility"
+              className="text-foreground underline underline-offset-3"
+            >
+              Accessibility
+            </a>
+            .
+          </li>
         </ul>
       </DocsSection>
     </div>

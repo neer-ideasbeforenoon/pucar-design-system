@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { Callout } from "@/components/docs/callout";
 import { DoDont } from "@/components/docs/do-dont";
@@ -97,29 +98,57 @@ export default function PrinciplesPage() {
       </DocsSection>
 
       <DocsSection
-        title="7. WCAG 2.2 AA is the floor"
-        description="Text ≥ 4.5:1, UI boundaries ≥ 3:1, in both themes — proven by contrast checks, never eyeballed. Focus is always visible."
+        title="7. WCAG 2.1 AA is the floor"
+        description="Conformance target is WCAG 2.1 Level AA plus WAI-ARIA 1.2. Text ≥ 4.5:1, UI boundaries ≥ 3:1, in both themes — proven by contrast checks, never eyeballed. Focus is always visible."
       >
         <DoDont
           do={[
             "Keep the teal focus ring on every interactive element.",
             "Check new token pairs against both light and dark before shipping.",
+            "Follow the full checklist on Accessibility (keyboard, labels, zoom, timeouts, scripts).",
           ]}
           dont={[
             "Ship a status fill under 4.5:1 because it \"looks fine\" in one theme.",
             "Remove a focus ring for aesthetics.",
+            "Use placeholder-only fields or hide critical actions behind hover.",
           ]}
         />
+        <Callout className="mt-4">
+          Full standards:{" "}
+          <Link
+            href="/foundations/accessibility"
+            className="underline underline-offset-3"
+          >
+            Accessibility
+          </Link>{" "}
+          and <code>ACCESSIBILITY.md</code>.
+        </Callout>
       </DocsSection>
 
       <DocsSection
         title="8. Control metrics aren't negotiable"
-        description="Fields and buttons default to 40px (ladder 32 / 36 / 40 / 44). Container padding is 24px (16px for a small card). Chip height is 24px. Touch targets are ≥ 40px on any citizen-facing surface."
+        description="Fields and buttons default to 40px (ladder 32 / 36 / 40 / 44). Container padding is 24px (16px for a small card). Chip height is 24px. Touch targets are ≥ 40×40px on any citizen-facing surface."
       >
         <Callout>
           Off-ladder sizing (a 38px button, a 20px chip) is banned the same
           way an arbitrary hex value is — it isn&apos;t a style choice.
         </Callout>
+      </DocsSection>
+
+      <DocsSection
+        title="9. Accessibility is product behaviour"
+        description="Screen readers (NVDA, JAWS, VoiceOver), keyboard-only use, voice control, 200% text zoom, session timeout warnings, and Indic script support are part of the system — not a separate audit after ship."
+      >
+        <DoDont
+          do={[
+            "Visible Label on every field; SessionTimeout before expiry.",
+            "Fluid layouts that survive 200% zoom; font stacks that cover court scripts.",
+          ]}
+          dont={[
+            "Expire sessions silently on draft flows.",
+            "Assume Helvetica covers Devanagari or Tamil.",
+          ]}
+        />
       </DocsSection>
     </div>
   );

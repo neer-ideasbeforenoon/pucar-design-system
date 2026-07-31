@@ -93,6 +93,32 @@ export default function LawsPage() {
           ]}
         />
       </DocsSection>
+
+      <DocsSection
+        title="Accessibility floor"
+        description="WCAG 2.1 AA + WAI-ARIA 1.2. Visible labels, focus rings, 40×40px targets, timeout warnings, and script-capable layout are defects when missing — not preferences."
+      >
+        <DoDont
+          do={[
+            "Visible Label on every field; keep focus-visible rings",
+            "SessionTimeout before expiry; ≥ 40×40px touch targets",
+          ]}
+          dont={[
+            "Placeholder-only fields",
+            "Critical actions only on hover; silent session expiry",
+          ]}
+        />
+        <Callout className="mt-4">
+          Full checklist:{" "}
+          <Link
+            href="/foundations/accessibility"
+            className="underline underline-offset-3"
+          >
+            Accessibility
+          </Link>
+          .
+        </Callout>
+      </DocsSection>
     </div>
   );
 }

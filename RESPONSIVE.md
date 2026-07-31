@@ -42,9 +42,10 @@ color/spacing tokens per breakpoint.
    for wider viewports.
 2. **No fixed trap widths.** Avoid `w-[480px]`, `min-w-[900px]`, or layouts that force
    horizontal page scroll. Prefer `w-full`, `max-w-*`, `min-w-0`, and `flex-1`.
-3. **Keep touch targets usable.** Interactive controls should remain easy to tap
-   (Button sizes `default` / `lg` on primary actions; avoid packing only `xs` icon buttons
-   as the sole actions on mobile).
+3. **Keep touch targets usable.** Interactive targets must be **≥ 40×40px**
+   (DS floor, aligned with `h-10`). Prefer Button sizes `default` / `lg` on primary
+   actions; expand hit areas on small visuals (checkbox, switch, icon). Avoid packing
+   only `xs` icon buttons as the sole actions on mobile.
 4. **Stack before splitting.** Forms, toolbars, and dialog footers should
    `flex-col` on small screens and `sm:flex-row` (or `md:`) when space allows.
 5. **Overflow is intentional.** Tables and wide data: wrap in
@@ -57,9 +58,12 @@ color/spacing tokens per breakpoint.
    - **Drawer** — prefer for mobile-first bottom sheets and short flows on small viewports.
    - **Sidebar** — uses `useIsMobile()` to switch to an off-canvas pattern on small screens.
 7. **Don’t hide critical actions only behind hover.** On touch devices there is no hover.
-   Keep primary actions visible; use Dropdown Menu / Sheet for overflow.
+   Keep primary actions visible; use Dropdown Menu / Sheet for overflow. This is also an
+   accessibility requirement — see [`ACCESSIBILITY.md`](./ACCESSIBILITY.md).
 8. **Tokens stay constant across breakpoints.** Do not invent “mobile primary” colors.
    Change layout, density, and component choice — not the brand palette.
+9. **Layouts must survive 200% text zoom.** Prefer fluid widths and wrapping text over
+   fixed pixel traps that force whole-page horizontal scroll.
 
 ---
 

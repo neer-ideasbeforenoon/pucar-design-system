@@ -2,6 +2,13 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-07-31 — Accessibility standards
+
+- Added authoritative accessibility checklist: `ACCESSIBILITY.md` + `/foundations/accessibility`
+- Conformance target set to **WCAG 2.1 Level AA** + **WAI-ARIA 1.2** (replacing informal 2.2 wording)
+- Documented: screen readers, keyboard, focus, 4.5:1 contrast, no hover-only critical UI, **40×40px** touch targets, voice control, 200% zoom, session timeout warnings, visible labels, Indic script support
+- Updated `AGENTS.md`, Principles, Laws, Typography, RESPONSIVE.md, README
+
 ## 2026-07-31 — Abhiram parity (Milestones 1–5)
 
 ### Law compliance & forms

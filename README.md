@@ -24,7 +24,7 @@ The goal is consistency at speed. When the brand, density, and interaction patte
 
 | Area | Purpose |
 | --- | --- |
-| **Foundations** | Color, typography, radius, spacing — the decisions everything else inherits |
+| **Foundations** | Color, typography, radius, spacing, elevation, icons, accessibility, laws |
 | **Components** | Documented UI primitives with previews, usage notes, and token coupling |
 | **Principles** | Non-negotiable rules that keep the system coherent as it grows |
 | **Getting started** | How to run the docs and how to consume the system in product work |
@@ -50,6 +50,10 @@ Agent-facing guidance lives in [`AGENTS.md`](./AGENTS.md) — keep that file ali
 
 Responsive composition rules for product UI (not the docs chrome) live in
 [`RESPONSIVE.md`](./RESPONSIVE.md).
+
+Accessibility standards (**WCAG 2.1 AA**, WAI-ARIA 1.2, keyboard, contrast, touch
+targets, labels, timeouts, Indic scripts, and more) live in
+[`ACCESSIBILITY.md`](./ACCESSIBILITY.md) and `/foundations/accessibility`.
 
 ---
 

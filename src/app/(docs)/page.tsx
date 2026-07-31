@@ -29,12 +29,17 @@ export default function IntroductionPage() {
         title="What lives here"
         description="This documentation site is the living reference for the system already installed in this repository."
       >
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
             {
               title: "Foundations",
-              body: "Color, typography, radius, and spacing — the tokens everything else is built from.",
+              body: "Color, typography, radius, spacing, elevation, icons — the tokens everything else is built from.",
               href: "/foundations/colors",
+            },
+            {
+              title: "Accessibility",
+              body: "WCAG 2.1 AA, WAI-ARIA 1.2, focus, contrast, labels, timeouts, and Indic script support.",
+              href: "/foundations/accessibility",
             },
             {
               title: "Components",

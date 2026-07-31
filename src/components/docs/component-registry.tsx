@@ -1424,7 +1424,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     slug: "session-timeout",
     title: "Session timeout",
     description:
-      "WCAG 2.2.1 timeout warning nested in Alert Dialog. Countdown is the information — sunken well with mono numerals.",
+      "WCAG 2.1 SC 2.2.1 timeout warning nested in Alert Dialog. Countdown is the information — sunken well with mono numerals.",
     importPath: "@/components/ui/session-timeout",
     whenToUse: [
       "Warn before session expiry so users can keep a draft.",
