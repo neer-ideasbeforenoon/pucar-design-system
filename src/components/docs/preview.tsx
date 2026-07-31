@@ -27,3 +27,26 @@ export function Preview({
     </div>
   );
 }
+
+/** Full-bleed preview body — use for wide matrices that need horizontal scroll. */
+export function PreviewStart({
+  children,
+  className,
+  label,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  label: string;
+}) {
+  return (
+    <Preview
+      label={label}
+      className={cn(
+        "items-stretch justify-start overflow-x-auto",
+        className
+      )}
+    >
+      {children}
+    </Preview>
+  );
+}

@@ -16,8 +16,12 @@ export type ComponentDoc = {
   tokens: string[];
   usageNotes: string[];
   preview: ReactNode;
+  /** Label for the preview section. Defaults to "Preview". */
+  previewLabel?: string;
   /** Single preview block — prefer `variantSections` for multi-block matrices. */
   variants?: ReactNode;
+  /** Title for the variants block. Defaults to "Variants & sizes". */
+  variantsLabel?: string;
   /** Multiple labeled previews (sizes, icon-only, disabled, …). */
   variantSections?: ComponentDocVariantSection[];
   doItems?: string[];

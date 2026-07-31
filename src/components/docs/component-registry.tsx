@@ -3,13 +3,10 @@
 import * as React from "react";
 import {
   AlertCircleIcon,
-  ArrowRightIcon,
   CheckCircle2Icon,
   InfoIcon,
-  PlusIcon,
   SearchIcon,
   MoreHorizontalIcon,
-  XIcon,
 } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
@@ -41,6 +38,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import {
+  ButtonExamples,
+  ButtonIconMatrix,
+  ButtonMasterMatrix,
+  ButtonWithIconsMatrix,
+} from "@/components/docs/button-docs";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Banner } from "@/components/ui/banner";
@@ -301,189 +304,64 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     slug: "button",
     title: "Button",
     description:
-      "Primary interactive control for actions. Variants map directly to semantic color tokens.",
+      "Actions, one press — navigation between pages is a link, not a button. Exactly one teal default per view; status solids rationed to one, only when the action IS the status. Labels: verb first, sentence case.",
     importPath: "@/components/ui/button",
     whenToUse: [
-      "Trigger an action (submit, navigate, open a dialog).",
-      "Use one primary button per visual region to preserve hierarchy.",
-      "Pair destructive with confirmation (Alert Dialog) for irreversible work.",
+      "Trigger an action (submit, open a dialog, apply a filter) — not for page navigation.",
+      "Use exactly one default (teal) button per view to preserve hierarchy.",
+      "Pair destructive-solid with confirmation (Alert Dialog) for irreversible work; keep destructive soft at rest.",
     ],
     tokens: [
       "primary",
+      "primary-hover",
       "secondary",
+      "secondary-hover",
       "destructive",
+      "destructive-muted",
       "success",
       "warning",
       "info",
       "muted",
       "ring",
+      "focus-ring-destructive",
     ],
     usageNotes: [
-      "Default variant is brand teal (primary) — ration it to one per view.",
-      "destructive is the soft/at-rest treatment; use destructive-solid only for a confirmed irreversible action.",
+      "Props: variant · size · asChild. State (hover / focus / disabled) is CSS/DOM — not a prop.",
+      "variant: default | outline | secondary | ghost | destructive | destructive-solid | success | warning | info | destructive-ghost | link.",
+      "size: xs 32 · sm 36 · default 40 · lg 44. Icon-only: icon-xs · icon-sm · icon · icon-lg.",
+      "destructive is the soft/at-rest treatment; destructive-solid only for a confirmed irreversible action.",
       "success / warning / info are solid treatments — the action IS the status.",
-      "Sizes follow the control-metrics ladder: xs 32 · sm 36 · default 40 · lg 44. Icon-only: icon-xs · icon-sm · icon · icon-lg.",
-      "Hover, focus, and disabled are CSS/DOM states — not a variant prop. Focus the previews with the keyboard to see the ring.",
       "Icon-only buttons need an accessible name (aria-label).",
-      "Matches the Figma Button master (variant × size × state). Outline border uses border in light and input in dark.",
+      "Figma masters: Button + Button Icon on the Button page. Outline border uses border in light and input in dark.",
     ],
     doItems: [
       "Use primary for the single highest-emphasis action.",
       "Use outline/ghost for secondary or tertiary actions.",
+      "Use LG 44px for citizen-facing primary actions.",
     ],
     dontItems: [
       "Place multiple primary buttons side by side competing for attention.",
       "Hardcode button background colors outside the variants.",
+      "Use a button for navigation between pages — use a link.",
     ],
-    preview: (
-      <>
-        <Button>Primary</Button>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="outline">Outline</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="destructive">Destructive</Button>
-        <Button variant="destructive-solid">Destructive solid</Button>
-        <Button variant="destructive-ghost">Destructive ghost</Button>
-        <Button variant="success">Success</Button>
-        <Button variant="warning">Warning</Button>
-        <Button variant="info">Info</Button>
-        <Button variant="link">Link</Button>
-      </>
-    ),
+    previewLabel: "Examples",
+    variantsLabel: "Component masters",
+    preview: <ButtonExamples />,
     variantSections: [
       {
-        label: "Sizes — default is MD 40px; LG 44px for citizen-facing primary actions",
-        content: (
-          <>
-            <Button size="xs">Extra small · 32</Button>
-            <Button size="sm">Small · 36</Button>
-            <Button size="default">Default · 40</Button>
-            <Button size="lg">Large · 44</Button>
-          </>
-        ),
-      },
-      {
-        label: "All variants × sizes",
+        label: "Button — variant × size × state (Default · Hover · Focus · Disabled)",
         className: "items-stretch justify-start overflow-x-auto",
-        content: (
-          <div className="flex w-full min-w-max flex-col gap-3">
-            {(
-              [
-                ["default", "Default"],
-                ["outline", "Outline"],
-                ["secondary", "Secondary"],
-                ["ghost", "Ghost"],
-                ["destructive", "Destructive"],
-                ["destructive-solid", "Destructive solid"],
-                ["destructive-ghost", "Destructive ghost"],
-                ["success", "Success"],
-                ["warning", "Warning"],
-                ["info", "Info"],
-                ["link", "Link"],
-              ] as const
-            ).map(([variant, label]) => (
-              <div
-                key={variant}
-                className="grid grid-cols-[9rem_repeat(4,minmax(0,auto))] items-center gap-3"
-              >
-                <span className="truncate font-mono text-xs text-muted-foreground">
-                  {label}
-                </span>
-                <Button variant={variant} size="xs">
-                  XS
-                </Button>
-                <Button variant={variant} size="sm">
-                  SM
-                </Button>
-                <Button variant={variant} size="default">
-                  MD
-                </Button>
-                <Button variant={variant} size="lg">
-                  LG
-                </Button>
-              </div>
-            ))}
-          </div>
-        ),
+        content: <ButtonMasterMatrix />,
       },
       {
-        label: "With icons",
-        content: (
-          <>
-            <Button>
-              <PlusIcon data-icon="inline-start" />
-              Add filing
-            </Button>
-            <Button variant="outline">
-              Continue
-              <ArrowRightIcon data-icon="inline-end" />
-            </Button>
-            <Button variant="secondary">
-              <SearchIcon data-icon="inline-start" />
-              Search
-            </Button>
-            <Button variant="ghost" size="sm">
-              <PlusIcon data-icon="inline-start" />
-              New
-            </Button>
-          </>
-        ),
+        label: "Button Icon — icon-only × variant × size × state",
+        className: "items-stretch justify-start overflow-x-auto",
+        content: <ButtonIconMatrix />,
       },
       {
-        label: "Icon only — size-icon · icon-xs · icon-sm · icon-lg",
-        content: (
-          <>
-            <Button size="icon-xs" aria-label="Add">
-              <PlusIcon />
-            </Button>
-            <Button size="icon-sm" aria-label="Add" variant="outline">
-              <PlusIcon />
-            </Button>
-            <Button size="icon" aria-label="Add" variant="secondary">
-              <PlusIcon />
-            </Button>
-            <Button size="icon-lg" aria-label="Add">
-              <PlusIcon />
-            </Button>
-            <Button size="icon" aria-label="Search" variant="ghost">
-              <SearchIcon />
-            </Button>
-            <Button
-              size="icon"
-              aria-label="Delete"
-              variant="destructive-ghost"
-            >
-              <XIcon />
-            </Button>
-          </>
-        ),
-      },
-      {
-        label: "Disabled — last resort; prefer hiding unavailable actions",
-        className: "items-stretch justify-start",
-        content: (
-          <div className="flex w-full flex-wrap gap-3">
-            {(
-              [
-                "default",
-                "outline",
-                "secondary",
-                "ghost",
-                "destructive",
-                "destructive-solid",
-                "destructive-ghost",
-                "success",
-                "warning",
-                "info",
-                "link",
-              ] as const
-            ).map((variant) => (
-              <Button key={variant} variant={variant} disabled>
-                {variant === "default" ? "Primary" : variant}
-              </Button>
-            ))}
-          </div>
-        ),
+        label: "With icons — icon start · icon end · both",
+        className: "items-stretch justify-start overflow-x-auto",
+        content: <ButtonWithIconsMatrix />,
       },
     ],
   },
