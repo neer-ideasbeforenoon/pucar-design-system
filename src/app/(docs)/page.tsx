@@ -26,7 +26,7 @@ export default function IntroductionPage() {
 
       <DocsSection
         title="What lives here"
-        description="This documentation site is the living reference for the system already installed in this repository."
+        description="Start with Foundations for tokens, Components for what's already built, and Principles for the rules that keep the two in sync."
       >
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[

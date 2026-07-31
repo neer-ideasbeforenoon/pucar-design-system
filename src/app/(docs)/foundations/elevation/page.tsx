@@ -41,7 +41,7 @@ export default function ElevationPage() {
       />
 
       <Callout>
-        Shadow colours are variable-bound, so the same effect deepens
+        Shadow colors are variable-bound, so the same effect deepens
         automatically in dark mode — never hardcode a{" "}
         <code>box-shadow</code> value in a component.
       </Callout>

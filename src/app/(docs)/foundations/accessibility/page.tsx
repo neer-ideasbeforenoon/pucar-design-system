@@ -27,7 +27,7 @@ const standards: {
   {
     title: "Screen reader compatibility",
     description:
-      "Usable with NVDA, JAWS, and VoiceOver. Announce async updates with live regions where needed; never rely on colour alone.",
+      "Usable with NVDA, JAWS, and VoiceOver. Announce async updates with live regions where needed; never rely on color alone.",
   },
   {
     title: "Keyboard-only navigability",
@@ -40,7 +40,7 @@ const standards: {
       "Teal ring token on focus-visible. Move focus into overlays on open; restore to the trigger on close. Never remove focus styles for aesthetics.",
   },
   {
-    title: "Colour contrast ratios",
+    title: "Color contrast ratios",
     description:
       "Normal text ≥ 4.5:1 against its background in light and dark. UI boundaries ≥ 3:1 where WCAG requires. Prove with a checker — do not eyeball.",
   },

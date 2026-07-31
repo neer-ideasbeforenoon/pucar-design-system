@@ -410,7 +410,7 @@ export default function ColorsPage() {
       </Callout>
 
       <Callout title="Three treatments per status" tone="warning">
-        Every status colour ships exactly three treatments, never a fourth:{" "}
+        Every status color ships exactly three treatments, never a fourth:{" "}
         <b>solid</b> (<code>bg-success</code> — the action is the status),{" "}
         <b>muted</b> (<code>bg-success-muted</code> — chips, callouts, rows),
         and <b>ink</b> (<code>text-success-ink</code> — text/icons on
@@ -474,7 +474,7 @@ export default function ColorsPage() {
 
       <DocsSection
         title="Muted &amp; ink pairs"
-        description="The tint half and text half of the three-treatments system, for brand and every status colour."
+        description="The tint half and text half of the three-treatments system, for brand and every status color."
       >
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {muted.map((swatch) => (

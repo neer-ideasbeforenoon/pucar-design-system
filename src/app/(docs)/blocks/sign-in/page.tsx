@@ -61,7 +61,7 @@ export default function SignInBlockPage() {
                   <Input
                     id="signin-email"
                     type="email"
-                    placeholder="name@organisation.gov.in"
+                    placeholder="name@organization.gov.in"
                     autoComplete="email"
                   />
                 </Field>

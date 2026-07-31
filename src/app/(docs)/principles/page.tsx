@@ -79,7 +79,7 @@ export default function PrinciplesPage() {
         <DoDont
           do={[
             "muted → surface-sunken (2½, wells) → accent (3, hover) → accent-strong (4, engaged) → track (5, recessed) → border (7) → input (9).",
-            "Let interaction move one step down — a control never hovers to its own rest colour.",
+            "Let interaction move one step down — a control never hovers to its own rest color.",
           ]}
           dont={[
             "Reach for neutral-6 or any raw step in a component.",
@@ -89,12 +89,12 @@ export default function PrinciplesPage() {
       </DocsSection>
 
       <DocsSection
-        title="6. Never colour alone"
-        description="Pair every status colour with an icon, label, or arrow (↑/↓ on deltas). A cheap screen or a colour-blind reader must still get the meaning."
+        title="6. Never color alone"
+        description="Pair every status color with an icon, label, or arrow (↑/↓ on deltas). A grayscale display or a color-blind reader must still get the meaning."
       >
         <Callout>
-          A red dot with no label communicates nothing on a bad monitor. A
-          red dot next to the word &quot;Overdue&quot; does.
+          A red dot with no label communicates nothing on a grayscale
+          display. A red dot next to the word &quot;Overdue&quot; does.
         </Callout>
       </DocsSection>
 
