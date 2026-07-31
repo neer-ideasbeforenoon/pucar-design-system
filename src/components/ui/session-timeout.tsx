@@ -43,10 +43,7 @@ function SessionTimeout({
 }) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange} {...props}>
-      <AlertDialogContent
-        size="default"
-        className={cn("sm:max-w-md", className)}
-      >
+      <AlertDialogContent size="default" className={cn(className)}>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>

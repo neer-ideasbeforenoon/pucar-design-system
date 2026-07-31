@@ -10,16 +10,16 @@ import {
 import { cn } from "@/lib/utils"
 
 const bannerVariants = cva(
-  "relative flex w-full items-center gap-3 border px-4 py-2.5 text-sm",
+  "relative flex min-h-11 w-full items-center gap-2.5 border-s-3 px-4 py-3 text-sm",
   {
     variants: {
       variant: {
-        info: "border-info-muted bg-info-muted text-info-muted-foreground",
+        info: "border-info bg-info-muted text-info-muted-foreground",
         warning:
-          "border-warning-muted bg-warning-muted text-warning-muted-foreground",
+          "border-warning bg-warning-muted text-warning-muted-foreground",
         success:
-          "border-success-muted bg-success-muted text-success-muted-foreground",
-        neutral: "border-border bg-muted text-foreground",
+          "border-success bg-success-muted text-success-muted-foreground",
+        neutral: "border-input bg-surface-sunken text-foreground",
       },
     },
     defaultVariants: {

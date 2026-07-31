@@ -309,7 +309,7 @@ const iconMap: Record<string, LucideIcon> = {
 
 export default function IconsPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Icons"
         description="Lucide icon set as used across Pucar. 16px default in controls; stroke inherits currentColor."

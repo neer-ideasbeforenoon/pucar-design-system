@@ -23,7 +23,7 @@ const recipes = [
   },
   {
     title: "Page rhythm",
-    classes: "gap-6 / gap-8 / gap-10",
+    classes: "gap-6 / gap-8 / gap-12",
     description: "Between major page sections and documentation blocks.",
   },
   {
@@ -35,16 +35,18 @@ const recipes = [
 
 export default function SpacingPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Spacing"
         description="Use Tailwind’s spacing scale via gap, padding, and margin utilities. Prefer consistent recipes over one-off values."
       />
 
       <Callout>
-        Stay on the scale (<code>2</code>, <code>3</code>, <code>4</code>,{" "}
-        <code>6</code>, <code>8</code>, <code>10</code>, <code>12</code>). Avoid
-        arbitrary spacing like <code>gap-[13px]</code>.
+        Rajini&apos;s spacing ladder is <code>0.5</code>, <code>1</code>,{" "}
+        <code>1.5</code>, <code>2</code>, <code>2.5</code>, <code>3</code>,{" "}
+        <code>4</code>, <code>6</code>, <code>8</code>, <code>12</code>, and{" "}
+        <code>16</code> (2–64px). Avoid uncontracted steps such as{" "}
+        <code>gap-10</code> and arbitrary values like <code>gap-[13px]</code>.
       </Callout>
 
       <DocsSection title="Common recipes">

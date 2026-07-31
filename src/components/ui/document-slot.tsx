@@ -9,15 +9,15 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 const documentSlotVariants = cva(
-  "flex w-full items-start gap-3 rounded-lg border p-3",
+  "flex w-full items-start gap-4 rounded-lg border p-4",
   {
     variants: {
       status: {
-        filled: "border-border bg-card",
-        processing: "border-border bg-card",
-        empty: "border-dashed border-input bg-surface-sunken",
-        "empty-optional": "border-dashed border-input bg-surface-sunken",
-        "filled-poor": "border-border bg-card",
+        filled: "border-transparent bg-surface-sunken",
+        processing: "border-transparent bg-surface-sunken",
+        empty: "border-dashed border-input bg-transparent",
+        "empty-optional": "border-dashed border-input bg-transparent",
+        "filled-poor": "border-transparent bg-surface-sunken",
       },
       media: {
         thumbnail: "",

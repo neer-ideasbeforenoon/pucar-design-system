@@ -83,7 +83,7 @@ const standards: {
 
 export default function AccessibilityPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Accessibility"
         description="Authoritative accessibility standards for the Pucar design system. Product UI must meet these; agents must not invent weaker rules."

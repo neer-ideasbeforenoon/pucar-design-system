@@ -25,16 +25,16 @@ const specimens = [
 
 export default function TypographyPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Typography"
         description="Major-third scale (1.250), base 16, line-heights on the 8px grid. Hierarchy comes from size and weight — never a second display family."
       />
 
-      <Callout tone="warning" title="Corrected">
-        The typeface is <b>not</b> Noto Sans. Code ships the zero-download
-        system stack — <code>&quot;Helvetica Neue&quot;, Helvetica, Arial, system-ui</code> —
-        so nothing downloads over the network. Mono is{" "}
+      <Callout title="Product stack">
+        Code ships the zero-download system stack —{" "}
+        <code>&quot;Helvetica Neue&quot;, Helvetica, Arial, system-ui</code> — so
+        nothing downloads over the network. Mono is{" "}
         <code>ui-monospace, &quot;SF Mono&quot;, &quot;Roboto Mono&quot;</code>. Figma itself
         substitutes Inter because Helvetica Neue isn&apos;t installed in that
         environment — that substitution never applies to shipped product UI.

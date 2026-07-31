@@ -118,9 +118,15 @@ const semanticMapping: MappingRow[] = [
     dark: "neutral-4",
   },
   {
-    semantic: "border / input",
+    semantic: "border",
     light: "neutral-7",
     dark: "neutral-7",
+  },
+  {
+    semantic: "input",
+    light: "neutral-9",
+    dark: "neutral-9",
+    note: "Stronger field edge than the default border",
   },
   {
     semantic: "ring",
@@ -158,9 +164,9 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "warning-muted-foreground / warning-ink",
-    light: "#ab6400",
+    light: "#9d5c00",
     dark: "#ffca16",
-    note: "Matches warning-11 in each theme",
+    note: "Engineered status ink; dark matches warning-11",
   },
   {
     semantic: "warning-foreground",
@@ -170,7 +176,7 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "info",
-    light: "#0d74ce",
+    light: "#0c6ec3",
     dark: "#3b9eff",
     note: "Light ≈ info-11 · dark ≈ info-10",
   },
@@ -183,7 +189,7 @@ const semanticMapping: MappingRow[] = [
     semantic: "info-muted-foreground / info-ink",
     light: "#0d74ce",
     dark: "#70b8ff",
-    note: "Matches info-11 in each theme",
+    note: "Engineered status ink; dark matches info-11",
   },
   {
     semantic: "destructive",
@@ -284,9 +290,15 @@ const semantic = [
     foregroundClassName: "text-popover-foreground",
   },
   {
-    name: "Border / Input",
-    token: "border · input",
+    name: "Border",
+    token: "border",
     className: "bg-border",
+    foregroundClassName: "text-foreground",
+  },
+  {
+    name: "Input",
+    token: "input",
+    className: "bg-input",
     foregroundClassName: "text-foreground",
   },
 ];
@@ -382,10 +394,10 @@ function MappingCell({ value }: { value: string }) {
 
 export default function ColorsPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Colors"
-        description="Primitives aliased by semantics — the same pipeline as Abhiram / pucar-ui. Toggle the theme in the header to inspect both modes."
+        description="Rajini 2.0 primitives aliased by semantics. Toggle the theme in the header to inspect both modes."
       />
 
       <Callout title="Usage">

@@ -7,6 +7,25 @@
 
 ## Status snapshot
 
+### Rajini 2.0 reconciliation — 2026-07-31
+
+- [x] Re-read the live Abhiram file: **208 variables** across primitives,
+  semantics, layout, and typography
+- [x] Added engineered state, focus, scrim, hairline, disabled, halo, and
+  per-theme elevation primitives
+- [x] Corrected `input` (neutral-9), Sidebar roles, status inks, opaque hover
+  composites, and the 999px full radius
+- [x] Reconciled Card, Badge, Banner, Document slot, Dialog, Alert Dialog,
+  Session timeout, and overlay scrims against their live masters
+- [x] Added Date Picker single/range composition
+- [x] Added docs/navigation for every previously hidden Rajini counterpart:
+  Date Picker, Input OTP, Combobox, Empty, Collapsible, Scroll Area, Kbd,
+  Sidebar, Context Menu, Chart, Button Group, and Input Group
+- [x] Removed conflicting provenance and established Abhiram’s live Rajini 2.0
+  file as the design contract
+- [x] Passed ESLint, TypeScript, and the Next.js production build (72 static
+  pages, 57 component routes)
+
 ### Done
 - [x] Primitive ramps (brand / success / info / warning / destructive 1–12 + neutrals)
 - [x] Semantic surfaces (surface, raised, sunken, track, prefilled)
@@ -34,9 +53,10 @@
 | ID | Workstream | Priority |
 |---|---|---|
 | C3 | Proving · Case documents as live acceptance canvas | P2 |
-| D2 | Sidebar menu-button matrix docs | P2 |
-| D3 | Deepen remaining shadcn pages to Figma Hover depth | P2 |
+| D2 | Deepen Sidebar menu-button matrix beyond the shipped overview | P2 |
+| D3 | Add screenshot-based light/dark/state regression coverage | P2 |
 | E3 | Contrast/token gate / law-lint in CI | P3 |
+| E4 | Publish the verified docs build and tag the Rajini 2.0 sync | P1 |
 
 ---
 

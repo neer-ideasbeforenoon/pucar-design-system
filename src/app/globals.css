@@ -37,6 +37,8 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary-hover: var(--secondary-hover);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -54,23 +56,40 @@
   --color-success-foreground: var(--success-foreground);
   --color-success-muted: var(--success-muted);
   --color-success-muted-foreground: var(--success-muted-foreground);
+  --color-success-hover: var(--success-hover);
+  --color-success-muted-hover: var(--success-muted-hover);
   --color-success-ink: var(--success-ink);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-warning-muted: var(--warning-muted);
   --color-warning-muted-foreground: var(--warning-muted-foreground);
+  --color-warning-hover: var(--warning-hover);
+  --color-warning-muted-hover: var(--warning-muted-hover);
   --color-warning-ink: var(--warning-ink);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
   --color-info-muted: var(--info-muted);
   --color-info-muted-foreground: var(--info-muted-foreground);
+  --color-info-hover: var(--info-hover);
+  --color-info-muted-hover: var(--info-muted-hover);
   --color-info-ink: var(--info-ink);
   --color-destructive-muted: var(--destructive-muted);
   --color-destructive-muted-foreground: var(--destructive-muted-foreground);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-destructive-muted-hover: var(--destructive-muted-hover);
   --color-destructive-ink: var(--destructive-ink);
   --color-brand-accent: var(--brand-accent);
   --color-brand-muted: var(--brand-muted);
   --color-brand-muted-foreground: var(--brand-muted-foreground);
+  --color-brand-muted-hover: var(--brand-muted-hover);
+
+  /* Interaction and accessibility primitives from Rajini 2.0. */
+  --color-focus-ring: var(--focus-ring);
+  --color-focus-ring-destructive: var(--focus-ring-destructive);
+  --color-scrim: var(--scrim);
+  --color-disabled-fill: var(--disabled-fill);
+  --color-halo: var(--halo);
+  --color-hairline: var(--border-hairline);
 
   /* Radius — derived from the single 10px --radius knob, confirmed against the live Figma
      file's Spacing & radius page. Role assignment matters: controls (buttons, inputs) use
@@ -84,11 +103,11 @@
   --radius-2xl: 18px;
   --radius-3xl: 22px;
   --radius-4xl: 26px;
-  --radius-full: 9999px;
+  --radius-full: 999px;
 
-  /* Elevation — raised (cards), overlay (popovers/menus/tooltips), modal (dialogs/sheets).
-     Dual box-shadow per level; both layers deepen in dark mode so depth doesn't disappear
-     on dark surfaces. */
+  /* Elevation — raised (genuinely lifted small boxes), overlay
+     (popovers/menus/tooltips), modal (dialogs/sheets). Cards follow their component
+     master and remain flat. */
   --shadow-raised: var(--shadow-raised);
   --shadow-overlay: var(--shadow-overlay);
   --shadow-modal: var(--shadow-modal);
@@ -201,6 +220,38 @@
   --destructive-11: #ce2c31;
   --destructive-12: #641723;
 
+  /* Engineered primitives — copied from the live Rajini 2.0 variable graph.
+     Semantic roles below alias these instead of duplicating raw values. */
+  --brand-solid: #007e7e;
+  --success-solid: #217a3a;
+  --info-solid: #0d74ce;
+  --destructive-solid: #c1232a;
+  --brand-accent: #12a594;
+  --brand-tint-foreground: #0a6969;
+  --surface-sunken: #f4f4f7;
+  --success-ink: #2a7e3b;
+  --warning-ink: #9d5c00;
+  --info-ink: #0c6ec3;
+  --destructive-ink: #ce2c31;
+  --solid-foreground: #ffffff;
+  --warning-on-solid: #3d2000;
+
+  /* Elevation and interaction-state primitives. */
+  --elevation-raised-a: #0000000a;
+  --elevation-raised-b: #00000012;
+  --elevation-overlay-a: #0000001a;
+  --elevation-overlay-b: #0000000f;
+  --elevation-modal-a: #0000002e;
+  --elevation-modal-b: #0000001f;
+  --state-hover-tint: #00000014;
+  --state-hover-tint-on-warning: #00000014;
+  --focus-ring: #007e7e80;
+  --focus-ring-destructive: #c1232a33;
+  --scrim: #00000080;
+  --border-hairline: #1c20241a;
+  --disabled-fill: #8b8d9880;
+  --halo: #12a59440;
+
   --background: var(--neutral-1);
   --foreground: var(--neutral-12);
   --card: var(--neutral-1);
@@ -210,53 +261,60 @@
 
   /* Structural surfaces */
   --surface: var(--neutral-1);
-  --surface-raised: var(--neutral-1); /* card / small box — same value today, free to diverge */
-  --surface-sunken: #f4f4f7; /* nested wells — tuned 2½ step, separates without a border */
+  --surface-raised: var(--neutral-1);
   --track: var(--neutral-5); /* recessed control tracks: tabs list, progress, slider */
   --prefilled: var(--warning-2); /* machine-prefilled, human-unverified field fill */
 
   /* Brand — teal. Confirmed against the live "Rajini 2.0" Figma file. */
-  --primary: #007e7e;
-  --primary-foreground: #ffffff;
-  --brand-accent: #12a594;
+  --primary: var(--brand-solid);
+  --primary-foreground: var(--solid-foreground);
   --brand-muted: var(--brand-3);
-  --brand-muted-foreground: #0a6969;
+  --brand-muted-foreground: var(--brand-tint-foreground);
 
   --secondary: var(--neutral-3);
   --secondary-foreground: var(--neutral-12);
+  --secondary-hover: var(--accent-strong);
   --muted: var(--neutral-2);
   --muted-foreground: var(--neutral-11);
   --accent: var(--neutral-3);
   --accent-foreground: var(--neutral-12);
   --accent-strong: var(--neutral-4); /* one step past accent — pressed toggles, engaged triggers */
 
-  --destructive: #c1232a;
-  --destructive-foreground: #ffffff;
+  --destructive: var(--destructive-solid);
+  --destructive-foreground: var(--solid-foreground);
   --destructive-muted: var(--destructive-3);
-  --destructive-muted-foreground: #ce2c31;
-  --destructive-ink: #ce2c31;
+  --destructive-muted-foreground: var(--destructive-ink);
 
-  --success: #217a3a;
-  --success-foreground: #ffffff;
+  --success: var(--success-solid);
+  --success-foreground: var(--solid-foreground);
   --success-muted: var(--success-3);
-  --success-muted-foreground: #2a7e3b;
-  --success-ink: #2a7e3b;
+  --success-muted-foreground: var(--success-ink);
 
   --warning: #ffc53d;
-  --warning-foreground: #3d2000; /* ink on solid amber — same value in both themes */
+  --warning-foreground: var(--warning-on-solid);
   --warning-muted: var(--warning-3);
-  --warning-muted-foreground: #ab6400;
-  --warning-ink: #ab6400;
+  --warning-muted-foreground: var(--warning-ink);
 
-  --info: #0d74ce;
-  --info-foreground: #ffffff;
+  --info: var(--info-solid);
+  --info-foreground: var(--solid-foreground);
   --info-muted: var(--info-3);
-  --info-muted-foreground: #0d74ce;
-  --info-ink: #0d74ce;
+  --info-muted-foreground: var(--info-ink);
+
+  /* Opaque hover composites reproduce Figma's base fill + tint layer. */
+  --primary-hover: color-mix(in srgb, var(--primary), black 8%);
+  --brand-muted-hover: color-mix(in srgb, var(--brand-muted), black 8%);
+  --destructive-hover: color-mix(in srgb, var(--destructive), black 8%);
+  --destructive-muted-hover: color-mix(in srgb, var(--destructive-muted), black 8%);
+  --success-hover: color-mix(in srgb, var(--success), black 8%);
+  --success-muted-hover: color-mix(in srgb, var(--success-muted), black 8%);
+  --warning-hover: color-mix(in srgb, var(--warning), black 8%);
+  --warning-muted-hover: color-mix(in srgb, var(--warning-muted), black 8%);
+  --info-hover: color-mix(in srgb, var(--info), black 8%);
+  --info-muted-hover: color-mix(in srgb, var(--info-muted), black 8%);
 
   --border: var(--neutral-7);
-  --input: var(--neutral-7);
-  --ring: #007e7e;
+  --input: var(--neutral-9);
+  --ring: var(--brand-solid);
 
   --chart-1: #007e7e;
   --chart-2: #0d74ce;
@@ -266,18 +324,18 @@
 
   --radius: 0.625rem; /* the single 10px knob everything else is derived from */
 
-  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.07);
-  --shadow-overlay: 0 4px 8px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-  --shadow-modal: 0 16px 32px -8px rgba(0, 0, 0, 0.18), 0 6px 12px -6px rgba(0, 0, 0, 0.12);
+  --shadow-raised: 0 1px 2px var(--elevation-raised-a), 0 1px 3px var(--elevation-raised-b);
+  --shadow-overlay: 0 4px 8px -2px var(--elevation-overlay-a), 0 2px 4px -2px var(--elevation-overlay-b);
+  --shadow-modal: 0 16px 32px -8px var(--elevation-modal-a), 0 6px 12px -6px var(--elevation-modal-b);
 
-  --sidebar: var(--neutral-1);
+  --sidebar: var(--neutral-2);
   --sidebar-foreground: var(--neutral-12);
-  --sidebar-primary: #007e7e;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: var(--neutral-3);
-  --sidebar-accent-foreground: var(--neutral-12);
-  --sidebar-border: var(--neutral-7);
-  --sidebar-ring: #007e7e;
+  --sidebar-primary: var(--brand-solid);
+  --sidebar-primary-foreground: var(--solid-foreground);
+  --sidebar-accent: var(--brand-3);
+  --sidebar-accent-foreground: var(--brand-tint-foreground);
+  --sidebar-border: var(--neutral-5);
+  --sidebar-ring: var(--brand-solid);
 }
 
 .dark {
@@ -359,6 +417,35 @@
   --destructive-11: #ff9592;
   --destructive-12: #ffd1d9;
 
+  --brand-solid: #0eb39e;
+  --success-solid: #46a758;
+  --info-solid: #3b9eff;
+  --destructive-solid: #ec5d5e;
+  --brand-accent: #12a594;
+  --brand-tint-foreground: #0bd8b6;
+  --surface-sunken: #1d1e21;
+  --success-ink: #71d083;
+  --warning-ink: #ffca16;
+  --info-ink: #70b8ff;
+  --destructive-ink: #ff9592;
+  --solid-foreground: #0a0a0a;
+  --warning-on-solid: #3d2000;
+
+  --elevation-raised-a: #0000004d;
+  --elevation-raised-b: #00000066;
+  --elevation-overlay-a: #00000073;
+  --elevation-overlay-b: #00000059;
+  --elevation-modal-a: #00000099;
+  --elevation-modal-b: #00000073;
+  --state-hover-tint: #ffffff1a;
+  --state-hover-tint-on-warning: #00000014;
+  --focus-ring: #0eb39e80;
+  --focus-ring-destructive: #ec5d5e66;
+  --scrim: #00000080;
+  --border-hairline: #edeef01a;
+  --disabled-fill: #696e7780;
+  --halo: #12a59440;
+
   --background: var(--neutral-1);
   --foreground: var(--neutral-12);
   --card: var(--neutral-1);
@@ -368,51 +455,57 @@
 
   --surface: var(--neutral-1);
   --surface-raised: var(--neutral-1);
-  --surface-sunken: #1d1e21;
   --track: var(--neutral-5);
   --prefilled: var(--warning-2);
 
-  --primary: #0eb39e;
-  --primary-foreground: #0a0a0a;
-  --brand-accent: #12a594;
+  --primary: var(--brand-solid);
+  --primary-foreground: var(--solid-foreground);
   --brand-muted: var(--brand-3);
-  --brand-muted-foreground: #0bd8b6;
+  --brand-muted-foreground: var(--brand-tint-foreground);
 
   --secondary: var(--neutral-3);
   --secondary-foreground: var(--neutral-12);
+  --secondary-hover: var(--accent-strong);
   --muted: var(--neutral-2);
   --muted-foreground: var(--neutral-11);
   --accent: var(--neutral-3);
   --accent-foreground: var(--neutral-12);
   --accent-strong: var(--neutral-4);
 
-  --destructive: #ec5d5e;
-  --destructive-foreground: #0a0a0a;
+  --destructive: var(--destructive-solid);
+  --destructive-foreground: var(--solid-foreground);
   --destructive-muted: var(--destructive-3);
-  --destructive-muted-foreground: #ff9592;
-  --destructive-ink: #ff9592;
+  --destructive-muted-foreground: var(--destructive-ink);
 
-  --success: #46a758;
-  --success-foreground: #0a0a0a;
+  --success: var(--success-solid);
+  --success-foreground: var(--solid-foreground);
   --success-muted: var(--success-3);
-  --success-muted-foreground: #71d083;
-  --success-ink: #71d083;
+  --success-muted-foreground: var(--success-ink);
 
   --warning: #ffc53d;
-  --warning-foreground: #3d2000;
+  --warning-foreground: var(--warning-on-solid);
   --warning-muted: var(--warning-3);
-  --warning-muted-foreground: #ffca16;
-  --warning-ink: #ffca16;
+  --warning-muted-foreground: var(--warning-ink);
 
-  --info: #3b9eff;
-  --info-foreground: #0a0a0a;
+  --info: var(--info-solid);
+  --info-foreground: var(--solid-foreground);
   --info-muted: var(--info-3);
-  --info-muted-foreground: #70b8ff;
-  --info-ink: #70b8ff;
+  --info-muted-foreground: var(--info-ink);
+
+  --primary-hover: color-mix(in srgb, var(--primary), white 10%);
+  --brand-muted-hover: color-mix(in srgb, var(--brand-muted), white 10%);
+  --destructive-hover: color-mix(in srgb, var(--destructive), white 10%);
+  --destructive-muted-hover: color-mix(in srgb, var(--destructive-muted), white 10%);
+  --success-hover: color-mix(in srgb, var(--success), white 10%);
+  --success-muted-hover: color-mix(in srgb, var(--success-muted), white 10%);
+  --warning-hover: color-mix(in srgb, var(--warning), black 8%);
+  --warning-muted-hover: color-mix(in srgb, var(--warning-muted), black 8%);
+  --info-hover: color-mix(in srgb, var(--info), white 10%);
+  --info-muted-hover: color-mix(in srgb, var(--info-muted), white 10%);
 
   --border: var(--neutral-7);
-  --input: var(--neutral-7);
-  --ring: #0eb39e;
+  --input: var(--neutral-9);
+  --ring: var(--brand-solid);
 
   --chart-1: #0eb39e;
   --chart-2: #3b9eff;
@@ -420,18 +513,18 @@
   --chart-4: #ffce6a;
   --chart-5: #ff8dab;
 
-  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-overlay: 0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
-  --shadow-modal: 0 16px 32px -8px rgba(0, 0, 0, 0.6), 0 6px 12px -6px rgba(0, 0, 0, 0.45);
+  --shadow-raised: 0 1px 2px var(--elevation-raised-a), 0 1px 3px var(--elevation-raised-b);
+  --shadow-overlay: 0 4px 8px -2px var(--elevation-overlay-a), 0 2px 4px -2px var(--elevation-overlay-b);
+  --shadow-modal: 0 16px 32px -8px var(--elevation-modal-a), 0 6px 12px -6px var(--elevation-modal-b);
 
-  --sidebar: var(--neutral-1);
+  --sidebar: var(--neutral-2);
   --sidebar-foreground: var(--neutral-12);
-  --sidebar-primary: #0eb39e;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: var(--neutral-3);
-  --sidebar-accent-foreground: var(--neutral-12);
-  --sidebar-border: var(--neutral-7);
-  --sidebar-ring: #0eb39e;
+  --sidebar-primary: var(--brand-solid);
+  --sidebar-primary-foreground: var(--solid-foreground);
+  --sidebar-accent: var(--brand-3);
+  --sidebar-accent-foreground: var(--brand-tint-foreground);
+  --sidebar-border: var(--neutral-5);
+  --sidebar-ring: var(--brand-solid);
 }
 
 @layer base {

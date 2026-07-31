@@ -17,10 +17,14 @@ export function DocsShell({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = React.useState(false);
 
   React.useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "0") setOpen(false);
-    if (stored === "1") setOpen(true);
-    setReady(true);
+    const frame = window.requestAnimationFrame(() => {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored === "0") setOpen(false);
+      if (stored === "1") setOpen(true);
+      setReady(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   React.useEffect(() => {

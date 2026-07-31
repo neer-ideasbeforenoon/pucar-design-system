@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function PrinciplesPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Principles"
         description="Non-negotiable rules that keep Pucar UI consistent across products, teams, and generated code."

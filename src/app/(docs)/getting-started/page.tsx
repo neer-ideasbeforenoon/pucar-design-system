@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function GettingStartedPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Getting started"
         description="How to run this documentation site and how consuming apps should pull from the Pucar system."

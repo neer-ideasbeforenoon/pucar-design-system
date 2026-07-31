@@ -21,7 +21,7 @@ export function ComponentDocPage({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader title={doc.title} description={doc.description} />
 
       <code className="w-fit rounded-md bg-muted px-2 py-1 font-mono text-xs text-foreground">

@@ -23,7 +23,7 @@ const radii = [
 
 export default function RadiusPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Radius"
         description="One 10px knob, roles not choices. Every step below is derived from a single --radius value (0.625rem) — change the knob and the whole system rounds together."
@@ -42,7 +42,7 @@ export default function RadiusPage() {
           {radii.map((item) => (
             <div
               key={item.name}
-              className="flex items-center gap-4 rounded-xl border border-border bg-card p-4 shadow-raised"
+              className="flex items-center gap-4 rounded-xl border border-border bg-card p-4"
             >
               <div
                 className={`size-14 shrink-0 border border-border bg-primary ${item.className}`}

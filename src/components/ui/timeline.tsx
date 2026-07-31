@@ -19,7 +19,7 @@ const timelineDotVariants = cva(
     variants: {
       status: {
         past: "border-muted-foreground bg-muted-foreground",
-        current: "border-primary bg-primary ring-4 ring-primary/20",
+        current: "border-primary bg-primary ring-4 ring-halo",
         future: "border-input bg-background",
       },
     },

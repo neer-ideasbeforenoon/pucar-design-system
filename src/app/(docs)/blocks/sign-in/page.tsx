@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function SignInBlockPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Sign-in block"
         description="Composition pattern for authentication — Field + Input + Button. Not a single mega-component; assemble from core controls."

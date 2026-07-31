@@ -9,22 +9,22 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        default: "bg-primary text-primary-foreground hover:bg-primary-hover",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-secondary-hover aria-expanded:bg-secondary-hover aria-expanded:text-secondary-foreground",
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
-          "bg-destructive-muted text-destructive-muted-foreground hover:bg-destructive-muted/80 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
+          "bg-destructive-muted text-destructive-muted-foreground hover:bg-destructive-muted-hover focus-visible:border-destructive focus-visible:ring-focus-ring-destructive",
         "destructive-solid":
-          "bg-destructive text-destructive-foreground hover:bg-destructive/80",
+          "bg-destructive text-destructive-foreground hover:bg-destructive-hover",
         "destructive-ghost":
           "text-destructive hover:bg-destructive-muted hover:text-destructive-muted-foreground",
-        success: "bg-success text-success-foreground hover:bg-success/80",
-        warning: "bg-warning text-warning-foreground hover:bg-warning/80",
-        info: "bg-info text-info-foreground hover:bg-info/80",
+        success: "bg-success text-success-foreground hover:bg-success-hover",
+        warning: "bg-warning text-warning-foreground hover:bg-warning-hover",
+        info: "bg-info text-info-foreground hover:bg-info-hover",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

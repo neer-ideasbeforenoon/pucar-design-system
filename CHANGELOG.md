@@ -2,6 +2,33 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-07-31 — Rajini 2.0 live-contract reconciliation
+
+### Foundations
+- Reconciled the repo against all 208 live variables in Abhiram’s Rajini 2.0
+  file.
+- Added engineered state, focus, scrim, hairline, disabled, halo, and
+  theme-specific elevation primitives.
+- Corrected Input and Sidebar aliases, status inks, full radius, and opaque
+  hover composites.
+- Made Abhiram’s live Rajini 2.0 file the explicit design contract throughout
+  governance and site copy.
+
+### Components
+- Corrected Card density/elevation, Badge height, Banner anatomy, Document slot
+  surfaces, modal geometry, Session timeout width, and all modal scrims.
+- Added Date Picker and Date Range Picker compositions from installed Calendar,
+  Popover, and Button primitives.
+- Bound Timeline’s current-state halo and interactive Bubble states to Rajini
+  tokens.
+
+### Documentation and release quality
+- Added 12 missing component pages and navigation entries, bringing the site to
+  57 statically generated component routes.
+- Replaced stale typography, spacing, color, elevation, and provenance guidance.
+- Fixed React 19 effect patterns in Docs Shell, Carousel, and `useIsMobile`.
+- ESLint, TypeScript, and the Next.js production build pass.
+
 ## 2026-07-31 — Accessibility standards
 
 - Authoritative checklist: `ACCESSIBILITY.md` + `/foundations/accessibility`

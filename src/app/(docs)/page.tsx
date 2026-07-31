@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function IntroductionPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Pucar Design System"
         description="The source of truth for Pucar's visual language — tokens, foundations, and UI components — so every product surface stays consistent for humans and AI agents alike."
@@ -20,9 +20,8 @@ export default function IntroductionPage() {
 
       <Callout title="Brand note" tone="info">
         Primary is <strong className="text-foreground">teal</strong> (
-        <code>#007e7e</code> light / <code>#0eb39e</code> dark). Older Figma
-        token names said &quot;green&quot; in places — treat this site&apos;s
-        values as authoritative.
+        <code>#007e7e</code> light / <code>#0eb39e</code> dark). This site is
+        the production mirror of Abhiram&apos;s live Rajini 2.0 design contract.
       </Callout>
 
       <DocsSection
@@ -81,11 +80,12 @@ export default function IntroductionPage() {
           </li>
           <li>
             <span className="text-foreground">shadcn/ui</span> (Radix) —
-            upstream component code in <code>src/components/ui/</code>
+            maintained primitives with Rajini-aligned adaptations in{" "}
+            <code>src/components/ui/</code>
           </li>
           <li>
-            <span className="text-foreground">Noto Sans</span> — body and UI
-            typeface
+            <span className="text-foreground">Helvetica Neue system stack</span>{" "}
+            — body and UI typeface
           </li>
         </ul>
       </DocsSection>

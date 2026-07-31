@@ -5,8 +5,10 @@ import {
   AlertCircleIcon,
   CheckCircle2Icon,
   InfoIcon,
+  SearchIcon,
   MoreHorizontalIcon,
 } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   Accordion,
@@ -37,7 +39,35 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Banner } from "@/components/ui/banner";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import { DatePicker, DateRangePicker } from "@/components/ui/date-picker";
 import {
   DescriptionDetails,
   DescriptionList,
@@ -82,6 +112,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { Label } from "@/components/ui/label";
 import {
   Pagination,
@@ -99,6 +141,7 @@ import {
 } from "@/components/ui/popover";
 import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -118,6 +161,17 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
 import {
   Table,
   TableBody,
@@ -185,6 +239,14 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 
 import type { ComponentDoc } from "@/lib/component-doc-types";
 
@@ -224,7 +286,7 @@ function available(
     ],
     tokens,
     usageNotes: [
-      "Installed from the upstream shadcn registry and themed via CSS variables.",
+      "Maintained as a registry primitive or a composition of installed primitives, themed via CSS variables.",
       "Compose with tokens — do not restyle with hardcoded colors.",
     ],
     preview,
@@ -644,7 +706,10 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "Avoid decorative cards that only wrap static marketing copy.",
     ],
     tokens: ["card", "card-foreground", "muted-foreground", "border"],
-    usageNotes: ["Uses a subtle ring for separation instead of heavy shadows."],
+    usageNotes: [
+      "The live Rajini Card master is flat: border plus surface, with no elevation effect.",
+      "Default spacing is 24px; size=sm uses 16px.",
+    ],
     preview: (
       <Card className="w-full max-w-sm">
         <CardHeader>
@@ -1472,6 +1537,255 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       </FieldGroup>
     ),
   },
+
+  "button-group": available(
+    "button-group",
+    "Button Group",
+    "Visually joins related actions while preserving one semantic group.",
+    <ButtonGroup>
+      <Button variant="outline">Previous</Button>
+      <Button variant="outline">Today</Button>
+      <Button variant="outline">Next</Button>
+    </ButtonGroup>,
+    ["input", "background", "foreground", "ring"]
+  ),
+
+  "date-picker": {
+    slug: "date-picker",
+    title: "Date Picker",
+    description:
+      "Rajini date selection composition with single-date and range variants.",
+    importPath: "@/components/ui/date-picker",
+    whenToUse: [
+      "Choose one date or a bounded date range from a calendar.",
+      "Use Input only when users must type a date in a mandated legal format.",
+    ],
+    tokens: ["input", "popover", "primary", "accent", "ring"],
+    usageNotes: [
+      "The trigger follows the 40px control metric and the 240px Figma specimen width.",
+      "Exports DatePicker and DateRangePicker; both support controlled and uncontrolled values.",
+    ],
+    preview: (
+      <div className="flex flex-wrap gap-3">
+        <DatePicker defaultValue={new Date(2026, 6, 31)} />
+        <DateRangePicker
+          defaultValue={{
+            from: new Date(2026, 6, 31),
+            to: new Date(2026, 7, 14),
+          }}
+        />
+      </div>
+    ),
+  },
+
+  "input-group": available(
+    "input-group",
+    "Input Group",
+    "One field boundary with a meaningful inline prefix or suffix.",
+    <InputGroup className="max-w-sm">
+      <InputGroupAddon>
+        <SearchIcon aria-hidden />
+      </InputGroupAddon>
+      <InputGroupInput aria-label="Search cases" placeholder="Search cases" />
+      <InputGroupAddon align="inline-end">
+        <Kbd>⌘K</Kbd>
+      </InputGroupAddon>
+    </InputGroup>,
+    ["input", "ring", "muted-foreground", "destructive"]
+  ),
+
+  "input-otp": available(
+    "input-otp",
+    "Input OTP",
+    "Segmented one-time passcode input with a single accessible value.",
+    <InputOTP maxLength={6} aria-label="One-time passcode">
+      <InputOTPGroup>
+        {[0, 1, 2].map((index) => (
+          <InputOTPSlot key={index} index={index} />
+        ))}
+      </InputOTPGroup>
+      <InputOTPSeparator />
+      <InputOTPGroup>
+        {[3, 4, 5].map((index) => (
+          <InputOTPSlot key={index} index={index} />
+        ))}
+      </InputOTPGroup>
+    </InputOTP>,
+    ["input", "ring", "foreground", "destructive"]
+  ),
+
+  combobox: available(
+    "combobox",
+    "Combobox",
+    "Searchable single selection for longer option sets.",
+    <Combobox items={["District court", "High court", "Supreme court"]}>
+      <ComboboxInput className="w-60" placeholder="Select court" />
+      <ComboboxContent>
+        <ComboboxEmpty>No court found.</ComboboxEmpty>
+        <ComboboxList>
+          {(item: string) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>,
+    ["input", "popover", "accent", "ring"]
+  ),
+
+  empty: available(
+    "empty",
+    "Empty",
+    "Purposeful empty state with a concise explanation and one recovery action.",
+    <Empty className="max-w-md border">
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <SearchIcon aria-hidden />
+        </EmptyMedia>
+        <EmptyTitle>No cases found</EmptyTitle>
+        <EmptyDescription>
+          Try changing the search terms or clearing filters.
+        </EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button variant="outline">Clear filters</Button>
+      </EmptyContent>
+    </Empty>,
+    ["border", "muted", "muted-foreground", "foreground"]
+  ),
+
+  collapsible: available(
+    "collapsible",
+    "Collapsible",
+    "Disclosure primitive for optional supporting content.",
+    <Collapsible defaultOpen className="w-full max-w-sm">
+      <CollapsibleTrigger asChild>
+        <Button variant="outline" className="w-full justify-between">
+          Filing details
+          <span aria-hidden>+</span>
+        </Button>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="px-4 pt-3 text-sm text-muted-foreground">
+        Filed on 31 July 2026 in Kollam magistrate court.
+      </CollapsibleContent>
+    </Collapsible>,
+    ["border", "background", "foreground", "muted-foreground"]
+  ),
+
+  "scroll-area": available(
+    "scroll-area",
+    "Scroll Area",
+    "Tokenized overflow region with native interaction behavior.",
+    <ScrollArea className="h-48 w-full max-w-sm rounded-lg border border-border p-4">
+      <div className="flex flex-col gap-3">
+        {Array.from({ length: 12 }, (_, index) => (
+          <p key={index} className="text-sm text-muted-foreground">
+            Hearing record {index + 1}
+          </p>
+        ))}
+      </div>
+    </ScrollArea>,
+    ["border", "ring", "muted-foreground"]
+  ),
+
+  kbd: available(
+    "kbd",
+    "Kbd",
+    "Compact keyboard shortcut notation for discoverability.",
+    <KbdGroup>
+      <Kbd>⌘</Kbd>
+      <span className="text-sm text-muted-foreground">+</span>
+      <Kbd>K</Kbd>
+    </KbdGroup>,
+    ["muted", "muted-foreground"]
+  ),
+
+  "context-menu": available(
+    "context-menu",
+    "Context Menu",
+    "Pointer-context actions for expert workflows; every action needs another discoverable route.",
+    <ContextMenu>
+      <ContextMenuTrigger className="flex h-32 w-full max-w-sm items-center justify-center rounded-lg border border-dashed border-input text-sm text-muted-foreground">
+        Right-click this area
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem>
+          Open case <ContextMenuShortcut>↵</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem>Copy CNR</ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem variant="destructive">Delete draft</ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>,
+    ["popover", "accent", "destructive-muted", "border"]
+  ),
+
+  chart: available(
+    "chart",
+    "Chart",
+    "Categorical data visualization using the Rajini chart palette.",
+    <ChartContainer
+      className="h-64 w-full max-w-lg"
+      config={{ cases: { label: "Cases", color: "var(--color-chart-1)" } }}
+    >
+      <BarChart
+        accessibilityLayer
+        data={[
+          { month: "Apr", cases: 32 },
+          { month: "May", cases: 46 },
+          { month: "Jun", cases: 38 },
+          { month: "Jul", cases: 54 },
+        ]}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis dataKey="month" tickLine={false} axisLine={false} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <Bar dataKey="cases" fill="var(--color-cases)" />
+      </BarChart>
+    </ChartContainer>,
+    ["chart-1", "border", "muted", "muted-foreground"]
+  ),
+
+  sidebar: available(
+    "sidebar",
+    "Sidebar",
+    "Application navigation using Rajini sidebar surface, active tint, and boundary tokens.",
+    <SidebarProvider className="min-h-64 overflow-hidden rounded-lg border border-sidebar-border">
+      <Sidebar collapsible="none" className="h-64 w-56">
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {[
+                  ["Hearings", true],
+                  ["Cases", false],
+                  ["Documents", false],
+                ].map(([label, active]) => (
+                  <SidebarMenuItem key={String(label)}>
+                    <SidebarMenuButton isActive={Boolean(active)}>
+                      <span>{label}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
+        Content
+      </div>
+    </SidebarProvider>,
+    [
+      "sidebar",
+      "sidebar-foreground",
+      "sidebar-accent",
+      "sidebar-accent-foreground",
+      "sidebar-border",
+    ]
+  ),
 
   toggle: available(
     "toggle",

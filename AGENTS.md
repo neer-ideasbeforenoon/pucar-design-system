@@ -15,7 +15,8 @@ instead of inventing new colors, spacing, or components per-project.
 - Next.js (App Router) + TypeScript
 - Tailwind CSS v4 (tokens defined as CSS custom properties in `src/app/globals.css`, mapped
   via `@theme inline`)
-- shadcn/ui (Radix primitives) — real, upstream component code in `src/components/ui/`
+- shadcn/ui (Radix primitives) — maintained registry code, adapted only where Rajini 2.0
+  defines a different contract, plus Pucar-specific components in `src/components/ui/`
 
 ## Rules for building UI in this system
 
@@ -56,7 +57,7 @@ instead of inventing new colors, spacing, or components per-project.
 | Token | Use |
 |---|---|
 | `background` / `foreground` | Page background / default text |
-| `surface` / `surface-raised` / `surface-sunken` | Structural base / lifted (cards) / recessed (nested wells, no border) |
+| `surface` / `surface-raised` / `surface-sunken` | Structural base / elevated surface / recessed well; Card itself follows the flat Figma master |
 | `track` | Recessed control tracks — tabs list, progress, slider |
 | `prefilled` | Machine-prefilled, human-unverified field fill |
 | `primary` / `primary-foreground` | Highest-emphasis actions (teal brand color) |
@@ -72,15 +73,15 @@ instead of inventing new colors, spacing, or components per-project.
 | `success-ink` / `warning-ink` / `info-ink` / `destructive-ink` | Status text/icons on neutral — never a fill |
 | `border` / `input` | Default borders / form field borders |
 | `ring` | Focus ring color |
-| `card` / `popover` | Raised surface backgrounds |
+| `card` / `popover` | Component surface backgrounds; elevation is applied separately by role |
 | `chart-1` … `chart-5` | Categorical data visualization palette — means "different series" only, never status |
-| `shadow-raised` / `shadow-overlay` / `shadow-modal` | Elevation — cards / popovers-menus-tooltips / dialogs-sheets |
+| `shadow-raised` / `shadow-overlay` / `shadow-modal` | Elevation — genuinely lifted boxes / popovers-menus-tooltips / dialogs-sheets |
 | `text-display` … `text-caption` | 11-style type scale (see Typography) — never an arbitrary `text-*` size for a heading |
 | `radius-xs` … `radius-4xl`, `radius-full` | Corner radius scale — controls use `radius-lg`, containers use `radius-xl` |
 
-**Brand note:** the primary color is **teal** (`#007e7e` light / `#0eb39e` dark). The
-original Figma file's internal token names said "green" in places — that was stale; the
-live values are teal. Treat this repo's values as authoritative.
+**Brand note:** the primary color is **teal** (`#007e7e` light / `#0eb39e` dark). Abhiram’s
+live Rajini 2.0 variable values and component masters are the design contract. This repo is
+the production mirror and must be re-reconciled when that contract changes.
 
 **Typeface note:** product UI ships a zero-download system stack — `"Helvetica Neue",
 Helvetica, Arial, system-ui` — not a downloaded web font. Figma's own file substitutes
@@ -89,10 +90,8 @@ substitution never applies to shipped code.
 
 ## Provenance
 
-Token values are extracted from the live Figma file "Pucar Design System" (cover: *Pucar ·
-ON Court — Design system · Rajini 2.0*), whose own cover page states it was **"Generated
-from `pucar-ui/lib/tokens` — primitives aliased by semantics, exactly as the code
-pipeline."** That implies an actual `pucar-ui` codebase is the upstream source of truth for
-these tokens, with this Figma file mirroring it. If that repo is reachable, treat it — not
-this repo, not Figma — as authoritative, and re-sync from there. Components are the
-unmodified upstream shadcn/ui registry, themed via CSS variables only.
+Token values, modes, component dimensions, variants, states, and usage rules are reconciled
+against Abhiram’s live Figma file "Pucar Design System" (cover: *Pucar · ON Court — Design
+system · Rajini 2.0*). When prose and a live component master disagree, the component master
+wins and the discrepancy must be documented. Registry primitives remain upgradeable, while
+Rajini-specific adaptations and Pucar components are maintained explicitly in this repo.

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function LawsPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Laws"
         description="Hard constraints from the Abhiram Figma Laws page. Breaking these is a defect, not a style preference."
@@ -28,7 +28,7 @@ export default function LawsPage() {
 
       <DocsSection
         title="No alpha status fills"
-        description="Status and brand tints use opaque *-muted tokens. Alpha is allowed only for focus rings, shadows, and scrims."
+        description="Status and brand tints use opaque *-muted tokens. Alpha is reserved for transient interaction layers, focus rings, shadows, and scrims."
       >
         <DoDont
           do={[

@@ -31,9 +31,12 @@ The goal is consistency at speed. When the brand, density, and interaction patte
 
 ### Brand
 
-Primary is **teal** — `#007e7e` (light) / `#0eb39e` (dark). Older Figma variable names sometimes said “green”; treat **this repository** as authoritative.
+Primary is **teal** — `#007e7e` (light) / `#0eb39e` (dark). Abhiram’s live
+**Rajini 2.0** Figma file is the design contract; this repository is its
+production implementation.
 
-Typography for product UI is **Noto Sans**.
+Typography for product UI uses the zero-download system stack
+**Helvetica Neue, Helvetica, Arial, system-ui**.
 
 ---
 
@@ -68,7 +71,10 @@ Accessibility standards (**WCAG 2.1 AA**, WAI-ARIA 1.2, keyboard, contrast,
 | Icons | Lucide |
 | Theming | `next-themes` (class-based `.dark`) |
 
-Tokens were extracted from the live **Pucar Design System — Abhiram** Figma file (cover: *Pucar · ON Court — Design system · Rajini 2.0*). Components are upstream registry code, themed only through those variables.
+Tokens, component dimensions, states, and usage rules are reconciled against the live
+**Pucar Design System — Abhiram** Figma file (cover: *Pucar · ON Court — Design system ·
+Rajini 2.0*). Components combine maintained shadcn/Radix primitives with Pucar-specific
+components and Rajini-aligned adaptations.
 
 ---
 
@@ -84,7 +90,7 @@ Tokens were extracted from the live **Pucar Design System — Abhiram** Figma fi
 | `destructive` | Irreversible or dangerous actions |
 | `success` / `warning` / `info` | Status communication |
 | `border` / `input` / `ring` | Edges, fields, and focus |
-| `card` / `popover` | Raised surfaces |
+| `card` / `popover` | Component surfaces; elevation is a separate role |
 | `chart-1` … `chart-5` | Categorical data visualization |
 | `radius-xs` … `radius-4xl`, `radius-full` | Corner radius scale |
 

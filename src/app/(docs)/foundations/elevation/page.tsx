@@ -13,31 +13,31 @@ const levels = [
     name: "Raised",
     className: "shadow-raised",
     token: "shadow-raised",
-    used: "Cards, small boxes",
-    values: "0 1 2 + 0 1 3 · ink .04/.07",
+    used: "Genuinely lifted small boxes (not Card)",
+    values: "0 1 2 + 0 1 3 · theme-bound ink",
   },
   {
     name: "Overlay",
     className: "shadow-overlay",
     token: "shadow-overlay",
     used: "Popovers, menus, tooltips",
-    values: "0 4 8 −2 + 0 2 4 −2 · ink .10/.06",
+    values: "0 4 8 −2 + 0 2 4 −2 · theme-bound ink",
   },
   {
     name: "Modal",
     className: "shadow-modal",
     token: "shadow-modal",
     used: "Dialogs, sheets",
-    values: "0 16 32 −8 + 0 6 12 −6 · ink .18/.12",
+    values: "0 16 32 −8 + 0 6 12 −6 · theme-bound ink",
   },
 ];
 
 export default function ElevationPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-12">
       <PageHeader
         title="Elevation"
-        description="Four levels: flat (page) → raised (cards) → overlay (popovers) → modal (dialogs). Level is semantic depth, never decoration."
+        description="Four levels: flat (page and Card) → raised (select lifted boxes) → overlay (popovers) → modal (dialogs). Level is semantic depth, never decoration."
       />
 
       <Callout>
@@ -76,9 +76,10 @@ export default function ElevationPage() {
             <span className="text-foreground">Depth is fill, not borders.</span>{" "}
             Nested wells use <code className="text-foreground">surface-sunken</code>{" "}
             with no border — the box-in-box ban. Chips and thumbnails are the
-            border exception. Cards lift with a hairline ring +{" "}
-            <code className="text-foreground">shadow-raised</code>, never a
-            heavier outline.
+            border exception. Rajini&apos;s live Card master is flat: it uses the
+            card surface and border without a shadow. Apply{" "}
+            <code className="text-foreground">shadow-raised</code> only when a
+            pattern explicitly calls for physical lift.
           </li>
           <li>
             <span className="text-foreground">Per-theme ink.</span> Light
