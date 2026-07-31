@@ -3,10 +3,13 @@
 import * as React from "react";
 import {
   AlertCircleIcon,
+  ArrowRightIcon,
   CheckCircle2Icon,
   InfoIcon,
+  PlusIcon,
   SearchIcon,
   MoreHorizontalIcon,
+  XIcon,
 } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
@@ -319,8 +322,10 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "Default variant is brand teal (primary) — ration it to one per view.",
       "destructive is the soft/at-rest treatment; use destructive-solid only for a confirmed irreversible action.",
       "success / warning / info are solid treatments — the action IS the status.",
-      "Sizes follow the control-metrics ladder: xs 32 · sm 36 · default 40 · lg 44.",
+      "Sizes follow the control-metrics ladder: xs 32 · sm 36 · default 40 · lg 44. Icon-only: icon-xs · icon-sm · icon · icon-lg.",
+      "Hover, focus, and disabled are CSS/DOM states — not a variant prop. Focus the previews with the keyboard to see the ring.",
       "Icon-only buttons need an accessible name (aria-label).",
+      "Matches the Figma Button master (variant × size × state). Outline border uses border in light and input in dark.",
     ],
     doItems: [
       "Use primary for the single highest-emphasis action.",
@@ -345,22 +350,142 @@ export const componentRegistry: Record<string, ComponentDoc> = {
         <Button variant="link">Link</Button>
       </>
     ),
-    variants: (
-      <div className="flex w-full flex-col gap-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <Button size="xs">Extra small · 32</Button>
-          <Button size="sm">Small · 36</Button>
-          <Button size="default">Default · 40</Button>
-          <Button size="lg">Large · 44</Button>
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Button disabled>Disabled</Button>
-          <Button variant="outline" disabled>
-            Disabled outline
-          </Button>
-        </div>
-      </div>
-    ),
+    variantSections: [
+      {
+        label: "Sizes — default is MD 40px; LG 44px for citizen-facing primary actions",
+        content: (
+          <>
+            <Button size="xs">Extra small · 32</Button>
+            <Button size="sm">Small · 36</Button>
+            <Button size="default">Default · 40</Button>
+            <Button size="lg">Large · 44</Button>
+          </>
+        ),
+      },
+      {
+        label: "All variants × sizes",
+        className: "items-stretch justify-start overflow-x-auto",
+        content: (
+          <div className="flex w-full min-w-max flex-col gap-3">
+            {(
+              [
+                ["default", "Default"],
+                ["outline", "Outline"],
+                ["secondary", "Secondary"],
+                ["ghost", "Ghost"],
+                ["destructive", "Destructive"],
+                ["destructive-solid", "Destructive solid"],
+                ["destructive-ghost", "Destructive ghost"],
+                ["success", "Success"],
+                ["warning", "Warning"],
+                ["info", "Info"],
+                ["link", "Link"],
+              ] as const
+            ).map(([variant, label]) => (
+              <div
+                key={variant}
+                className="grid grid-cols-[9rem_repeat(4,minmax(0,auto))] items-center gap-3"
+              >
+                <span className="truncate font-mono text-xs text-muted-foreground">
+                  {label}
+                </span>
+                <Button variant={variant} size="xs">
+                  XS
+                </Button>
+                <Button variant={variant} size="sm">
+                  SM
+                </Button>
+                <Button variant={variant} size="default">
+                  MD
+                </Button>
+                <Button variant={variant} size="lg">
+                  LG
+                </Button>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        label: "With icons",
+        content: (
+          <>
+            <Button>
+              <PlusIcon data-icon="inline-start" />
+              Add filing
+            </Button>
+            <Button variant="outline">
+              Continue
+              <ArrowRightIcon data-icon="inline-end" />
+            </Button>
+            <Button variant="secondary">
+              <SearchIcon data-icon="inline-start" />
+              Search
+            </Button>
+            <Button variant="ghost" size="sm">
+              <PlusIcon data-icon="inline-start" />
+              New
+            </Button>
+          </>
+        ),
+      },
+      {
+        label: "Icon only — size-icon · icon-xs · icon-sm · icon-lg",
+        content: (
+          <>
+            <Button size="icon-xs" aria-label="Add">
+              <PlusIcon />
+            </Button>
+            <Button size="icon-sm" aria-label="Add" variant="outline">
+              <PlusIcon />
+            </Button>
+            <Button size="icon" aria-label="Add" variant="secondary">
+              <PlusIcon />
+            </Button>
+            <Button size="icon-lg" aria-label="Add">
+              <PlusIcon />
+            </Button>
+            <Button size="icon" aria-label="Search" variant="ghost">
+              <SearchIcon />
+            </Button>
+            <Button
+              size="icon"
+              aria-label="Delete"
+              variant="destructive-ghost"
+            >
+              <XIcon />
+            </Button>
+          </>
+        ),
+      },
+      {
+        label: "Disabled — last resort; prefer hiding unavailable actions",
+        className: "items-stretch justify-start",
+        content: (
+          <div className="flex w-full flex-wrap gap-3">
+            {(
+              [
+                "default",
+                "outline",
+                "secondary",
+                "ghost",
+                "destructive",
+                "destructive-solid",
+                "destructive-ghost",
+                "success",
+                "warning",
+                "info",
+                "link",
+              ] as const
+            ).map((variant) => (
+              <Button key={variant} variant={variant} disabled>
+                {variant === "default" ? "Primary" : variant}
+              </Button>
+            ))}
+          </div>
+        ),
+      },
+    ],
   },
 
   badge: {

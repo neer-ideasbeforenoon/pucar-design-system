@@ -40,9 +40,22 @@ export function ComponentDocPage({ slug }: { slug: string }) {
         <Preview>{doc.preview}</Preview>
       </DocsSection>
 
-      {doc.variants ? (
+      {doc.variantSections?.length || doc.variants ? (
         <DocsSection title="Variants & sizes">
-          <Preview label="Variants">{doc.variants}</Preview>
+          <div className="flex flex-col gap-4">
+            {doc.variantSections?.map((section) => (
+              <Preview
+                key={section.label}
+                label={section.label}
+                className={section.className}
+              >
+                {section.content}
+              </Preview>
+            ))}
+            {doc.variants ? (
+              <Preview label="Variants">{doc.variants}</Preview>
+            ) : null}
+          </div>
         </DocsSection>
       ) : null}
 
