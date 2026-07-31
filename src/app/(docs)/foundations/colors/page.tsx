@@ -84,6 +84,77 @@ const semantic = [
   },
 ];
 
+const surfaces = [
+  {
+    name: "Surface sunken",
+    token: "surface-sunken",
+    className: "bg-surface-sunken",
+    foregroundClassName: "text-foreground",
+  },
+  {
+    name: "Track",
+    token: "track",
+    className: "bg-track",
+    foregroundClassName: "text-foreground",
+  },
+  {
+    name: "Prefilled",
+    token: "prefilled",
+    className: "bg-prefilled",
+    foregroundClassName: "text-foreground",
+  },
+  {
+    name: "Accent strong",
+    token: "accent-strong",
+    className: "bg-accent-strong",
+    foregroundClassName: "text-foreground",
+  },
+];
+
+const muted = [
+  {
+    name: "Brand muted",
+    token: "brand-muted / brand-muted-foreground",
+    className: "bg-brand-muted",
+    foregroundClassName: "text-brand-muted-foreground",
+  },
+  {
+    name: "Success muted",
+    token: "success-muted / success-muted-foreground",
+    className: "bg-success-muted",
+    foregroundClassName: "text-success-muted-foreground",
+  },
+  {
+    name: "Warning muted",
+    token: "warning-muted / warning-muted-foreground",
+    className: "bg-warning-muted",
+    foregroundClassName: "text-warning-muted-foreground",
+  },
+  {
+    name: "Info muted",
+    token: "info-muted / info-muted-foreground",
+    className: "bg-info-muted",
+    foregroundClassName: "text-info-muted-foreground",
+  },
+  {
+    name: "Destructive muted",
+    token: "destructive-muted / destructive-muted-foreground",
+    className: "bg-destructive-muted",
+    foregroundClassName: "text-destructive-muted-foreground",
+  },
+];
+
+const inks = [
+  { name: "Success ink", token: "success-ink", className: "text-success-ink" },
+  { name: "Warning ink", token: "warning-ink", className: "text-warning-ink" },
+  { name: "Info ink", token: "info-ink", className: "text-info-ink" },
+  {
+    name: "Destructive ink",
+    token: "destructive-ink",
+    className: "text-destructive-ink",
+  },
+];
+
 const charts = [
   { name: "Chart 1", token: "chart-1", className: "bg-chart-1" },
   { name: "Chart 2", token: "chart-2", className: "bg-chart-2" },
@@ -103,8 +174,19 @@ export default function ColorsPage() {
       <Callout title="Usage">
         Prefer role utilities — <code>bg-primary</code>,{" "}
         <code>text-muted-foreground</code>, <code>border-border</code> — never
-        raw hex. Neutrals underpin surfaces; brand teal drives highest-emphasis
-        actions.
+        raw hex, and never a raw primitive step like{" "}
+        <code>brand-9</code> (there is no such utility — semantic tokens are
+        the only door in). Neutrals underpin surfaces; brand teal drives
+        highest-emphasis actions.
+      </Callout>
+
+      <Callout title="Three treatments per status" tone="warning">
+        Every status colour ships exactly three treatments, never a fourth:{" "}
+        <b>solid</b> (<code>bg-success</code> — the action is the status),{" "}
+        <b>muted</b> (<code>bg-success-muted</code> — chips, callouts, rows),
+        and <b>ink</b> (<code>text-success-ink</code> — text/icons on
+        neutral). Status fills are opaque tokens, never alpha — contrast
+        depends on the backdrop.
       </Callout>
 
       <DocsSection
@@ -113,6 +195,38 @@ export default function ColorsPage() {
       >
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {semantic.map((swatch) => (
+            <TokenSwatch key={swatch.token} {...swatch} />
+          ))}
+        </div>
+      </DocsSection>
+
+      <DocsSection
+        title="Muted &amp; ink pairs"
+        description="The tint half and text half of the three-treatments system, for brand and every status colour."
+      >
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {muted.map((swatch) => (
+            <TokenSwatch key={swatch.token} {...swatch} />
+          ))}
+        </div>
+        <div className="mt-3 flex flex-wrap gap-4">
+          {inks.map((ink) => (
+            <span
+              key={ink.token}
+              className={`font-mono text-sm ${ink.className}`}
+            >
+              {ink.name}
+            </span>
+          ))}
+        </div>
+      </DocsSection>
+
+      <DocsSection
+        title="Structural surfaces"
+        description="Named roles so components never reach for a raw neutral-N step directly."
+      >
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {surfaces.map((swatch) => (
             <TokenSwatch key={swatch.token} {...swatch} />
           ))}
         </div>

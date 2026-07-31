@@ -9,16 +9,16 @@ export const metadata: Metadata = {
 };
 
 const radii = [
-  { name: "none", className: "rounded-none", value: "0px" },
-  { name: "xs", className: "rounded-xs", value: "2px" },
-  { name: "sm", className: "rounded-sm", value: "4px" },
-  { name: "md", className: "rounded-md", value: "6px" },
-  { name: "lg", className: "rounded-lg", value: "8px" },
-  { name: "xl", className: "rounded-xl", value: "12px" },
-  { name: "2xl", className: "rounded-2xl", value: "16px" },
-  { name: "3xl", className: "rounded-3xl", value: "24px" },
-  { name: "4xl", className: "rounded-4xl", value: "32px" },
-  { name: "full", className: "rounded-full", value: "9999px" },
+  { name: "none", className: "rounded-none", value: "0px", role: "" },
+  { name: "xs", className: "rounded-xs", value: "4px", role: "micro insets" },
+  { name: "sm", className: "rounded-sm", value: "6px", role: "inset sm" },
+  { name: "md", className: "rounded-md", value: "8px", role: "insets" },
+  { name: "lg", className: "rounded-lg", value: "10px", role: "controls" },
+  { name: "xl", className: "rounded-xl", value: "14px", role: "containers" },
+  { name: "2xl", className: "rounded-2xl", value: "18px", role: "" },
+  { name: "3xl", className: "rounded-3xl", value: "22px", role: "" },
+  { name: "4xl", className: "rounded-4xl", value: "26px", role: "" },
+  { name: "full", className: "rounded-full", value: "9999px", role: "chips & pills" },
 ];
 
 export default function RadiusPage() {
@@ -26,12 +26,14 @@ export default function RadiusPage() {
     <div className="flex flex-col gap-10">
       <PageHeader
         title="Radius"
-        description="Corner radius scale confirmed against the live Figma file. Default control radius is md (6px) — the shadcn baseline used throughout the system."
+        description="One 10px knob, roles not choices. Every step below is derived from a single --radius value (0.625rem) — change the knob and the whole system rounds together."
       />
 
       <Callout>
-        Use <code>rounded-md</code>, <code>rounded-lg</code>,{" "}
-        <code>rounded-xl</code>, etc. Never invent values like{" "}
+        Assignment is by role, never by taste: <code>rounded-xl</code> for
+        containers, <code>rounded-lg</code> for controls (buttons, inputs),{" "}
+        <code>rounded-md</code>/<code>rounded-sm</code> for insets,{" "}
+        <code>rounded-full</code> for chips. Never invent values like{" "}
         <code>rounded-[7px]</code>.
       </Callout>
 
@@ -40,7 +42,7 @@ export default function RadiusPage() {
           {radii.map((item) => (
             <div
               key={item.name}
-              className="flex items-center gap-4 rounded-xl border border-border bg-card p-4"
+              className="flex items-center gap-4 rounded-xl border border-border bg-card p-4 shadow-raised"
             >
               <div
                 className={`size-14 shrink-0 border border-border bg-primary ${item.className}`}
@@ -51,6 +53,7 @@ export default function RadiusPage() {
                 </p>
                 <p className="font-mono text-xs text-muted-foreground">
                   {item.className} · {item.value}
+                  {item.role ? ` · ${item.role}` : ""}
                 </p>
               </div>
             </div>

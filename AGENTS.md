@@ -34,32 +34,57 @@ instead of inventing new colors, spacing, or components per-project.
    (Dialog / Sheet / Drawer / Sidebar). The docs site itself does not need to be responsive;
    the components do.
 
+6. **Follow the Laws, not just the tokens.** See [Principles](/principles) and the
+   [Typography](/foundations/typography) / [Colors](/foundations/colors) /
+   [Elevation](/foundations/elevation) pages for the non-negotiables: sentence case
+   everywhere, one rationed teal action per view, exactly three treatments per status
+   (solid / muted / ink — never a fourth, never alpha), the grey ladder (never a raw
+   `neutral-N`), depth via fill not borders, status never conveyed by colour alone, WCAG
+   2.2 AA as the floor, and fixed control metrics (40px default control height, 24px
+   container padding, 40px minimum touch target).
+
 ## Token reference
 
 | Token | Use |
 |---|---|
 | `background` / `foreground` | Page background / default text |
+| `surface` / `surface-raised` / `surface-sunken` | Structural base / lifted (cards) / recessed (nested wells, no border) |
+| `track` | Recessed control tracks — tabs list, progress, slider |
+| `prefilled` | Machine-prefilled, human-unverified field fill |
 | `primary` / `primary-foreground` | Highest-emphasis actions (teal brand color) |
+| `brand-accent` | Bright teal for non-text marks (chart lines, active underlines) — never for text |
+| `brand-muted` / `brand-muted-foreground` | Brand-tinted chips that carry text |
 | `secondary` / `secondary-foreground` | Supporting actions, light fills |
 | `muted` / `muted-foreground` | De-emphasized backgrounds / secondary text |
-| `accent` / `accent-foreground` | Hover/highlight fills |
-| `destructive` / `destructive-foreground` | Irreversible/dangerous actions |
-| `success` / `success-foreground` | Positive status |
-| `warning` / `warning-foreground` | Caution status |
-| `info` / `info-foreground` | Informational status |
+| `accent` / `accent-foreground` | Hover/highlight fills (transient) |
+| `accent-strong` | One step past accent — pressed toggles, engaged triggers |
+| `destructive` / `destructive-foreground` | Irreversible/dangerous actions (solid treatment) |
+| `success` / `warning` / `info` (+ `-foreground`) | Status solids — the action IS the status |
+| `success-muted` / `warning-muted` / `info-muted` / `destructive-muted` (+ `-foreground`) | Status tint pairs — chips, callouts, rows |
+| `success-ink` / `warning-ink` / `info-ink` / `destructive-ink` | Status text/icons on neutral — never a fill |
 | `border` / `input` | Default borders / form field borders |
 | `ring` | Focus ring color |
 | `card` / `popover` | Raised surface backgrounds |
-| `chart-1` … `chart-5` | Categorical data visualization palette |
-| `radius-xs` … `radius-4xl`, `radius-full` | Corner radius scale |
+| `chart-1` … `chart-5` | Categorical data visualization palette — means "different series" only, never status |
+| `shadow-raised` / `shadow-overlay` / `shadow-modal` | Elevation — cards / popovers-menus-tooltips / dialogs-sheets |
+| `text-display` … `text-caption` | 11-style type scale (see Typography) — never an arbitrary `text-*` size for a heading |
+| `radius-xs` … `radius-4xl`, `radius-full` | Corner radius scale — controls use `radius-lg`, containers use `radius-xl` |
 
 **Brand note:** the primary color is **teal** (`#007e7e` light / `#0eb39e` dark). The
 original Figma file's internal token names said "green" in places — that was stale; the
 live values are teal. Treat this repo's values as authoritative.
 
+**Typeface note:** product UI ships a zero-download system stack — `"Helvetica Neue",
+Helvetica, Arial, system-ui` — not a downloaded web font. Figma's own file substitutes
+Inter only because Helvetica Neue isn't installed in that rendering environment; that
+substitution never applies to shipped code.
+
 ## Provenance
 
-Token values were extracted directly from the `PUCAR DS - Mohit` Figma file's live variable
-data (not from documentation, which was found to be out of date in places — see token names
-above). Components are the unmodified upstream shadcn/ui registry, themed via CSS variables
-only.
+Token values are extracted from the live Figma file "Pucar Design System" (cover: *Pucar ·
+ON Court — Design system · Rajini 2.0*), whose own cover page states it was **"Generated
+from `pucar-ui/lib/tokens` — primitives aliased by semantics, exactly as the code
+pipeline."** That implies an actual `pucar-ui` codebase is the upstream source of truth for
+these tokens, with this Figma file mirroring it. If that repo is reachable, treat it — not
+this repo, not Figma — as authoritative, and re-sync from there. Components are the
+unmodified upstream shadcn/ui registry, themed via CSS variables only.

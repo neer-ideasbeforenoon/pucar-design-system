@@ -206,10 +206,21 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "Use one primary button per visual region to preserve hierarchy.",
       "Pair destructive with confirmation (Alert Dialog) for irreversible work.",
     ],
-    tokens: ["primary", "secondary", "destructive", "muted", "ring"],
+    tokens: [
+      "primary",
+      "secondary",
+      "destructive",
+      "success",
+      "warning",
+      "info",
+      "muted",
+      "ring",
+    ],
     usageNotes: [
-      "Default variant is brand teal (primary).",
-      "Prefer size defaults; use sm/xs in dense toolbars.",
+      "Default variant is brand teal (primary) — ration it to one per view.",
+      "destructive is the soft/at-rest treatment; use destructive-solid only for a confirmed irreversible action.",
+      "success / warning / info are solid treatments — the action IS the status.",
+      "Sizes follow the control-metrics ladder: xs 32 · sm 36 · default 40 · lg 44.",
       "Icon-only buttons need an accessible name (aria-label).",
     ],
     doItems: [
@@ -227,16 +238,21 @@ export const componentRegistry: Record<string, ComponentDoc> = {
         <Button variant="outline">Outline</Button>
         <Button variant="ghost">Ghost</Button>
         <Button variant="destructive">Destructive</Button>
+        <Button variant="destructive-solid">Destructive solid</Button>
+        <Button variant="destructive-ghost">Destructive ghost</Button>
+        <Button variant="success">Success</Button>
+        <Button variant="warning">Warning</Button>
+        <Button variant="info">Info</Button>
         <Button variant="link">Link</Button>
       </>
     ),
     variants: (
       <div className="flex w-full flex-col gap-4">
         <div className="flex flex-wrap items-center gap-3">
-          <Button size="xs">Extra small</Button>
-          <Button size="sm">Small</Button>
-          <Button size="default">Default</Button>
-          <Button size="lg">Large</Button>
+          <Button size="xs">Extra small · 32</Button>
+          <Button size="sm">Small · 36</Button>
+          <Button size="default">Default · 40</Button>
+          <Button size="lg">Large · 44</Button>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <Button disabled>Disabled</Button>
@@ -258,9 +274,17 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "Show status (Paid, Pending) or category chips.",
       "Annotate counts or metadata next to headings.",
     ],
-    tokens: ["primary", "secondary", "destructive", "border"],
+    tokens: [
+      "primary",
+      "secondary",
+      "destructive",
+      "success-muted",
+      "warning-muted",
+      "info-muted",
+      "border",
+    ],
     usageNotes: [
-      "For success/warning/info states, apply semantic token classes on a badge or use Alert.",
+      "success / warning / info use the muted tint pair — badges are metadata, not an action, so they never carry the solid treatment.",
       "Avoid nesting interactive controls inside badges.",
     ],
     preview: (
@@ -269,9 +293,11 @@ export const componentRegistry: Record<string, ComponentDoc> = {
         <Badge variant="secondary">Secondary</Badge>
         <Badge variant="outline">Outline</Badge>
         <Badge variant="destructive">Destructive</Badge>
-        <Badge className="bg-success text-success-foreground">Success</Badge>
-        <Badge className="bg-warning text-warning-foreground">Warning</Badge>
-        <Badge className="bg-info text-info-foreground">Info</Badge>
+        <Badge variant="success">Success</Badge>
+        <Badge variant="warning">Warning</Badge>
+        <Badge variant="info">Info</Badge>
+        <Badge variant="ghost">Ghost</Badge>
+        <Badge variant="link">Link</Badge>
       </>
     ),
   },

@@ -14,7 +14,7 @@ export function DocsSection({
   return (
     <section className={cn("flex flex-col gap-4", className)}>
       <div className="flex flex-col gap-1.5">
-        <h2 className="text-xl font-semibold tracking-tight text-foreground">
+        <h2 className="text-title-s font-semibold tracking-tight text-foreground">
           {title}
         </h2>
         {description ? (

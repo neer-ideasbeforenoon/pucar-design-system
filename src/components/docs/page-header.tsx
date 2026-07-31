@@ -11,7 +11,7 @@ export function PageHeader({
 }) {
   return (
     <header className={cn("mb-10 flex flex-col gap-3", className)}>
-      <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+      <h1 className="text-title-l font-semibold tracking-tight text-foreground md:text-display-s">
         {title}
       </h1>
       {description ? (

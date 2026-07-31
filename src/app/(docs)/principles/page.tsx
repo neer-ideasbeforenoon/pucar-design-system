@@ -61,12 +61,64 @@ export default function PrinciplesPage() {
       </DocsSection>
 
       <DocsSection
-        title="4. Teal is the brand"
-        description="Primary actions use teal. Status colors (success, warning, info, destructive) stay semantic and distinct from brand."
+        title="4. Teal is the brand — and it's rationed"
+        description="Primary actions use teal. One strong teal action per view — if two things shout, neither is heard. Status colors (success, warning, info, destructive) stay semantic and distinct from brand."
       >
         <Callout title="Legacy naming" tone="warning">
           The Figma file sometimes labeled brand tokens as &quot;green.&quot;
           Live values are teal — this documentation is authoritative.
+        </Callout>
+      </DocsSection>
+
+      <DocsSection
+        title="5. The grey ladder"
+        description="Each neutral step has one job. Never pick a raw neutral-N directly — go through a semantic token."
+      >
+        <DoDont
+          do={[
+            "muted → surface-sunken (2½, wells) → accent (3, hover) → accent-strong (4, engaged) → track (5, recessed) → border (7) → input (9).",
+            "Let interaction move one step down — a control never hovers to its own rest colour.",
+          ]}
+          dont={[
+            "Reach for neutral-6 or any raw step in a component.",
+            "Invent a new grey outside the ladder for a one-off hover state.",
+          ]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="6. Never colour alone"
+        description="Pair every status colour with an icon, label, or arrow (↑/↓ on deltas). A cheap screen or a colour-blind reader must still get the meaning."
+      >
+        <Callout>
+          A red dot with no label communicates nothing on a bad monitor. A
+          red dot next to the word &quot;Overdue&quot; does.
+        </Callout>
+      </DocsSection>
+
+      <DocsSection
+        title="7. WCAG 2.2 AA is the floor"
+        description="Text ≥ 4.5:1, UI boundaries ≥ 3:1, in both themes — proven by contrast checks, never eyeballed. Focus is always visible."
+      >
+        <DoDont
+          do={[
+            "Keep the teal focus ring on every interactive element.",
+            "Check new token pairs against both light and dark before shipping.",
+          ]}
+          dont={[
+            "Ship a status fill under 4.5:1 because it \"looks fine\" in one theme.",
+            "Remove a focus ring for aesthetics.",
+          ]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="8. Control metrics aren't negotiable"
+        description="Fields and buttons default to 40px (ladder 32 / 36 / 40 / 44). Container padding is 24px (16px for a small card). Chip height is 24px. Touch targets are ≥ 40px on any citizen-facing surface."
+      >
+        <Callout>
+          Off-ladder sizing (a 38px button, a 20px chip) is banned the same
+          way an arbitrary hex value is — it isn&apos;t a style choice.
         </Callout>
       </DocsSection>
     </div>

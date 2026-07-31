@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Roboto Mono", monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -30,6 +30,7 @@
   --color-destructive-foreground: var(--destructive-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -41,26 +42,81 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
+  /* Structural surfaces — named so components never reach for a raw neutral-N */
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-track: var(--track);
+  --color-prefilled: var(--prefilled);
+
   /* Pucar semantic status colors — not part of default shadcn */
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-muted: var(--success-muted);
+  --color-success-muted-foreground: var(--success-muted-foreground);
+  --color-success-ink: var(--success-ink);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-warning-muted: var(--warning-muted);
+  --color-warning-muted-foreground: var(--warning-muted-foreground);
+  --color-warning-ink: var(--warning-ink);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+  --color-info-muted: var(--info-muted);
+  --color-info-muted-foreground: var(--info-muted-foreground);
+  --color-info-ink: var(--info-ink);
+  --color-destructive-muted: var(--destructive-muted);
+  --color-destructive-muted-foreground: var(--destructive-muted-foreground);
+  --color-destructive-ink: var(--destructive-ink);
   --color-brand-accent: var(--brand-accent);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-muted-foreground: var(--brand-muted-foreground);
 
-  /* Real radius scale (Tailwind's canonical steps, confirmed against the live Figma file) */
+  /* Radius — derived from the single 10px --radius knob, confirmed against the live Figma
+     file's Spacing & radius page. Role assignment matters: controls (buttons, inputs) use
+     radius-lg, not radius-md. */
   --radius-none: 0px;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-3xl: 24px;
-  --radius-4xl: 32px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 22px;
+  --radius-4xl: 26px;
   --radius-full: 9999px;
+
+  /* Elevation — raised (cards), overlay (popovers/menus/tooltips), modal (dialogs/sheets).
+     Dual box-shadow per level; both layers deepen in dark mode so depth doesn't disappear
+     on dark surfaces. */
+  --shadow-raised: var(--shadow-raised);
+  --shadow-overlay: var(--shadow-overlay);
+  --shadow-modal: var(--shadow-modal);
+
+  /* Typography — 11 named text styles from the live Figma file. Major-third scale (1.250),
+     base 16, line-heights on the 8px grid. */
+  --text-display: 3rem;
+  --text-display--line-height: 3.5rem;
+  --text-display--font-weight: 600;
+  --text-display-s: 2.5rem;
+  --text-display-s--line-height: 3rem;
+  --text-display-s--font-weight: 600;
+  --text-title-l: 2rem;
+  --text-title-l--line-height: 2.5rem;
+  --text-title-l--font-weight: 600;
+  --text-title: 1.5rem;
+  --text-title--line-height: 2rem;
+  --text-title--font-weight: 600;
+  --text-title-s: 1.25rem;
+  --text-title-s--line-height: 1.75rem;
+  --text-title-s--font-weight: 600;
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+  --text-body-compact: 0.875rem;
+  --text-body-compact--line-height: 1.25rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+  --text-caption--font-weight: 500;
 }
 
 :root {
@@ -78,6 +134,73 @@
   --neutral-11: #60646c;
   --neutral-12: #1c2024;
 
+  /* Brand — Radix-style 12-step teal ramp. Product UI never picks a raw step directly;
+     go through a semantic token (primary, brand-accent, brand-muted...). */
+  --brand-1: #fafefd;
+  --brand-2: #f3fbf9;
+  --brand-3: #e0f8f3;
+  --brand-4: #ccf3ea;
+  --brand-5: #b8eae0;
+  --brand-6: #a1ded2;
+  --brand-7: #83cdc1;
+  --brand-8: #53b9ab;
+  --brand-9: #12a594;
+  --brand-10: #0d9b8a;
+  --brand-11: #008573;
+  --brand-12: #0d3d38;
+
+  --success-1: #fbfefb;
+  --success-2: #f5fbf5;
+  --success-3: #e9f6e9;
+  --success-4: #daf1db;
+  --success-5: #c9e8ca;
+  --success-6: #b2ddb5;
+  --success-7: #94ce9a;
+  --success-8: #65ba74;
+  --success-9: #46a758;
+  --success-10: #3e9b4f;
+  --success-11: #2a7e3b;
+  --success-12: #203c25;
+
+  --info-1: #fbfdff;
+  --info-2: #f4faff;
+  --info-3: #e6f4fe;
+  --info-4: #d5efff;
+  --info-5: #c2e5ff;
+  --info-6: #acd8fc;
+  --info-7: #8ec8f6;
+  --info-8: #5eb1ef;
+  --info-9: #0090ff;
+  --info-10: #0588f0;
+  --info-11: #0d74ce;
+  --info-12: #113264;
+
+  --warning-1: #fefdfb;
+  --warning-2: #fefbe9;
+  --warning-3: #fff7c2;
+  --warning-4: #ffee9c;
+  --warning-5: #fbe577;
+  --warning-6: #f3d673;
+  --warning-7: #e9c162;
+  --warning-8: #e2a336;
+  --warning-9: #ffc53d;
+  --warning-10: #ffba18;
+  --warning-11: #ab6400;
+  --warning-12: #4f3422;
+
+  --destructive-1: #fffcfc;
+  --destructive-2: #fff7f7;
+  --destructive-3: #feebec;
+  --destructive-4: #ffdbdc;
+  --destructive-5: #ffcdce;
+  --destructive-6: #fdbdbe;
+  --destructive-7: #f4a9aa;
+  --destructive-8: #eb8e90;
+  --destructive-9: #e5484d;
+  --destructive-10: #dc3e42;
+  --destructive-11: #ce2c31;
+  --destructive-12: #641723;
+
   --background: var(--neutral-1);
   --foreground: var(--neutral-12);
   --card: var(--neutral-1);
@@ -85,26 +208,51 @@
   --popover: var(--neutral-1);
   --popover-foreground: var(--neutral-12);
 
-  /* Brand — teal, pulled directly from PUCAR DS - Mohit (NOT green, despite old token names) */
+  /* Structural surfaces */
+  --surface: var(--neutral-1);
+  --surface-raised: var(--neutral-1); /* card / small box — same value today, free to diverge */
+  --surface-sunken: #f4f4f7; /* nested wells — tuned 2½ step, separates without a border */
+  --track: var(--neutral-5); /* recessed control tracks: tabs list, progress, slider */
+  --prefilled: var(--warning-2); /* machine-prefilled, human-unverified field fill */
+
+  /* Brand — teal. Confirmed against the live "Rajini 2.0" Figma file. */
   --primary: #007e7e;
   --primary-foreground: #ffffff;
   --brand-accent: #12a594;
+  --brand-muted: var(--brand-3);
+  --brand-muted-foreground: #0a6969;
 
   --secondary: var(--neutral-3);
   --secondary-foreground: var(--neutral-12);
-  --muted: var(--neutral-3);
+  --muted: var(--neutral-2);
   --muted-foreground: var(--neutral-11);
   --accent: var(--neutral-3);
   --accent-foreground: var(--neutral-12);
+  --accent-strong: var(--neutral-4); /* one step past accent — pressed toggles, engaged triggers */
 
   --destructive: #c1232a;
   --destructive-foreground: #ffffff;
+  --destructive-muted: var(--destructive-3);
+  --destructive-muted-foreground: #ce2c31;
+  --destructive-ink: #ce2c31;
+
   --success: #217a3a;
   --success-foreground: #ffffff;
+  --success-muted: var(--success-3);
+  --success-muted-foreground: #2a7e3b;
+  --success-ink: #2a7e3b;
+
   --warning: #ffc53d;
-  --warning-foreground: #9d5c00;
+  --warning-foreground: #3d2000; /* ink on solid amber — same value in both themes */
+  --warning-muted: var(--warning-3);
+  --warning-muted-foreground: #ab6400;
+  --warning-ink: #ab6400;
+
   --info: #0d74ce;
   --info-foreground: #ffffff;
+  --info-muted: var(--info-3);
+  --info-muted-foreground: #0d74ce;
+  --info-ink: #0d74ce;
 
   --border: var(--neutral-7);
   --input: var(--neutral-7);
@@ -116,7 +264,11 @@
   --chart-4: #e2a336;
   --chart-5: #e93d82;
 
-  --radius: 0.375rem; /* radius-md, 6px — the real shadcn default used throughout the live file */
+  --radius: 0.625rem; /* the single 10px knob everything else is derived from */
+
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.07);
+  --shadow-overlay: 0 4px 8px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  --shadow-modal: 0 16px 32px -8px rgba(0, 0, 0, 0.18), 0 6px 12px -6px rgba(0, 0, 0, 0.12);
 
   --sidebar: var(--neutral-1);
   --sidebar-foreground: var(--neutral-12);
@@ -142,6 +294,71 @@
   --neutral-11: #b0b4ba;
   --neutral-12: #edeef0;
 
+  --brand-1: #0d1514;
+  --brand-2: #111c1b;
+  --brand-3: #0d2d2a;
+  --brand-4: #023b37;
+  --brand-5: #084843;
+  --brand-6: #145750;
+  --brand-7: #1c6961;
+  --brand-8: #207e73;
+  --brand-9: #12a594;
+  --brand-10: #0eb39e;
+  --brand-11: #0bd8b6;
+  --brand-12: #adf0dd;
+
+  --success-1: #0e1511;
+  --success-2: #141a15;
+  --success-3: #1b2a1e;
+  --success-4: #1d3a24;
+  --success-5: #25482d;
+  --success-6: #2d5736;
+  --success-7: #366740;
+  --success-8: #3e7949;
+  --success-9: #46a758;
+  --success-10: #53b365;
+  --success-11: #71d083;
+  --success-12: #c2f0c2;
+
+  --info-1: #0d1520;
+  --info-2: #111927;
+  --info-3: #0d2847;
+  --info-4: #003362;
+  --info-5: #004074;
+  --info-6: #104d87;
+  --info-7: #205d9e;
+  --info-8: #2870bd;
+  --info-9: #0090ff;
+  --info-10: #3b9eff;
+  --info-11: #70b8ff;
+  --info-12: #c2e6ff;
+
+  --warning-1: #16120c;
+  --warning-2: #1d180f;
+  --warning-3: #302008;
+  --warning-4: #3f2700;
+  --warning-5: #4d3000;
+  --warning-6: #5c3d05;
+  --warning-7: #714f19;
+  --warning-8: #8f6424;
+  --warning-9: #ffc53d;
+  --warning-10: #ffd60a;
+  --warning-11: #ffca16;
+  --warning-12: #ffe7b3;
+
+  --destructive-1: #191111;
+  --destructive-2: #201314;
+  --destructive-3: #3b1219;
+  --destructive-4: #500f1c;
+  --destructive-5: #611623;
+  --destructive-6: #72232d;
+  --destructive-7: #8c333a;
+  --destructive-8: #b54548;
+  --destructive-9: #e5484d;
+  --destructive-10: #ec5d5e;
+  --destructive-11: #ff9592;
+  --destructive-12: #ffd1d9;
+
   --background: var(--neutral-1);
   --foreground: var(--neutral-12);
   --card: var(--neutral-1);
@@ -149,25 +366,49 @@
   --popover: var(--neutral-1);
   --popover-foreground: var(--neutral-12);
 
+  --surface: var(--neutral-1);
+  --surface-raised: var(--neutral-1);
+  --surface-sunken: #1d1e21;
+  --track: var(--neutral-5);
+  --prefilled: var(--warning-2);
+
   --primary: #0eb39e;
   --primary-foreground: #0a0a0a;
   --brand-accent: #12a594;
+  --brand-muted: var(--brand-3);
+  --brand-muted-foreground: #0bd8b6;
 
   --secondary: var(--neutral-3);
   --secondary-foreground: var(--neutral-12);
-  --muted: var(--neutral-3);
+  --muted: var(--neutral-2);
   --muted-foreground: var(--neutral-11);
   --accent: var(--neutral-3);
   --accent-foreground: var(--neutral-12);
+  --accent-strong: var(--neutral-4);
 
   --destructive: #ec5d5e;
   --destructive-foreground: #0a0a0a;
+  --destructive-muted: var(--destructive-3);
+  --destructive-muted-foreground: #ff9592;
+  --destructive-ink: #ff9592;
+
   --success: #46a758;
   --success-foreground: #0a0a0a;
+  --success-muted: var(--success-3);
+  --success-muted-foreground: #71d083;
+  --success-ink: #71d083;
+
   --warning: #ffc53d;
-  --warning-foreground: #ffca16;
+  --warning-foreground: #3d2000;
+  --warning-muted: var(--warning-3);
+  --warning-muted-foreground: #ffca16;
+  --warning-ink: #ffca16;
+
   --info: #3b9eff;
   --info-foreground: #0a0a0a;
+  --info-muted: var(--info-3);
+  --info-muted-foreground: #70b8ff;
+  --info-ink: #70b8ff;
 
   --border: var(--neutral-7);
   --input: var(--neutral-7);
@@ -178,6 +419,10 @@
   --chart-3: #9e8cff;
   --chart-4: #ffce6a;
   --chart-5: #ff8dab;
+
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-overlay: 0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 16px 32px -8px rgba(0, 0, 0, 0.6), 0 6px 12px -6px rgba(0, 0, 0, 0.45);
 
   --sidebar: var(--neutral-1);
   --sidebar-foreground: var(--neutral-12);
