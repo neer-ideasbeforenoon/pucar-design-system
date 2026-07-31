@@ -29,6 +29,7 @@ export default function PrinciplesPage() {
           ]}
           dont={[
             "Hardcode hex or oklch values in components.",
+            // ds-tokens-ignore — this is the anti-example being documented
             "Use arbitrary Tailwind values like bg-[#007e7e] or rounded-[7px].",
           ]}
         />

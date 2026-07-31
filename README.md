@@ -42,21 +42,32 @@ Typography for product UI uses the zero-download system stack
 
 ## Principles
 
-These are the rules that protect the system. Break them and the brand fragments.
+Four rules protect the system. Break them and the brand fragments.
 
-1. **Tokens over inventing** — Never hardcode color, spacing, or radius. Use utilities that map to tokens (`bg-primary`, `text-muted-foreground`, `border-border`, `rounded-md`, `gap-4`). No hex, no oklch, no arbitrary values like `bg-[#007e7e]`.
-2. **Reuse before create** — Check `src/components/ui/` first. Prefer composition over new primitives.
-3. **Install, don’t hand-write** — New shadcn components come from `npx shadcn@latest add <component>`, not from rewriting upstream code by hand.
-4. **Light and dark are equal** — Every color token must exist in both `:root` and `.dark`. Theme is a product requirement, not an afterthought.
+1. **Tokens over inventing** — never a hex, an `oklch()`, or an arbitrary value like `bg-[#007e7e]`.
+2. **Reuse before create** — check `src/components/ui/` first; prefer composition.
+3. **Install, don’t hand-write** — new shadcn components come from `npx shadcn@latest add`.
+4. **Light and dark are equal** — every color token exists in both `:root` and `.dark`.
 
-Agent-facing guidance lives in [`AGENTS.md`](./AGENTS.md) — keep that file aligned with these principles.
+The enforceable version of these, with the recipes and the checks that back them, lives in
+[`AGENTS.md`](./AGENTS.md). The first and fourth are verified by `npm run lint`.
 
-Responsive composition rules for product UI (not the docs chrome) live in
-[`RESPONSIVE.md`](./RESPONSIVE.md).
+---
 
-Accessibility standards (**WCAG 2.1 AA**, WAI-ARIA 1.2, keyboard, contrast,
-**40×40px** touch targets, labels, timeouts, Indic scripts, and more) live in
-[`ACCESSIBILITY.md`](./ACCESSIBILITY.md) and `/foundations/accessibility`.
+## Standards
+
+These are part of the design contract, not per-app decisions. A Pucar component is only
+correct if it meets them.
+
+| Document | Covers |
+| --- | --- |
+| [`ACCESSIBILITY.md`](./ACCESSIBILITY.md) | WCAG 2.1 AA, WAI-ARIA 1.2, keyboard, contrast, 40×40px touch targets, visible labels, session timeouts, 200% zoom, Indic scripts |
+| [`RESPONSIVE.md`](./RESPONSIVE.md) | Mobile-first composition, breakpoints, overlay choice, table overflow |
+| [`AGENTS.md`](./AGENTS.md) | Token rules, the Laws, and how to add or change a component |
+| [`CHANGELOG.md`](./CHANGELOG.md) | Reconciliation history against the Figma contract |
+
+Both standards are also documented on the site, at `/foundations/accessibility` and
+`/foundations/laws`.
 
 ---
 
@@ -78,23 +89,15 @@ components and Rajini-aligned adaptations.
 
 ---
 
-## Semantic tokens (quick reference)
+## Tokens
 
-| Token | Role |
-| --- | --- |
-| `background` / `foreground` | Page surface and default text |
-| `primary` / `primary-foreground` | Highest-emphasis actions (brand teal) |
-| `secondary` / `secondary-foreground` | Supporting actions and light fills |
-| `muted` / `muted-foreground` | De-emphasized surfaces and secondary text |
-| `accent` / `accent-foreground` | Hover and highlight fills |
-| `destructive` | Irreversible or dangerous actions |
-| `success` / `warning` / `info` | Status communication |
-| `border` / `input` / `ring` | Edges, fields, and focus |
-| `card` / `popover` | Component surfaces; elevation is a separate role |
-| `chart-1` … `chart-5` | Categorical data visualization |
-| `radius-xs` … `radius-4xl`, `radius-full` | Corner radius scale |
+Every token is a CSS custom property in [`src/app/globals.css`](./src/app/globals.css),
+defined in both light and dark mode and exposed to Tailwind through `@theme inline`.
 
-Full swatches and specimens live in the Foundations section of the docs site.
+What each family means, plus the full generated inventory, lives in
+[`AGENTS.md`](./AGENTS.md#tokens). Swatches and specimens are in the Foundations section of
+the docs site. Those two are the only places tokens are described — deliberately, so a
+third copy cannot drift.
 
 ---
 
@@ -108,10 +111,15 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000). Use the header control to switch light and dark.
 
 ```bash
-npm run build   # production build
-npm run start   # serve production build
-npm run lint    # eslint
+npm run build        # production build
+npm run start        # serve production build
+npm run lint         # eslint, plus the token and coverage checks
+npm run sync:tokens  # regenerate the token inventory in AGENTS.md from globals.css
 ```
+
+`npm run lint` is the gate. Beyond eslint it fails on a hardcoded color, a token missing
+from either theme, a component that is undocumented or unreachable from the docs nav, and a
+stale token inventory.
 
 ---
 
@@ -121,13 +129,15 @@ npm run lint    # eslint
 src/
   app/
     (docs)/          # Documentation routes (foundations, components, principles)
-    globals.css      # Design tokens (light + dark)
+    globals.css      # Design tokens (light + dark) — the only place raw values belong
   components/
-    docs/            # Docs chrome and page primitives
-    ui/              # Design system components (shadcn)
+    docs/            # Docs chrome, page primitives, and the component registry
+    ui/              # Design system components (shadcn + Pucar)
   lib/
-    docs-nav.ts      # Sidebar information architecture
+    docs-nav.ts      # Sidebar information architecture, and the component route list
+    icons.ts         # Allowlisted Lucide icon names from Figma
     utils.ts         # cn() and shared helpers
+scripts/             # Token generation and the checks that run in `npm run lint`
 ```
 
 ---
@@ -137,7 +147,7 @@ src/
 - **Designers** — Confirm that what ships matches the system, not a one-off mock.
 - **Engineers** — Pull tokens and components instead of reinventing UI per feature.
 - **Product / stakeholders** — Walk foundations and components in a shareable live site.
-- **AI coding agents** — Follow `AGENTS.md` and `RESPONSIVE.md` so generated UI stays on-brand and usable on mobile.
+- **AI coding agents** — Follow [`AGENTS.md`](./AGENTS.md); it is the rulebook for working in this repo.
 
 ---
 

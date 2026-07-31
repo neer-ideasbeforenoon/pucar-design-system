@@ -68,6 +68,7 @@ npm run dev`}
       <Callout title="For AI coding agents" tone="success">
         Follow <code>AGENTS.md</code> in this repository. Never hardcode hex,
         oklch, or arbitrary Tailwind values like{" "}
+        {/* ds-tokens-ignore — this is the anti-example being documented */}
         <code>bg-[#007e7e]</code>.
       </Callout>
 

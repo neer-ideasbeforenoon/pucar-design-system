@@ -10,88 +10,235 @@ This repo is the source of truth for Pucar's design tokens and UI components. It
 that both humans and AI coding agents build UI that matches Pucar's actual design system,
 instead of inventing new colors, spacing, or components per-project.
 
-## Stack
+**Stack:** Next.js (App Router) + TypeScript · Tailwind CSS v4 · shadcn/ui (Radix primitives).
+Tokens are CSS custom properties in `src/app/globals.css`, mapped via `@theme inline`.
 
-- Next.js (App Router) + TypeScript
-- Tailwind CSS v4 (tokens defined as CSS custom properties in `src/app/globals.css`, mapped
-  via `@theme inline`)
-- shadcn/ui (Radix primitives) — maintained registry code, adapted only where Rajini 2.0
-  defines a different contract, plus Pucar-specific components in `src/components/ui/`
+---
 
-## Rules for building UI in this system
+## Precedence
 
-1. **Never hardcode a color, spacing, or radius value.** Always use the Tailwind utility that
-   maps to a token (`bg-primary`, `text-muted-foreground`, `border-border`, `rounded-md`,
-   `gap-4`, etc.) — never a raw hex, oklch, or arbitrary Tailwind value like `bg-[#007e7e]`.
-2. **Never add a new shadcn component by hand-writing it.** Install it for real:
-   `npx shadcn@latest add <component>`. This keeps components upstream-correct and easy to
-   update.
-3. **Reuse an existing component before creating a new one.** Check `src/components/ui/`
-   first.
-4. **All new colors must support both light and dark mode.** Add the token to both `:root`
-   and `.dark` in `globals.css`, never just one.
-5. **Components must be responsive in product UI.** Follow [`RESPONSIVE.md`](./RESPONSIVE.md)
-   when composing screens — mobile-first layouts, fluid widths, correct overlays
-   (Dialog / Sheet / Drawer / Sidebar). The docs site itself does not need to be responsive;
-   the components do.
+When sources disagree, resolve in this order:
 
-6. **Meet the accessibility standards.** Follow [`ACCESSIBILITY.md`](./ACCESSIBILITY.md)
-   and `/foundations/accessibility`. Floor: **WCAG 2.1 Level AA** + **WAI-ARIA 1.2**.
-   Required: keyboard-only use; NVDA / JAWS / VoiceOver; visible focus (`ring`); text
-   contrast ≥ **4.5:1**; no critical info only on hover; touch targets ≥ **40×40px**;
-   voice-control-friendly visible labels (no placeholder-only fields); **200% text zoom**
-   without broken layout; **session timeout warnings** before expiry; multilingual /
-   Indic script support (Devanagari, Tamil, etc. per court).
+1. **The live Figma component master** — Abhiram's "Pucar Design System" file
+   (cover: *Pucar · ON Court — Design system · Rajini 2.0*). This is the design contract.
+2. **This file**, then the code it points at.
+3. **Site prose** in `src/app/(docs)/`.
 
-7. **Follow the Laws, not just the tokens.** See [Principles](/principles) and the
-   [Typography](/foundations/typography) / [Colors](/foundations/colors) /
-   [Elevation](/foundations/elevation) / [Accessibility](/foundations/accessibility) pages
-   for the non-negotiables: sentence case everywhere, one rationed teal action per view,
-   exactly three treatments per status (solid / muted / ink — never a fourth, never alpha),
-   the grey ladder (never a raw `neutral-N`), depth via fill not borders, status never
-   conveyed by colour alone, WCAG 2.1 AA as the floor, and fixed control metrics (40px
-   default control height, 24px container padding, **40×40px minimum touch target**).
+A component master beating prose is normal. When it happens, change the code and record the
+discrepancy in `CHANGELOG.md` — do not silently leave the two disagreeing.
 
-## Token reference
+---
 
-| Token | Use |
-|---|---|
+## Commands
+
+```bash
+npm install
+npm run dev            # docs site on http://localhost:3000
+npm run lint           # eslint + token and coverage rules — the gate that must pass
+npm run build          # production build; catches type and prerender errors
+npm run sync:tokens    # regenerate the token inventory below from globals.css
+```
+
+`npm run lint` also runs `check:tokens` (rules 1, 4 and 5) and `check:ds` (every component
+reachable from the docs and backed by a real file). Run it before claiming any work is
+finished.
+
+---
+
+## Where things live
+
+| Path | What it owns |
+| --- | --- |
+| `src/app/globals.css` | Every design token, light and dark. The only place raw color values belong. |
+| `src/components/ui/` | Design system components — registry primitives plus Pucar-specific ones. |
+| `src/components/docs/` | Docs chrome and page primitives (`Section`, `PageHeader`, `Callout`, `DoDont`, `TokenSwatch`). |
+| `src/components/docs/component-registry.tsx` | The documented content for each component page. |
+| `src/lib/docs-nav.ts` | Sidebar IA — and the list that generates component routes. |
+| `src/app/(docs)/` | Foundations, principles, and block pages. |
+| `src/hooks/use-mobile.ts` | `useIsMobile()` — the viewport check to use instead of `window.innerWidth`. |
+| `scripts/` | `sync-tokens` generates the inventory; `check-*` enforce the rules in `lint`. |
+
+---
+
+## Non-negotiable rules
+
+**1. Never hardcode a color, spacing, or radius.** Use the utility that maps to a token.
+
+```tsx
+// wrong — enforced by `npm run lint`
+<div className="bg-[#007e7e] rounded-[7px]" />
+// right
+<div className="bg-primary rounded-lg" />
+```
+
+**2. Never hand-write a shadcn component.** Install it for real so it stays upstream-correct
+and upgradeable: `npx shadcn@latest add <component>`.
+
+**3. Reuse before creating.** Check `src/components/ui/` first — there are 67 components
+already installed. Compose them before adding a primitive.
+
+**4. Every color works in both modes.** Add the token to `:root` *and* `.dark` in
+`globals.css`. A token defined in only one mode fails `npm run lint`.
+
+**5. Never reach for a raw grey.** Go through a semantic token, not the ladder underneath it.
+
+```tsx
+// wrong
+<p className="text-neutral-11" />
+// right
+<p className="text-muted-foreground" />
+```
+
+**6. Exactly three treatments per status** — solid (`success`), muted (`success-muted`), and
+ink (`success-ink`). Never invent a fourth, and never fake one with alpha (`bg-destructive/10`).
+Use the opaque `-muted` token instead.
+
+**7. Follow the Laws, not just the tokens.** Sentence case everywhere; one rationed teal
+action per view; depth via fill, not borders; status never conveyed by color alone; 40px
+default control height; 24px container padding; 40×40px minimum touch target. Full text:
+`src/app/(docs)/foundations/laws/page.tsx` and `src/app/(docs)/principles/page.tsx`.
+
+**8. Responsive and accessible are requirements, not polish.** Product UI follows
+[`RESPONSIVE.md`](./RESPONSIVE.md) and [`ACCESSIBILITY.md`](./ACCESSIBILITY.md)
+(floor: WCAG 2.1 AA + WAI-ARIA 1.2). The docs site itself need not be responsive; the
+components must be.
+
+To document a rule violation deliberately — an anti-example in the docs, say — put
+`ds-tokens-ignore` in a comment on that line or the one above it.
+
+---
+
+## Recipes
+
+### Add a component
+
+1. `npx shadcn@latest add <slug>` → lands in `src/components/ui/<slug>.tsx`.
+2. Add a `ComponentDoc` entry to `componentRegistry` in
+   `src/components/docs/component-registry.tsx`, keyed by slug. The shape is
+   `src/lib/component-doc-types.ts`; the `available()` helper covers a minimal entry.
+3. Add `{ title, href: "/components/<slug>" }` to the right section of `src/lib/docs-nav.ts`.
+4. `npm run lint && npm run build`.
+
+Write a real `whenToUse` rather than leaning on the `available()` boilerplate. `npm run lint`
+reports how many components still carry it, and a component with no reviewed guidance is a
+component the system has not actually decided on.
+
+Steps 2 and 3 are both required, and they fail differently. `docs-nav.ts` is what *creates*
+the route — `generateStaticParams` and the 404 guard in
+`src/app/(docs)/components/[slug]/page.tsx` both read `getAllComponentSlugs()`, which reads
+`docsNav`. A registry entry with no nav entry produces no page at all; a nav entry with no
+registry entry produces an empty one.
+
+### Add or change a token
+
+1. Define the value in **both** `:root` and `.dark` in `src/app/globals.css`. Prefer aliasing
+   an existing primitive over pasting a new hex.
+2. Expose it in `@theme inline` as `--color-<name>: var(--<name>)`.
+3. `npm run sync:tokens` to refresh the inventory below.
+4. If it is a new *family*, add a row to the semantics table — the generator only owns names.
+5. Verify contrast ≥ 4.5:1 for text in both modes. Do not eyeball a new pair.
+
+### Adapt an upstream component
+
+Registry primitives stay upgradeable, so prefer theming via tokens over editing markup. Keep
+their responsive utilities and ARIA wiring intact — never strip `sm:` / `md:` classes, `role`,
+`aria-*`, or focus traps to simplify a desktop mock. When Rajini 2.0 genuinely defines a
+different contract, adapt the component and record what diverged in `CHANGELOG.md`.
+
+### Add a foundations page
+
+Create `src/app/(docs)/foundations/<name>/page.tsx`, build it from `src/components/docs/`
+primitives, and add a Foundations entry to `docsNav`.
+
+---
+
+## Tokens
+
+### What each family means
+
+The generator below owns the token *names*. This table owns their *meaning* — read it first.
+
+| Family | Use |
+| --- | --- |
 | `background` / `foreground` | Page background / default text |
-| `surface` / `surface-raised` / `surface-sunken` | Structural base / elevated surface / recessed well; Card itself follows the flat Figma master |
+| `surface` / `surface-raised` / `surface-sunken` | Structural base / elevated surface / recessed well. Card itself follows the flat Figma master. |
 | `track` | Recessed control tracks — tabs list, progress, slider |
 | `prefilled` | Machine-prefilled, human-unverified field fill |
 | `primary` / `primary-foreground` | Highest-emphasis actions (teal brand color) |
 | `brand-accent` | Bright teal for non-text marks (chart lines, active underlines) — never for text |
 | `brand-muted` / `brand-muted-foreground` | Brand-tinted chips that carry text |
-| `secondary` / `secondary-foreground` | Supporting actions, light fills |
-| `muted` / `muted-foreground` | De-emphasized backgrounds / secondary text |
-| `accent` / `accent-foreground` | Hover/highlight fills (transient) |
+| `secondary` / `muted` / `accent` (+ `-foreground`) | Supporting actions / de-emphasized surfaces / transient hover fills |
 | `accent-strong` | One step past accent — pressed toggles, engaged triggers |
-| `destructive` / `destructive-foreground` | Irreversible/dangerous actions (solid treatment) |
+| `destructive` (+ `-foreground`) | Irreversible or dangerous actions, solid treatment |
 | `success` / `warning` / `info` (+ `-foreground`) | Status solids — the action IS the status |
-| `success-muted` / `warning-muted` / `info-muted` / `destructive-muted` (+ `-foreground`) | Status tint pairs — chips, callouts, rows |
-| `success-ink` / `warning-ink` / `info-ink` / `destructive-ink` | Status text/icons on neutral — never a fill |
-| `border` / `input` | Default borders / form field borders |
-| `ring` | Focus ring color |
+| `*-muted` (+ `-foreground`) | Status tint pairs — chips, callouts, rows. Use instead of alpha. |
+| `*-ink` | Status text and icons on a neutral background — never a fill |
+| `*-hover` / `*-muted-hover` | Opaque hover composites. Use these rather than an alpha overlay. |
+| `border` / `input` / `hairline` | Default borders / form field borders / the faintest divider |
+| `ring` / `focus-ring` / `focus-ring-destructive` | Focus ring color and its translucent halos |
+| `scrim` | Modal and drawer backdrops |
+| `disabled-fill` | Disabled control fill |
+| `halo` | Emphasis glow — e.g. Timeline's current state |
 | `card` / `popover` | Component surface backgrounds; elevation is applied separately by role |
-| `chart-1` … `chart-5` | Categorical data visualization palette — means "different series" only, never status |
-| `shadow-raised` / `shadow-overlay` / `shadow-modal` | Elevation — genuinely lifted boxes / popovers-menus-tooltips / dialogs-sheets |
-| `text-display` … `text-caption` | 11-style type scale (see Typography) — never an arbitrary `text-*` size for a heading |
-| `radius-xs` … `radius-4xl`, `radius-full` | Corner radius scale — controls use `radius-lg`, containers use `radius-xl` |
+| `sidebar-*` | Sidebar-scoped aliases; keep them in step with their base tokens |
+| `chart-1` … `chart-5` | Categorical data viz — means "different series" only, never status |
+| `shadow-raised` / `shadow-overlay` / `shadow-modal` | Lifted boxes / popovers, menus, tooltips / dialogs, sheets |
+| `text-display` … `text-caption` | Type size tokens. Figma's 11 named styles are these 8 sizes plus weight and mono variants — see `/foundations/typography`. Never an arbitrary size for a heading. |
+| `radius-*` | Corner radius. Controls use `radius-lg`, containers use `radius-xl`. |
 
-**Brand note:** the primary color is **teal** (`#007e7e` light / `#0eb39e` dark). Abhiram’s
-live Rajini 2.0 variable values and component masters are the design contract. This repo is
-the production mirror and must be re-reconciled when that contract changes.
+**Brand:** primary is teal — `#007e7e` light, `#0eb39e` dark.
 
-**Typeface note:** product UI ships a zero-download system stack — `"Helvetica Neue",
-Helvetica, Arial, system-ui` — not a downloaded web font. Figma's own file substitutes
-Inter only because Helvetica Neue isn't installed in that rendering environment; that
-substitution never applies to shipped code.
+**Typeface:** product UI ships a zero-download system stack — `"Helvetica Neue", Helvetica,
+Arial, system-ui`. Figma substitutes Inter only because Helvetica Neue is absent from that
+rendering environment; that substitution never applies to shipped code.
 
-## Provenance
+### Full inventory
 
-Token values, modes, component dimensions, variants, states, and usage rules are reconciled
-against Abhiram’s live Figma file "Pucar Design System" (cover: *Pucar · ON Court — Design
-system · Rajini 2.0*). When prose and a live component master disagree, the component master
-wins and the discrepancy must be documented. Registry primitives remain upgradeable, while
-Rajini-specific adaptations and Pucar components are maintained explicitly in this repo.
+<!-- BEGIN:generated-tokens -->
+<!-- Generated by `npm run sync:tokens` from src/app/globals.css. Do not edit by hand. -->
+
+**Color** (76) — use as `bg-*`, `text-*`, `border-*`, `ring-*`, `fill-*`, `stroke-*`.
+
+`accent` · `accent-foreground` · `accent-strong` · `background` · `border` · `brand-accent` · `brand-muted` · `brand-muted-foreground` · `brand-muted-hover` · `card` · `card-foreground` · `chart-1` · `chart-2` · `chart-3` · `chart-4` · `chart-5` · `destructive` · `destructive-foreground` · `destructive-hover` · `destructive-ink` · `destructive-muted` · `destructive-muted-foreground` · `destructive-muted-hover` · `disabled-fill` · `focus-ring` · `focus-ring-destructive` · `foreground` · `hairline` · `halo` · `info` · `info-foreground` · `info-hover` · `info-ink` · `info-muted` · `info-muted-foreground` · `info-muted-hover` · `input` · `muted` · `muted-foreground` · `popover` · `popover-foreground` · `prefilled` · `primary` · `primary-foreground` · `primary-hover` · `ring` · `scrim` · `secondary` · `secondary-foreground` · `secondary-hover` · `sidebar` · `sidebar-accent` · `sidebar-accent-foreground` · `sidebar-border` · `sidebar-foreground` · `sidebar-primary` · `sidebar-primary-foreground` · `sidebar-ring` · `success` · `success-foreground` · `success-hover` · `success-ink` · `success-muted` · `success-muted-foreground` · `success-muted-hover` · `surface` · `surface-raised` · `surface-sunken` · `track` · `warning` · `warning-foreground` · `warning-hover` · `warning-ink` · `warning-muted` · `warning-muted-foreground` · `warning-muted-hover`
+
+**Radius** (10) — use as `rounded-*`.
+
+`2xl` · `3xl` · `4xl` · `full` · `lg` · `md` · `none` · `sm` · `xl` · `xs`
+
+**Elevation** (3) — use as `shadow-*`.
+
+`modal` · `overlay` · `raised`
+
+**Type scale** (8) — use as `text-*`.
+
+`body` · `body-compact` · `caption` · `display` · `display-s` · `title` · `title-l` · `title-s`
+
+**Font** (3) — use as `font-*`.
+
+`heading` · `mono` · `sans`
+
+<!-- END:generated-tokens -->
+
+---
+
+## Definition of done
+
+Before reporting UI work as complete:
+
+- [ ] `npm run lint` passes — including the token check
+- [ ] `npm run build` passes
+- [ ] New or changed colors exist in both `:root` and `.dark`
+- [ ] New components are in `componentRegistry` *and* `docsNav`, with real usage guidance
+- [ ] `npm run sync:tokens` leaves no diff — the token inventory is current
+- [ ] Text contrast ≥ 4.5:1, touch targets ≥ 40×40px, focus rings intact
+- [ ] Usable at ~375px wide and at 200% text zoom
+- [ ] Any divergence from the Figma master is recorded in `CHANGELOG.md`
+
+---
+
+## Related
+
+- [`README.md`](./README.md) — what the system is and who it is for
+- [`RESPONSIVE.md`](./RESPONSIVE.md) — composing responsive product screens
+- [`ACCESSIBILITY.md`](./ACCESSIBILITY.md) — the full WCAG 2.1 AA checklist
+- [`CHANGELOG.md`](./CHANGELOG.md) — reconciliation history against Rajini 2.0
