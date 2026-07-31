@@ -49,7 +49,7 @@ instead of inventing new colors, spacing, or components per-project.
    exactly three treatments per status (solid / muted / ink — never a fourth, never alpha),
    the grey ladder (never a raw `neutral-N`), depth via fill not borders, status never
    conveyed by colour alone, WCAG 2.1 AA as the floor, and fixed control metrics (40px
-   default control height, 24px container padding, 40px minimum touch target).
+   default control height, 24px container padding, **40×40px minimum touch target**).
 
 ## Token reference
 

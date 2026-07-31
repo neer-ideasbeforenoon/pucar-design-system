@@ -51,8 +51,8 @@ Agent-facing guidance lives in [`AGENTS.md`](./AGENTS.md) — keep that file ali
 Responsive composition rules for product UI (not the docs chrome) live in
 [`RESPONSIVE.md`](./RESPONSIVE.md).
 
-Accessibility standards (**WCAG 2.1 AA**, WAI-ARIA 1.2, keyboard, contrast, touch
-targets, labels, timeouts, Indic scripts, and more) live in
+Accessibility standards (**WCAG 2.1 AA**, WAI-ARIA 1.2, keyboard, contrast,
+**40×40px** touch targets, labels, timeouts, Indic scripts, and more) live in
 [`ACCESSIBILITY.md`](./ACCESSIBILITY.md) and `/foundations/accessibility`.
 
 ---

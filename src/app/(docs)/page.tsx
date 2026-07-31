@@ -38,7 +38,7 @@ export default function IntroductionPage() {
             },
             {
               title: "Accessibility",
-              body: "WCAG 2.1 AA, WAI-ARIA 1.2, focus, contrast, labels, timeouts, and Indic script support.",
+              body: "WCAG 2.1 AA, WAI-ARIA 1.2, 40×40 touch targets, focus, contrast, labels, timeouts, and Indic script support.",
               href: "/foundations/accessibility",
             },
             {

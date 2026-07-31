@@ -15,12 +15,11 @@ Read this whenever you build screens, forms, overlays, or flows with
 | **WCAG 2.1 Level AA** | Floor for all citizen- and staff-facing product UI |
 | **WAI-ARIA 1.2** | Correct roles, states, and properties on custom widgets; prefer native semantics and Radix primitives over reinvented ARIA |
 
-Do not claim WCAG 2.2 (or AAA) as the DS target unless product explicitly raises the bar.
 Session timeout behaviour maps to WCAG **2.1 Success Criterion 2.2.1** (Timing Adjustable).
 
 ---
 
-## Standards checklist
+## Standards checklist (authoritative)
 
 ### 1. WCAG 2.1 Level AA
 Ship against AA success criteria. Contrast, keyboard, labels, focus, timing, and resize are non-negotiable — not optional polish.
@@ -55,7 +54,7 @@ Critical actions and information must be available without hover (touch and keyb
 Keep primary actions visible; use menus/sheets for overflow — never hide the only path behind `:hover`.
 
 ### 8. Touch target sizing
-**Minimum interactive target: 40×40px** on citizen-facing (and default product) surfaces — aligned with the DS control metric (`h-10` / `size-10`).
+**Minimum interactive target: 40×40px** on mobile and citizen-facing surfaces — aligned with the DS control metric (`h-10` / `size-10`).
 - Prefer Button `default` or `lg` for primary mobile actions.
 - Smaller visual controls (checkbox, switch, icon) must expand hit area (padding / `after:` inset) to meet **40×40px**.
 - Do not pack only `xs` icon buttons as the sole actions on mobile.
@@ -90,6 +89,20 @@ Court deployments may require **Devanagari, Tamil**, and other Indic scripts (an
 
 ---
 
+## Core subset (always enforce)
+
+Even on the shortest product checklists, these never drop:
+
+1. WCAG 2.1 Level AA  
+2. WAI-ARIA 1.2  
+3. Focus management and visible focus indicator  
+4. Colour contrast ≥ 4.5:1 for normal text  
+5. Touch targets ≥ **40×40px**  
+6. 200% text zoom without layout breaking  
+7. Multilingual / Indic script support per court  
+
+---
+
 ## Component mapping (use these)
 
 | Need | Use |
@@ -100,6 +113,7 @@ Court deployments may require **Devanagari, Tamil**, and other Indic scripts (an
 | Transient confirmation | Toast / Sonner (not for errors that require action) |
 | Modal focus trap | `Dialog` / `AlertDialog` / `Sheet` |
 | Status without colour-alone | `Badge` + text, or icon + label |
+| 40px touch primary action | `Button` default (`h-10`) or larger |
 
 ---
 
@@ -112,3 +126,4 @@ Court deployments may require **Devanagari, Tamil**, and other Indic scripts (an
 5. Warn before session timeout; use `SessionTimeout` when building auth/session UX.
 6. Don’t hide critical UI behind hover.
 7. Support 200% zoom and Indic script locales in layout and typography choices.
+8. Verify NVDA / JAWS / VoiceOver and keyboard-only paths for critical flows.

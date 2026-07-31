@@ -96,7 +96,7 @@ export default function LawsPage() {
 
       <DocsSection
         title="Accessibility floor"
-        description="WCAG 2.1 AA + WAI-ARIA 1.2. Visible labels, focus rings, 40×40px targets, timeout warnings, and script-capable layout are defects when missing — not preferences."
+        description="WCAG 2.1 AA + WAI-ARIA 1.2. Visible labels, focus rings, 40×40px touch targets, timeout warnings, and script-capable layout are defects when missing — not preferences."
       >
         <DoDont
           do={[

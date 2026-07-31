@@ -45,7 +45,8 @@ color/spacing tokens per breakpoint.
 3. **Keep touch targets usable.** Interactive targets must be **≥ 40×40px**
    (DS floor, aligned with `h-10`). Prefer Button sizes `default` / `lg` on primary
    actions; expand hit areas on small visuals (checkbox, switch, icon). Avoid packing
-   only `xs` icon buttons as the sole actions on mobile.
+   only `xs` icon buttons as the sole actions on mobile. See
+   [`ACCESSIBILITY.md`](./ACCESSIBILITY.md).
 4. **Stack before splitting.** Forms, toolbars, and dialog footers should
    `flex-col` on small screens and `sm:flex-row` (or `md:`) when space allows.
 5. **Overflow is intentional.** Tables and wide data: wrap in

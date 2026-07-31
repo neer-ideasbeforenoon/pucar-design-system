@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 const standards: {
   title: string;
   description: string;
-  detail?: string;
 }[] = [
   {
     title: "WCAG 2.1 Level AA",
@@ -53,7 +52,7 @@ const standards: {
   {
     title: "Touch target sizing",
     description:
-      "Minimum interactive target 40×40px — aligned with the DS control metric (h-10). Expand hit areas on small visual controls.",
+      "Minimum interactive target 40×40px — aligned with the DS control metric (h-10 / size-10). Expand hit areas on small visual controls.",
   },
   {
     title: "Voice control compatibility",
@@ -91,9 +90,8 @@ export default function AccessibilityPage() {
       />
 
       <Callout title="Also for agents">
-        Full checklist lives in{" "}
-        <code>ACCESSIBILITY.md</code> at the repo root. Coding agents must follow
-        it alongside{" "}
+        Full checklist lives in <code>ACCESSIBILITY.md</code> at the repo root.
+        Coding agents must follow it alongside{" "}
         <Link href="/foundations/laws" className="underline underline-offset-3">
           Laws
         </Link>{" "}
@@ -124,7 +122,7 @@ export default function AccessibilityPage() {
 
       <DocsSection
         title="Standards"
-        description="All of the following apply. Touch targets use the DS 40×40px floor (control metric), not a separate size scale."
+        description="All thirteen apply. The short core subset (WCAG, ARIA, focus, contrast, 40×40 touch, 200% zoom, scripts) never drops."
       >
         <ol className="flex flex-col gap-4">
           {standards.map((item, index) => (
