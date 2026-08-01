@@ -28,9 +28,9 @@ const bubbleVariants = cva(
         tinted:
           "*:data-[slot=bubble-content]:bg-brand-muted *:data-[slot=bubble-content]:text-brand-muted-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-brand-muted-hover",
         outline:
-          "*:data-[slot=bubble-content]:border-border *:data-[slot=bubble-content]:bg-background [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-input/30",
+          "*:data-[slot=bubble-content]:border-border *:data-[slot=bubble-content]:bg-background [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground",
         ghost:
-          "border-none *:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:bg-transparent *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted/50",
+          "border-none *:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:bg-transparent *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground",
         destructive:
           "*:data-[slot=bubble-content]:bg-destructive-muted *:data-[slot=bubble-content]:text-destructive-muted-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-destructive-muted-hover",
       },

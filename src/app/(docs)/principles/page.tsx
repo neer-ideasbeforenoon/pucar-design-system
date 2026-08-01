@@ -78,7 +78,7 @@ export default function PrinciplesPage() {
       >
         <DoDont
           do={[
-            "muted → surface-sunken (2½, wells) → accent (3, hover) → accent-strong (4, engaged) → track (5, recessed) → border (7) → input (9).",
+            "muted → surface-sunken (2½, wells) → accent (4, hover) → accent-strong (5, engaged) → track (6, recessed) → border (8) → input (9).",
             "Let interaction move one step down — a control never hovers to its own rest color.",
           ]}
           dont={[

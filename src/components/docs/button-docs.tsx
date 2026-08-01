@@ -49,9 +49,9 @@ const ICON_SIZE_LABEL: Record<ButtonIconSize, string> = {
 /** Forced hover composites — mirrors `hover:*` on each variant. */
 const HOVER_CLASS: Record<ButtonVariant, string> = {
   default: "bg-primary-hover",
-  outline: "bg-muted text-foreground",
+  outline: "bg-accent text-foreground",
   secondary: "bg-secondary-hover",
-  ghost: "bg-muted text-foreground",
+  ghost: "bg-accent text-foreground",
   destructive: "bg-destructive-muted-hover",
   "destructive-solid": "bg-destructive-hover",
   "destructive-ghost":

@@ -48,11 +48,11 @@ master.
 
 Re-pointed to the token whose documented role they were already claiming:
 Button, Badge, Toggle, Table, Menubar, Navigation menu, Item, Attachment,
-Message scroller and Calendar now use `accent` for hover and `accent-strong` for
-pressed, engaged and selected. Progress, Skeleton, Tabs list and the Attachment
-thumbnail well now use `track`. `hover:bg-accent` had zero occurrences before this
-change and `bg-track` had zero anywhere. Alpha fills (`bg-muted/50`) on Card
-footer, Table footer and Item are now opaque per rule 6.
+Message scroller, Calendar, Bubble and Command now use `accent` for hover and
+`accent-strong` for pressed, engaged and selected. Progress, Skeleton, Tabs list,
+Slider and the Attachment thumbnail well now use `track`. `hover:bg-accent` had
+zero occurrences before this change and `bg-track` had zero anywhere. Alpha fills
+(`bg-muted/50`) on Card footer, Table footer and Item are now opaque per rule 6.
 
 ### Governance
 
@@ -71,7 +71,8 @@ footer, Table footer and Item are now opaque per rule 6.
 - The `foundations/colors` semantic mapping table is hand-maintained and had
   drifted from `globals.css` in eleven rows, including `info` and `info-ink`
   swapped. Corrected here, but it should be generated like the AGENTS.md token
-  block.
+  block. Principles grey ladder and component docs (Button, Progress, Skeleton,
+  Slider, Toggle) were updated to match the shifted roles in the same pass.
 - Not addressed in this pass: Toast renders every type identically because Sonner
   gates per-type colour behind `richColors`, which is never set; Alert has only
   `default` and `destructive` variants while the docs fake a success variant with
