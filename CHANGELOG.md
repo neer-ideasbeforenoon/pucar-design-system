@@ -2,6 +2,25 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-01 — Colors mapping table role honesty
+
+The foundations/colors semantic → primitive table was teaching the wrong mental
+model even after the Aug 1 value corrections.
+
+- Split `surface-raised` from `card / popover / surface` — raised is
+  `neutral-2`, not flat with the page.
+- Split `secondary` and `accent` into separate rows (same step, different
+  roles) and stopped labeling secondary as a hover fill.
+- Split status `*-ink` from `*-muted-foreground` so the three treatments stay
+  visible; documented coinciding values explicitly.
+- Alias vs literal consistency: `ring` → `brand-solid`, charts list real hex,
+  hover composites documented as `color-mix`.
+- Added hairline, focus rings, scrim, disabled-fill, halo, sidebar aliases,
+  and surface / surface-raised swatches.
+- Section copy now states that identical light/dark step names are intentional.
+
+Generating this table from `globals.css` remains an open follow-up.
+
 ## 2026-08-01 — Accessibility, gate honesty, and agent endpoints
 
 Closes the remaining high-severity findings from the Aug 1 audit after the
@@ -106,11 +125,10 @@ zero occurrences before this change and `bg-track` had zero anywhere. Alpha fill
 
 ### Known open items
 
-- The `foundations/colors` semantic mapping table is hand-maintained and had
-  drifted from `globals.css` in eleven rows, including `info` and `info-ink`
-  swapped. Corrected here, but it should be generated like the AGENTS.md token
-  block. Principles grey ladder and component docs (Button, Progress, Skeleton,
-  Slider, Toggle) were updated to match the shifted roles in the same pass.
+- The `foundations/colors` semantic mapping table is still hand-maintained.
+  Role conflations and the `surface-raised` mis-map were corrected on Aug 1,
+  but the table should eventually be generated from `globals.css` like the
+  AGENTS.md token inventory so drift cannot return.
 - Card remains flat with the Figma master (`card` == `background`); use
   `surface-raised` or a border when a product surface needs an edge.
 - Full Playwright / axe suite and a versioned Figma↔token mapping artifact are

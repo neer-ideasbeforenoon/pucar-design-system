@@ -26,7 +26,11 @@ type MappingRow = {
   note?: string;
 };
 
-/** Exact aliases from globals.css — literals are called out when not a var(--step). */
+/**
+ * Exact aliases from globals.css. One row per role — values may coincide;
+ * roles must not. Ramp step names are identical in light/dark because the
+ * underlying ramp flips under `.dark`; only off-ramp literals differ by mode.
+ */
 const semanticMapping: MappingRow[] = [
   {
     semantic: "background",
@@ -39,9 +43,10 @@ const semanticMapping: MappingRow[] = [
     dark: "neutral-12",
   },
   {
-    semantic: "card / popover / surface / surface-raised",
+    semantic: "card / popover / surface",
     light: "neutral-1",
     dark: "neutral-1",
+    note: "Flat with the page — Figma master keeps card unraised",
   },
   {
     semantic: "card-foreground / popover-foreground",
@@ -49,10 +54,27 @@ const semanticMapping: MappingRow[] = [
     dark: "neutral-12",
   },
   {
+    semantic: "surface-raised",
+    light: "neutral-2",
+    dark: "neutral-2",
+    note: "Elevation without shadow — same step as muted, different role",
+  },
+  {
     semantic: "surface-sunken",
     light: "#f4f4f7",
     dark: "#1d1e21",
     note: "Tuned 2½-step well — not a raw ramp step",
+  },
+  {
+    semantic: "muted",
+    light: "neutral-2",
+    dark: "neutral-2",
+    note: "Resting surface — never an interaction state",
+  },
+  {
+    semantic: "muted-foreground",
+    light: "neutral-11",
+    dark: "neutral-11",
   },
   {
     semantic: "track",
@@ -64,23 +86,25 @@ const semanticMapping: MappingRow[] = [
     semantic: "prefilled",
     light: "warning-2",
     dark: "warning-2",
+    note: "Machine-prefilled, human-unverified field fill",
   },
   {
     semantic: "primary",
     light: "#007e7e",
     dark: "brand-10",
-    note: "Brand solid — the light value is off-ramp by design",
+    note: "Brand solid — light is off-ramp by design (via brand-solid)",
   },
   {
     semantic: "primary-foreground",
     light: "#ffffff",
     dark: "#0a0a0a",
+    note: "via solid-foreground",
   },
   {
     semantic: "brand-accent",
     light: "brand-9",
     dark: "brand-9",
-    note: "Marks only, never text",
+    note: "Marks only — chart lines, underlines; never text",
   },
   {
     semantic: "brand-muted",
@@ -91,33 +115,41 @@ const semanticMapping: MappingRow[] = [
     semantic: "brand-muted-foreground",
     light: "#0a6969",
     dark: "brand-11",
+    note: "Light via brand-tint-foreground",
   },
   {
-    semantic: "secondary / accent",
+    semantic: "secondary",
     light: "neutral-4",
     dark: "neutral-4",
-    note: "Hover fill — one step darker than the page can be read against",
+    note: "Supporting action fill — same step as accent, different role",
   },
   {
-    semantic: "secondary-foreground / accent-foreground",
+    semantic: "secondary-foreground",
     light: "neutral-12",
     dark: "neutral-12",
   },
   {
-    semantic: "muted",
-    light: "neutral-2",
-    dark: "neutral-2",
+    semantic: "accent",
+    light: "neutral-4",
+    dark: "neutral-4",
+    note: "Transient hover fill — never a resting surface",
   },
   {
-    semantic: "muted-foreground",
-    light: "neutral-11",
-    dark: "neutral-11",
+    semantic: "accent-foreground",
+    light: "neutral-12",
+    dark: "neutral-12",
   },
   {
     semantic: "accent-strong",
     light: "neutral-5",
     dark: "neutral-5",
-    note: "Pressed, engaged and selected states",
+    note: "Pressed, engaged, and selected fills",
+  },
+  {
+    semantic: "secondary-hover",
+    light: "accent-strong",
+    dark: "accent-strong",
+    note: "Aliases accent-strong",
   },
   {
     semantic: "border",
@@ -129,19 +161,59 @@ const semanticMapping: MappingRow[] = [
     semantic: "input",
     light: "neutral-9",
     dark: "neutral-9",
-    note: "Stronger field edge than the default border",
+    note: "Field edge — clears 3:1 on the page",
+  },
+  {
+    semantic: "hairline",
+    light: "neutral-12 @ 10%",
+    dark: "neutral-12 @ 10%",
+    note: "Faintest divider — via color-mix on border-hairline",
   },
   {
     semantic: "ring",
-    light: "#007e7e",
-    dark: "#0eb39e",
-    note: "Matches primary",
+    light: "brand-solid",
+    dark: "brand-solid",
+    note: "Focus ring color — same source as primary",
+  },
+  {
+    semantic: "focus-ring",
+    light: "brand-solid @ 50%",
+    dark: "brand-solid @ 50%",
+    note: "Translucent focus halo",
+  },
+  {
+    semantic: "focus-ring-destructive",
+    light: "destructive-solid @ 20%",
+    dark: "destructive-solid @ 40%",
+  },
+  {
+    semantic: "scrim",
+    light: "#00000080",
+    dark: "#00000080",
+    note: "Modal/drawer backdrop — literal so pre-color-mix engines stay 50%",
+  },
+  {
+    semantic: "disabled-fill",
+    light: "neutral-9 @ 50%",
+    dark: "neutral-9 @ 50%",
+  },
+  {
+    semantic: "halo",
+    light: "brand-accent @ 25%",
+    dark: "brand-accent @ 25%",
+    note: "Emphasis glow — e.g. Timeline current state",
   },
   {
     semantic: "success",
     light: "#217a3a",
     dark: "success-9",
-    note: "The light value is tuned off-ramp for 4.5:1",
+    note: "Light tuned off-ramp for 4.5:1 (via success-solid)",
+  },
+  {
+    semantic: "success-foreground",
+    light: "#ffffff",
+    dark: "#0a0a0a",
+    note: "via solid-foreground",
   },
   {
     semantic: "success-muted",
@@ -149,15 +221,28 @@ const semanticMapping: MappingRow[] = [
     dark: "success-3",
   },
   {
-    semantic: "success-muted-foreground / success-ink",
+    semantic: "success-muted-foreground",
     light: "success-11",
     dark: "success-11",
+    note: "Aliases success-ink",
+  },
+  {
+    semantic: "success-ink",
+    light: "success-11",
+    dark: "success-11",
+    note: "Status text/icon on a neutral background — never a fill",
   },
   {
     semantic: "warning",
     light: "warning-9",
     dark: "warning-9",
-    note: "1.54:1 on the page, so the solid button carries a warning-ink border",
+    note: "1.54:1 on the page — solid button carries a warning-ink border",
+  },
+  {
+    semantic: "warning-foreground",
+    light: "#3d2000",
+    dark: "#3d2000",
+    note: "Ink on solid amber — via warning-on-solid",
   },
   {
     semantic: "warning-muted",
@@ -165,21 +250,28 @@ const semanticMapping: MappingRow[] = [
     dark: "warning-3",
   },
   {
-    semantic: "warning-muted-foreground / warning-ink",
+    semantic: "warning-muted-foreground",
     light: "#9d5c00",
     dark: "warning-11",
-    note: "Light ink is tuned off-ramp for 4.5:1",
+    note: "Aliases warning-ink",
   },
   {
-    semantic: "warning-foreground",
-    light: "#3d2000",
-    dark: "#3d2000",
-    note: "Ink on solid amber — same in both themes",
+    semantic: "warning-ink",
+    light: "#9d5c00",
+    dark: "warning-11",
+    note: "Light ink tuned off-ramp for 4.5:1 — never a fill",
   },
   {
     semantic: "info",
     light: "info-11",
     dark: "info-10",
+    note: "via info-solid",
+  },
+  {
+    semantic: "info-foreground",
+    light: "#ffffff",
+    dark: "#0a0a0a",
+    note: "via solid-foreground",
   },
   {
     semantic: "info-muted",
@@ -187,16 +279,28 @@ const semanticMapping: MappingRow[] = [
     dark: "info-3",
   },
   {
-    semantic: "info-muted-foreground / info-ink",
+    semantic: "info-muted-foreground",
     light: "#0c6ec3",
     dark: "info-11",
-    note: "Light ink is tuned off-ramp for 4.5:1",
+    note: "Aliases info-ink",
+  },
+  {
+    semantic: "info-ink",
+    light: "#0c6ec3",
+    dark: "info-11",
+    note: "Light ink tuned off-ramp for 4.5:1 — never a fill",
   },
   {
     semantic: "destructive",
     light: "#c1232a",
     dark: "destructive-10",
-    note: "The light value is tuned off-ramp for 4.5:1",
+    note: "Light tuned off-ramp for 4.5:1 (via destructive-solid)",
+  },
+  {
+    semantic: "destructive-foreground",
+    light: "#ffffff",
+    dark: "#0a0a0a",
+    note: "via solid-foreground",
   },
   {
     semantic: "destructive-muted",
@@ -204,20 +308,69 @@ const semanticMapping: MappingRow[] = [
     dark: "destructive-3",
   },
   {
-    semantic: "destructive-muted-foreground / destructive-ink",
+    semantic: "destructive-muted-foreground",
     light: "destructive-11",
     dark: "destructive-11",
+    note: "Aliases destructive-ink",
   },
   {
-    semantic: "chart-1 / chart-2",
-    light: "primary · info-11",
-    dark: "primary · info-10",
+    semantic: "destructive-ink",
+    light: "destructive-11",
+    dark: "destructive-11",
+    note: "Status text/icon on a neutral background — never a fill",
   },
   {
-    semantic: "chart-3 … chart-5",
-    light: "literal categorical hex",
-    dark: "literal categorical hex",
-    note: "Series identity only, never status — each clears 3:1 on the page",
+    semantic: "*-hover / *-muted-hover",
+    light: "color-mix(fill, black 8%)",
+    dark: "color-mix(fill, white 10%)*",
+    note: "*warning stays black 8% in dark — opaque hover composites, not alpha",
+  },
+  {
+    semantic: "chart-1",
+    light: "brand-solid",
+    dark: "brand-solid",
+    note: "Series identity only — never status",
+  },
+  {
+    semantic: "chart-2",
+    light: "info-11",
+    dark: "info-10",
+  },
+  {
+    semantic: "chart-3",
+    light: "#6e56cf",
+    dark: "#9e8cff",
+  },
+  {
+    semantic: "chart-4",
+    light: "#bd7b00",
+    dark: "#ffce6a",
+    note: "Light darkened from Rajini #e2a336 to clear 3:1",
+  },
+  {
+    semantic: "chart-5",
+    light: "#e93d82",
+    dark: "#ff8dab",
+  },
+  {
+    semantic: "sidebar",
+    light: "neutral-2",
+    dark: "neutral-2",
+  },
+  {
+    semantic: "sidebar-accent",
+    light: "brand-3",
+    dark: "brand-3",
+  },
+  {
+    semantic: "sidebar-border",
+    light: "neutral-6",
+    dark: "neutral-6",
+  },
+  {
+    semantic: "sidebar-primary / sidebar-ring",
+    light: "brand-solid",
+    dark: "brand-solid",
   },
 ];
 
@@ -304,6 +457,18 @@ const semantic = [
 
 const surfaces = [
   {
+    name: "Surface",
+    token: "surface",
+    className: "bg-surface",
+    foregroundClassName: "text-foreground",
+  },
+  {
+    name: "Surface raised",
+    token: "surface-raised",
+    className: "bg-surface-raised",
+    foregroundClassName: "text-foreground",
+  },
+  {
     name: "Surface sunken",
     token: "surface-sunken",
     className: "bg-surface-sunken",
@@ -382,11 +547,14 @@ const charts = [
 ];
 
 function MappingCell({ value }: { value: string }) {
-  const isHex = value.startsWith("#");
-  const isLiteral = value.includes(" ") || isHex;
+  const isAlias =
+    !value.startsWith("#") &&
+    !value.includes(" ") &&
+    !value.includes("@") &&
+    !value.includes("(");
   return (
     <td className="px-3 py-2.5 font-mono text-xs text-foreground">
-      {isLiteral ? value : `--${value}`}
+      {isAlias ? `--${value}` : value}
     </td>
   );
 }
@@ -430,7 +598,7 @@ export default function ColorsPage() {
 
       <DocsSection
         title="Semantic → primitive mapping"
-        description="How each role resolves in light and dark. A step name (neutral-3) is the matching ramp token — usually via var(--neutral-3). Hex is a literal that does not equal a named step."
+        description="How each role resolves in light and dark. Identical step names across modes are correct — the ramp values flip under .dark. A name like neutral-4 is var(--neutral-4); hex or N% is a literal or color-mix that does not equal a named step. One row per role, even when values coincide."
       >
         <div className="overflow-x-auto rounded-xl border border-border">
           <table className="w-full min-w-[36rem] text-left text-sm">
@@ -531,8 +699,11 @@ export default function ColorsPage() {
               {[
                 ["primary", "Highest-emphasis actions (teal brand)"],
                 ["secondary", "Supporting actions, light fills"],
-                ["muted", "De-emphasized backgrounds / secondary text"],
-                ["accent", "Hover and highlight fills"],
+                ["muted", "Resting / de-emphasized surfaces — never a hover"],
+                ["accent", "Transient hover fills"],
+                ["accent-strong", "Pressed, engaged, and selected fills"],
+                ["surface-raised", "Elevation without a shadow"],
+                ["track", "Recessed wells — tabs, progress, slider, skeleton"],
                 ["destructive", "Irreversible or dangerous actions"],
                 ["success / warning / info", "Status communication"],
                 ["border / input / ring", "Edges, fields, and focus"],
