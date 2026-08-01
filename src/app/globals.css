@@ -268,9 +268,10 @@
   --popover: var(--neutral-1);
   --popover-foreground: var(--neutral-12);
 
-  /* Structural surfaces */
+  /* Structural surfaces — card/popover stay flat with the Figma master;
+     surface-raised is one step up for genuine elevation without a shadow. */
   --surface: var(--neutral-1);
-  --surface-raised: var(--neutral-1);
+  --surface-raised: var(--neutral-2);
   --track: var(--neutral-6); /* recessed tracks and placeholder wells: tabs list, progress, slider, skeleton */
   --prefilled: var(--warning-2); /* machine-prefilled, human-unverified field fill */
 
@@ -468,7 +469,7 @@
   --popover-foreground: var(--neutral-12);
 
   --surface: var(--neutral-1);
-  --surface-raised: var(--neutral-1);
+  --surface-raised: var(--neutral-2);
   --track: var(--neutral-6);
   --prefilled: var(--warning-2);
 

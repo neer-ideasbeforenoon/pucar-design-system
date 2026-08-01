@@ -1,0 +1,54 @@
+# Pucar Design System
+
+> Source of truth for Pucar's design tokens and UI components. Built so humans and AI coding agents ship UI that matches the system instead of inventing colours, spacing, or primitives per project.
+
+Deployed docs: https://pucar-design-system-five.vercel.app
+Repository authority: AGENTS.md (then code). Design contract: Abhiram's live Figma "Pucar Design System" (Rajini 2.0).
+
+## Stack
+
+- Next.js App Router + TypeScript
+- Tailwind CSS v4 + CSS custom properties in `src/app/globals.css`
+- shadcn/ui (Radix primitives) in `src/components/ui/`
+
+## Critical rules (always)
+
+1. Never hardcode colour, spacing, or radius — use token utilities (`bg-primary`, `rounded-lg`, `gap-4`).
+2. Install shadcn components with the CLI; do not hand-write primitives.
+3. Reuse before creating — 67 components already live under `src/components/ui/`.
+4. Every colour token exists in both `:root` and `.dark`.
+5. No raw grey ladder (`text-neutral-11`) — use semantic tokens (`text-muted-foreground`).
+6. Status has exactly three treatments: solid, muted, ink — never alpha fakes.
+7. Accessibility floor: WCAG 2.1 AA + WAI-ARIA 1.2. Touch targets ≥ 40×40px. Form errors must bind via `aria-describedby` (use `Field` + `FieldError`).
+8. Interaction states: hover = `accent`, pressed/selected = `accent-strong`, recessed wells = `track`. Never use `muted` as a hover fill.
+
+## Install a component
+
+Prefer copying from this repo's `src/components/ui/<slug>.tsx` after reading its docs page. Machine registry stubs: `/r/registry.json`.
+
+```bash
+npx shadcn@latest add <slug>
+```
+
+## Key pages
+
+- [Introduction](https://pucar-design-system-five.vercel.app/)
+- [Getting started](https://pucar-design-system-five.vercel.app/getting-started)
+- [Principles](https://pucar-design-system-five.vercel.app/principles)
+- [Colors](https://pucar-design-system-five.vercel.app/foundations/colors)
+- [Typography](https://pucar-design-system-five.vercel.app/foundations/typography)
+- [Accessibility](https://pucar-design-system-five.vercel.app/foundations/accessibility)
+- [Laws](https://pucar-design-system-five.vercel.app/foundations/laws)
+- [Button](https://pucar-design-system-five.vercel.app/components/button)
+- [Field](https://pucar-design-system-five.vercel.app/components/field)
+- [Input](https://pucar-design-system-five.vercel.app/components/input)
+- [Progress](https://pucar-design-system-five.vercel.app/components/progress)
+- [Table](https://pucar-design-system-five.vercel.app/components/table)
+- [Sign-in block](https://pucar-design-system-five.vercel.app/blocks/sign-in)
+
+## Optional
+
+- [AGENTS.md](https://github.com/): full agent contract and token inventory
+- [ACCESSIBILITY.md](https://github.com/): WCAG checklist
+- [RESPONSIVE.md](https://github.com/): product layout rules
+- [CHANGELOG.md](https://github.com/): Figma reconciliation history

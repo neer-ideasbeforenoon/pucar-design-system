@@ -39,9 +39,11 @@ npm run build          # production build; catches type and prerender errors
 npm run sync:tokens    # regenerate the token inventory below from globals.css
 ```
 
-`npm run lint` also runs `check:tokens` (rules 1, 4 and 5), `check:contrast` (rule 9, plus
-rule 1 applied to `globals.css` itself) and `check:ds` (every component reachable from the
-docs and backed by a real file). Run it before claiming any work is finished.
+`npm run lint` also runs `check:tokens` (rules 1, 4 and 5 — including named palette colours
+and raw-unit arbitrary spacing/radius), `check:contrast` (rule 9, plus rule 1 applied to
+`globals.css` itself) and `check:ds` (every component reachable from the docs and backed by
+a real file). GitHub Actions runs the same gate on every pull request. Run it before claiming
+any work is finished.
 
 A green gate is not the same as a good design. It proves the mechanical rules hold; it says
 nothing about whether a hover is perceptible or a component matches its master.

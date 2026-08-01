@@ -19,6 +19,8 @@ const bannerVariants = cva(
           "border-warning bg-warning-muted text-warning-muted-foreground",
         success:
           "border-success bg-success-muted text-success-muted-foreground",
+        error:
+          "border-destructive bg-destructive-muted text-destructive-muted-foreground",
         neutral: "border-input bg-surface-sunken text-foreground",
       },
     },
@@ -32,6 +34,7 @@ const bannerIcons = {
   info: InfoIcon,
   warning: CircleAlertIcon,
   success: CircleCheckIcon,
+  error: CircleAlertIcon,
   neutral: MegaphoneIcon,
 } as const
 

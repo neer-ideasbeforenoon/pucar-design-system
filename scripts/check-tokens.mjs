@@ -5,8 +5,11 @@
  *   1. No literal colour inside an arbitrary Tailwind value (`bg-[#007e7e]`).
  *      Arbitrary values that reference a token (`shadow-[…var(--border)]`) are fine.
  *   2. No raw grey ladder utilities (`bg-neutral-3`) — go through a semantic token.
- *   3. Every `--color-*` token resolves in both `:root` and `.dark`.
- *   4. The generated token block in AGENTS.md is in sync with globals.css.
+ *   3. No default palette colours (`bg-white`, `text-black`) — use a token.
+ *   4. No raw-unit arbitrary spacing or radius (`rounded-[7px]`, `p-[13px]`).
+ *      Values that contain `var(` are allowed.
+ *   5. Every `--color-*` token resolves in both `:root` and `.dark`.
+ *   6. The generated token block in AGENTS.md is in sync with globals.css.
  *
  * Escape hatch: put `ds-tokens-ignore` in a comment on the offending line or the
  * line above it — used for documentation that deliberately shows an anti-example.
@@ -35,6 +38,11 @@ const LITERAL_COLOR = new RegExp(
   "g"
 );
 const RAW_GREY = /\b(?:bg|text|border|ring|fill|stroke|from|via|to|divide|outline)-neutral-\d/g;
+const NAMED_PALETTE =
+  /\b(?:bg|text|border|ring|fill|stroke|from|via|to|divide|outline)-(?:white|black)(?:\/[\d.]+)?\b/g;
+/** Spacing + radius with a raw length unit and no var() inside the brackets. */
+const ARBITRARY_METRIC =
+  /\b(?:rounded(?:-[trblxyse]{1,2})?|p|px|py|pt|pb|pl|pr|ps|pe|m|mx|my|mt|mb|ml|mr|ms|me|gap|space-[xy])-\[(?![^\]]*var\()([0-9]+\.?[0-9]*(?:px|rem|em))\]/g;
 
 function sourceFiles(dir) {
   return readdirSync(dir).flatMap((entry) => {
@@ -51,6 +59,8 @@ function scan(file, findings) {
     for (const [rule, pattern] of [
       ["literal colour in an arbitrary value", LITERAL_COLOR],
       ["raw grey ladder utility", RAW_GREY],
+      ["default palette colour (use a token)", NAMED_PALETTE],
+      ["raw-unit arbitrary spacing or radius", ARBITRARY_METRIC],
     ]) {
       for (const match of line.matchAll(pattern)) {
         findings.push({

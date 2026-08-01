@@ -46,7 +46,9 @@ export default function SpacingPage() {
         <code>1.5</code>, <code>2</code>, <code>2.5</code>, <code>3</code>,{" "}
         <code>4</code>, <code>6</code>, <code>8</code>, <code>12</code>, and{" "}
         <code>16</code> (2–64px). Avoid uncontracted steps such as{" "}
-        <code>gap-10</code> and arbitrary values like <code>gap-[13px]</code>.
+        <code>gap-10</code> and arbitrary values like{" "}
+        {/* ds-tokens-ignore — anti-example in docs prose */}
+        <code>gap-[13px]</code>.
       </Callout>
 
       <DocsSection title="Common recipes">

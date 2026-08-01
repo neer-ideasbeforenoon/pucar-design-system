@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/docs/theme-provider";
+import { DirectionProvider } from "@/components/ui/direction";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      dir="ltr"
       suppressHydrationWarning
       className="h-full antialiased"
     >
@@ -30,7 +32,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider>{children}</TooltipProvider>
+          <DirectionProvider dir="ltr">
+            <TooltipProvider>{children}</TooltipProvider>
+          </DirectionProvider>
         </ThemeProvider>
       </body>
     </html>

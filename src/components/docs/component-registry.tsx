@@ -415,7 +415,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "border",
     ],
     usageNotes: [
-      "variant: default | destructive are the only built-in variants; success/warning/info are the same component with opaque muted token classes applied — never alpha fills.",
+      "variant: default | destructive | success | warning | info — status variants use the opaque muted token pairs, never alpha fills.",
       "AlertTitle + AlertDescription; an optional AlertAction slot docks a button top-right.",
       "Keep the title short — a few words. Put detail in the description.",
     ],
@@ -443,7 +443,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
             Check the card details and try again.
           </AlertDescription>
         </Alert>
-        <Alert className="border-success-muted bg-success-muted text-success-muted-foreground">
+        <Alert variant="success">
           <CheckCircle2Icon />
           <AlertTitle>Synced</AlertTitle>
           <AlertDescription>
@@ -475,7 +475,8 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     usageNotes: [
       "Height is fixed at h-10 (40px) — the same metric as Button default and Select trigger.",
       "Focus ring uses the ring token (teal); invalid fields switch to a destructive border and ring via aria-invalid.",
-      "prefilled is a boolean prop that fills the field bg-prefilled (amber) for machine-read, human-unverified values — the border stays input either way.",
+      "prefilled fills bg-prefilled, switches the border to a dashed warning-ink edge, and announces \"Machine filled, not yet verified\" to assistive tech — never colour alone.",
+      "Inside Field, id / aria-describedby / aria-invalid are wired automatically from FieldDescription and FieldError.",
       "Always pair with Label or FieldLabel; a placeholder is a hint, never the accessible name.",
     ],
     doItems: [
@@ -483,7 +484,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "Use type=\"email\" / type=\"password\" / etc. so mobile keyboards and password managers behave correctly.",
     ],
     dontItems: [
-      "Signal a prefilled or invalid state with border color alone — pair it with the prefilled fill or an inline error message.",
+      "Signal a prefilled or invalid state with colour alone — the dashed border and programmatic description are required.",
       "Use a placeholder as a substitute for a visible label.",
     ],
     preview: (
@@ -663,7 +664,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     slug: "table",
     title: "Table",
     description:
-      "Structured display for comparing the same fields across many records. Header uses muted surface; hover and selected rows use accent/muted only.",
+      "Structured display for comparing the same fields across many records. Header uses muted surface; hover uses accent and selected uses accent-strong.",
     importPath: "@/components/ui/table",
     whenToUse: [
       "Rows of structured records that share the same columns — cases, invoices, filings.",
@@ -852,17 +853,30 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     tokens: ["primary", "track"],
     usageNotes: [
       "value is a 0–100 number; the track is bg-track and the indicator is bg-primary.",
-      "The component has no built-in label — pair it with visible text (\"66%\", \"Step 2 of 3\") for sighted and screen-reader users alike.",
+      "Always pass aria-label (or aria-labelledby) naming what is progressing, and show the percent or step count as visible text beside the bar.",
     ],
     doItems: [
       "Update value as real progress changes; don't fake a smooth animation over a fixed duration.",
-      "Show the percentage or step count as text next to the bar.",
+      "Show the percentage or step count as text next to the bar, and give the bar an aria-label.",
     ],
     dontItems: [
       "Use Progress for an unknown-duration wait — that reads as stalled once it stops moving.",
       "Recolor the indicator to signal status; teal always means \"in progress,\" not success or failure.",
+      "Ship a bare progress bar with no accessible name and no visible percentage.",
     ],
-    preview: <Progress value={66} className="w-full max-w-sm" />,
+    preview: (
+      <div className="flex w-full max-w-sm flex-col gap-2">
+        <div className="flex items-center justify-between text-sm">
+          <span id="progress-upload-label">Uploading complaint.pdf</span>
+          <span className="text-muted-foreground">66%</span>
+        </div>
+        <Progress
+          value={66}
+          aria-labelledby="progress-upload-label"
+          className="w-full"
+        />
+      </div>
+    ),
   },
 
   spinner: {
@@ -1603,11 +1617,12 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "info-muted",
       "warning-muted",
       "success-muted",
+      "destructive-muted",
       "muted",
       "border",
     ],
     usageNotes: [
-      "variant: info | warning | success | neutral — opaque muted fills only, each with a matching leading icon baked in.",
+      "variant: info | warning | success | error | neutral — opaque muted fills only, each with a matching leading icon baked in.",
       "role=\"status\" is built in; icon is chosen automatically per variant.",
       "Optional action prop docks a single quiet link/button on the right (e.g. View order).",
     ],
@@ -1858,28 +1873,33 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     usageNotes: [
       "orientation: vertical (default) | horizontal | responsive — responsive stacks on narrow screens and goes inline past the @container breakpoint.",
       "data-invalid on Field recolors the whole group (label included) destructive — pair it with FieldError for the message.",
+      "FieldError and FieldDescription mount with stable ids; Input/Textarea inside Field receive aria-describedby and aria-invalid automatically.",
       "FieldSeparator draws a labeled divider between fields (\"or\"); FieldSet + FieldLegend group a whole cluster of fields under one heading.",
     ],
     doItems: [
       "Use FieldError to surface validation messages rather than a separate Alert per field.",
       "Keep FieldDescription to one short supporting sentence.",
+      "Set data-invalid on Field whenever FieldError is shown so the control is programmatically invalid.",
     ],
-    dontItems: ["Show FieldError and a stale FieldDescription at the same time for the same field — replace the description with the error."],
+    dontItems: [
+      "Show FieldError and a stale FieldDescription at the same time for the same field — replace the description with the error.",
+      "Hand-wire aria-invalid without FieldError — the message must be bound via aria-describedby.",
+    ],
     preview: (
       <FieldGroup className="w-full max-w-sm">
         <Field>
-          <FieldLabel htmlFor="party">Party name</FieldLabel>
-          <Input id="party" placeholder="Complainant name" />
+          <FieldLabel>Party name</FieldLabel>
+          <Input placeholder="Complainant name" />
           <FieldDescription>As it appears on the complaint.</FieldDescription>
         </Field>
         <Field data-invalid>
-          <FieldLabel htmlFor="email-bad">Email</FieldLabel>
-          <Input id="email-bad" defaultValue="not-valid" aria-invalid />
+          <FieldLabel>Email</FieldLabel>
+          <Input defaultValue="not-valid" />
           <FieldError>Enter a valid email address.</FieldError>
         </Field>
         <Field orientation="horizontal">
-          <FieldLabel htmlFor="cnr-h">CNR</FieldLabel>
-          <Input id="cnr-h" defaultValue="KLEK020012342026" prefilled />
+          <FieldLabel>CNR</FieldLabel>
+          <Input defaultValue="KLEK020012342026" prefilled />
         </Field>
       </FieldGroup>
     ),

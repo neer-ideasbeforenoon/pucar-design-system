@@ -34,6 +34,7 @@ export default function RadiusPage() {
         containers, <code>rounded-lg</code> for controls (buttons, inputs),{" "}
         <code>rounded-md</code>/<code>rounded-sm</code> for insets,{" "}
         <code>rounded-full</code> for chips. Never invent values like{" "}
+        {/* ds-tokens-ignore — anti-example in docs prose */}
         <code>rounded-[7px]</code>.
       </Callout>
 

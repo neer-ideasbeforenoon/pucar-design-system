@@ -1,11 +1,54 @@
 "use client"
 
+import * as React from "react"
 import { useMemo } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+
+type FieldContextValue = {
+  controlId: string
+  descriptionId: string
+  errorId: string
+  invalid: boolean
+  descriptionMounted: boolean
+  errorMounted: boolean
+  setDescriptionMounted: (mounted: boolean) => void
+  setErrorMounted: (mounted: boolean) => void
+}
+
+const FieldContext = React.createContext<FieldContextValue | null>(null)
+
+function useFieldContext() {
+  return React.useContext(FieldContext)
+}
+
+/** Merge onto a control inside Field — wires id, aria-describedby, aria-invalid. */
+function useFieldControlProps(props: {
+  id?: string
+  "aria-describedby"?: string
+  "aria-invalid"?: React.AriaAttributes["aria-invalid"]
+}) {
+  const ctx = useFieldContext()
+  if (!ctx) return {}
+
+  const describedBy = [
+    props["aria-describedby"],
+    ctx.descriptionMounted ? ctx.descriptionId : null,
+    ctx.errorMounted ? ctx.errorId : null,
+  ]
+    .filter(Boolean)
+    .join(" ")
+
+  return {
+    id: props.id ?? ctx.controlId,
+    "aria-describedby": describedBy || undefined,
+    "aria-invalid":
+      props["aria-invalid"] ?? (ctx.invalid ? (true as const) : undefined),
+  }
+}
 
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return (
@@ -69,19 +112,44 @@ const fieldVariants = cva(
   }
 )
 
+function isInvalidAttr(value: unknown) {
+  return value === true || value === "" || value === "true"
+}
+
 function Field({
   className,
   orientation = "vertical",
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+}: React.ComponentProps<"div"> &
+  VariantProps<typeof fieldVariants> & {
+    "data-invalid"?: boolean | "true" | "false" | ""
+  }) {
+  const reactId = React.useId()
+  const [descriptionMounted, setDescriptionMounted] = React.useState(false)
+  const [errorMounted, setErrorMounted] = React.useState(false)
+  const invalid = isInvalidAttr(props["data-invalid"])
+
+  const context: FieldContextValue = {
+    controlId: `${reactId}-control`,
+    descriptionId: `${reactId}-description`,
+    errorId: `${reactId}-error`,
+    invalid,
+    descriptionMounted,
+    errorMounted,
+    setDescriptionMounted,
+    setErrorMounted,
+  }
+
   return (
-    <div
-      role="group"
-      data-slot="field"
-      data-orientation={orientation}
-      className={cn(fieldVariants({ orientation }), className)}
-      {...props}
-    />
+    <FieldContext.Provider value={context}>
+      <div
+        role="group"
+        data-slot="field"
+        data-orientation={orientation}
+        className={cn(fieldVariants({ orientation }), className)}
+        {...props}
+      />
+    </FieldContext.Provider>
   )
 }
 
@@ -100,11 +168,14 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
 
 function FieldLabel({
   className,
+  htmlFor,
   ...props
 }: React.ComponentProps<typeof Label>) {
+  const ctx = useFieldContext()
   return (
     <Label
       data-slot="field-label"
+      htmlFor={htmlFor ?? ctx?.controlId}
       className={cn(
         "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary has-data-checked:bg-brand-muted has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border *:data-[slot=field]:p-2.5",
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
@@ -128,9 +199,19 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
+function FieldDescription({ className, id, ...props }: React.ComponentProps<"p">) {
+  const ctx = useFieldContext()
+  const descriptionId = id ?? ctx?.descriptionId
+
+  React.useLayoutEffect(() => {
+    if (!ctx) return
+    ctx.setDescriptionMounted(true)
+    return () => ctx.setDescriptionMounted(false)
+  }, [ctx])
+
   return (
     <p
+      id={descriptionId}
       data-slot="field-description"
       className={cn(
         "text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
@@ -177,10 +258,20 @@ function FieldError({
   className,
   children,
   errors,
+  id,
   ...props
 }: React.ComponentProps<"div"> & {
   errors?: Array<{ message?: string } | undefined>
 }) {
+  const ctx = useFieldContext()
+  const errorId = id ?? ctx?.errorId
+
+  React.useLayoutEffect(() => {
+    if (!ctx) return
+    ctx.setErrorMounted(true)
+    return () => ctx.setErrorMounted(false)
+  }, [ctx])
+
   const content = useMemo(() => {
     if (children) {
       return children
@@ -199,7 +290,7 @@ function FieldError({
     }
 
     return (
-      <ul className="ml-4 flex list-disc flex-col gap-1">
+      <ul className="ms-4 flex list-disc flex-col gap-1">
         {uniqueErrors.map(
           (error, index) =>
             error?.message && <li key={index}>{error.message}</li>
@@ -214,6 +305,7 @@ function FieldError({
 
   return (
     <div
+      id={errorId}
       role="alert"
       data-slot="field-error"
       className={cn("text-sm font-normal text-destructive", className)}
@@ -235,4 +327,6 @@ export {
   FieldSet,
   FieldContent,
   FieldTitle,
+  useFieldContext,
+  useFieldControlProps,
 }

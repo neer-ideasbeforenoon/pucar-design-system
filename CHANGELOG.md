@@ -2,6 +2,44 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-01 — Accessibility, gate honesty, and agent endpoints
+
+Closes the remaining high-severity findings from the Aug 1 audit after the
+contrast/token pass earlier the same day.
+
+### Accessibility
+
+- **FieldError is programmatically bound.** `Field` provides context; `FieldError`
+  and `FieldDescription` mount with stable ids; `Input` / `Textarea` inside a
+  Field receive `aria-describedby` and `aria-invalid` automatically. Docs preview
+  no longer hand-wires a disconnected error.
+- **`prefilled` is no longer colour-alone.** Dashed `warning-ink` border plus a
+  visually hidden “Machine filled, not yet verified” description.
+- **Touch targets ≥ 40×40.** Switch, Checkbox, Radio, and Slider thumb expand
+  hit areas via `after:` insets; Switch geometry moved to token scale (`h-5` /
+  `w-9`).
+- **Progress docs model the required pattern** — visible percent +
+  `aria-labelledby`. Checkbox gains an indeterminate indicator.
+- **Overlay focus.** Dialog and Alert Dialog keep `outline-none` but add a
+  visible `focus-visible` ring. `DirectionProvider` is mounted at the root with
+  `dir="ltr"`.
+- **Alert** gains `success` / `warning` / `info` variants; **Banner** gains
+  `error`; **Toaster** enables `richColors` so typed toasts use their tokens.
+- **Read-only fields** get a muted fill distinct from disabled.
+
+### Governance / agent-readability
+
+- `check-tokens.mjs` now fails on `bg-white` / `text-black` and on raw-unit
+  arbitrary spacing/radius (`rounded-[7px]`, `p-[13px]`), matching what rule 1
+  claimed. Slider thumb uses `bg-background`.
+- GitHub Actions CI runs `npm run lint` and `npm run build` on every PR.
+- `extendTailwindMerge` registers the custom `text-*` and `shadow-*` tokens.
+- `public/llms.txt`, `public/robots.txt`, `src/app/sitemap.ts`, and
+  `public/r/registry.json` (via `npm run build:registry`) make the docs
+  discoverable to agents.
+- `surface-raised` steps to `neutral-2` so the elevation ladder is not five
+  names for one value; `card` / `popover` stay flat with the Figma master.
+
 ## 2026-08-01 — Contrast and token-derivation reconciliation
 
 Triggered by the "Aug 1st Iteration" review and its Claude-assisted audit section.
@@ -73,11 +111,10 @@ zero occurrences before this change and `bg-track` had zero anywhere. Alpha fill
   swapped. Corrected here, but it should be generated like the AGENTS.md token
   block. Principles grey ladder and component docs (Button, Progress, Skeleton,
   Slider, Toggle) were updated to match the shifted roles in the same pass.
-- Not addressed in this pass: Toast renders every type identically because Sonner
-  gates per-type colour behind `richColors`, which is never set; Alert has only
-  `default` and `destructive` variants while the docs fake a success variant with
-  an inline class; Card has no perceptible boundary because `card` equals
-  `background` and the master is flat.
+- Card remains flat with the Figma master (`card` == `background`); use
+  `surface-raised` or a border when a product surface needs an edge.
+- Full Playwright / axe suite and a versioned Figma↔token mapping artifact are
+  still follow-ups — CI now gates lint + build, not visual regression.
 
 ## 2026-07-31 — Rajini 2.0 live-contract reconciliation
 

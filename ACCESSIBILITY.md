@@ -107,7 +107,7 @@ Even on the shortest product checklists, these never drop:
 
 | Need | Use |
 | --- | --- |
-| Labeled fields | `Field` + `Label` / `FieldLabel` + `Input` / `Select` / `Textarea` |
+| Labeled fields | `Field` + `FieldLabel` + `Input` / `Textarea` — `FieldError` binds via `aria-describedby` automatically |
 | Session expiry warning | `SessionTimeout` |
 | Standing page notice | `Banner` (not Toast) |
 | Transient confirmation | Toast / Sonner (not for errors that require action) |
