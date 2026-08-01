@@ -39,9 +39,12 @@ npm run build          # production build; catches type and prerender errors
 npm run sync:tokens    # regenerate the token inventory below from globals.css
 ```
 
-`npm run lint` also runs `check:tokens` (rules 1, 4 and 5) and `check:ds` (every component
-reachable from the docs and backed by a real file). Run it before claiming any work is
-finished.
+`npm run lint` also runs `check:tokens` (rules 1, 4 and 5), `check:contrast` (rule 9, plus
+rule 1 applied to `globals.css` itself) and `check:ds` (every component reachable from the
+docs and backed by a real file). Run it before claiming any work is finished.
+
+A green gate is not the same as a good design. It proves the mechanical rules hold; it says
+nothing about whether a hover is perceptible or a component matches its master.
 
 ---
 
@@ -103,6 +106,20 @@ default control height; 24px container padding; 40×40px minimum touch target. F
 (floor: WCAG 2.1 AA + WAI-ARIA 1.2). The docs site itself need not be responsive; the
 components must be.
 
+**9. Every colour pair is measured, never asserted.** `check:contrast` computes 54 pairs in
+both modes — text at 4.5:1, chart series and field borders at 3:1. Adding a token that
+carries text or meaning means adding its pair to `scripts/check-contrast.mjs`.
+
+Structural neutrals are deliberately *not* held to 3:1. Radix builds ramp steps 2–8 below
+that on purpose and WCAG 1.4.11 exempts a decorative boundary, so `border` sits at
+neutral-8. Any control whose edge is the only thing identifying it uses `input` (neutral-9,
+3.22:1) instead — that one *is* enforced.
+
+**10. Use the token the role names.** `accent` is the hover fill, `accent-strong` is the
+pressed, engaged and selected fill, `track` is the recessed well, `muted` is a resting
+surface and never an interaction state. Reaching one step lighter than the named token is
+how the entire system ended up with invisible hovers.
+
 To document a rule violation deliberately — an anti-example in the docs, say — put
 `ds-tokens-ignore` in a comment on that line or the one above it.
 
@@ -136,7 +153,12 @@ registry entry produces an empty one.
 2. Expose it in `@theme inline` as `--color-<name>: var(--<name>)`.
 3. `npm run sync:tokens` to refresh the inventory below.
 4. If it is a new *family*, add a row to the semantics table — the generator only owns names.
-5. Verify contrast ≥ 4.5:1 for text in both modes. Do not eyeball a new pair.
+5. Add the pair to `scripts/check-contrast.mjs` if it carries text or meaning, then run
+ `npm run check:contrast`. Do not eyeball a new pair and do not assert a ratio in prose.
+6. Prefer `color-mix` over a flattened hex when the value is "some token at N%". Figma
+ stores those flattened because it drops paint opacity on a bound variable; that is a Figma
+ constraint, not a spec. The exception is `scrim`, where the pre-`color-mix` fallback would
+ turn a 50% backdrop opaque.
 
 ### Adapt an upstream component
 
@@ -162,7 +184,7 @@ The generator below owns the token *names*. This table owns their *meaning* — 
 | --- | --- |
 | `background` / `foreground` | Page background / default text |
 | `surface` / `surface-raised` / `surface-sunken` | Structural base / elevated surface / recessed well. Card itself follows the flat Figma master. |
-| `track` | Recessed control tracks — tabs list, progress, slider |
+| `track` | Recessed tracks and placeholder wells — tabs list, progress, slider, skeleton |
 | `prefilled` | Machine-prefilled, human-unverified field fill |
 | `primary` / `primary-foreground` | Highest-emphasis actions (teal brand color) |
 | `brand-accent` | Bright teal for non-text marks (chart lines, active underlines) — never for text |
@@ -225,12 +247,14 @@ rendering environment; that substitution never applies to shipped code.
 
 Before reporting UI work as complete:
 
-- [ ] `npm run lint` passes — including the token check
+- [ ] `npm run lint` passes — including the token and contrast checks
 - [ ] `npm run build` passes
 - [ ] New or changed colors exist in both `:root` and `.dark`
 - [ ] New components are in `componentRegistry` *and* `docsNav`, with real usage guidance
 - [ ] `npm run sync:tokens` leaves no diff — the token inventory is current
-- [ ] Text contrast ≥ 4.5:1, touch targets ≥ 40×40px, focus rings intact
+- [ ] `npm run check:contrast` measures the pair — not "looks fine"
+- [ ] Touch targets ≥ 40×40px, focus rings intact
+- [ ] Interaction states use `accent` / `accent-strong`, not a resting surface token
 - [ ] Usable at ~375px wide and at 200% text zoom
 - [ ] Any divergence from the Figma master is recorded in `CHANGELOG.md`
 

@@ -56,8 +56,9 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "track",
-    light: "neutral-5",
-    dark: "neutral-5",
+    light: "neutral-6",
+    dark: "neutral-6",
+    note: "Recessed tracks and placeholder wells",
   },
   {
     semantic: "prefilled",
@@ -67,8 +68,8 @@ const semanticMapping: MappingRow[] = [
   {
     semantic: "primary",
     light: "#007e7e",
-    dark: "#0eb39e",
-    note: "Brand solid — dark matches brand-10",
+    dark: "brand-10",
+    note: "Brand solid — the light value is off-ramp by design",
   },
   {
     semantic: "primary-foreground",
@@ -77,9 +78,9 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "brand-accent",
-    light: "#12a594",
-    dark: "#12a594",
-    note: "Matches brand-9 — marks only, never text",
+    light: "brand-9",
+    dark: "brand-9",
+    note: "Marks only, never text",
   },
   {
     semantic: "brand-muted",
@@ -89,13 +90,13 @@ const semanticMapping: MappingRow[] = [
   {
     semantic: "brand-muted-foreground",
     light: "#0a6969",
-    dark: "#0bd8b6",
-    note: "Dark matches brand-11",
+    dark: "brand-11",
   },
   {
     semantic: "secondary / accent",
-    light: "neutral-3",
-    dark: "neutral-3",
+    light: "neutral-4",
+    dark: "neutral-4",
+    note: "Hover fill — one step darker than the page can be read against",
   },
   {
     semantic: "secondary-foreground / accent-foreground",
@@ -114,13 +115,15 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "accent-strong",
-    light: "neutral-4",
-    dark: "neutral-4",
+    light: "neutral-5",
+    dark: "neutral-5",
+    note: "Pressed, engaged and selected states",
   },
   {
     semantic: "border",
-    light: "neutral-7",
-    dark: "neutral-7",
+    light: "neutral-8",
+    dark: "neutral-8",
+    note: "Structural only — a control that needs a 3:1 edge uses input",
   },
   {
     semantic: "input",
@@ -137,8 +140,8 @@ const semanticMapping: MappingRow[] = [
   {
     semantic: "success",
     light: "#217a3a",
-    dark: "#46a758",
-    note: "Dark matches success-9",
+    dark: "success-9",
+    note: "The light value is tuned off-ramp for 4.5:1",
   },
   {
     semantic: "success-muted",
@@ -147,15 +150,14 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "success-muted-foreground / success-ink",
-    light: "#2a7e3b",
-    dark: "#71d083",
-    note: "Matches success-11 in each theme",
+    light: "success-11",
+    dark: "success-11",
   },
   {
     semantic: "warning",
-    light: "#ffc53d",
-    dark: "#ffc53d",
-    note: "Matches warning-9",
+    light: "warning-9",
+    dark: "warning-9",
+    note: "1.54:1 on the page, so the solid button carries a warning-ink border",
   },
   {
     semantic: "warning-muted",
@@ -165,8 +167,8 @@ const semanticMapping: MappingRow[] = [
   {
     semantic: "warning-muted-foreground / warning-ink",
     light: "#9d5c00",
-    dark: "#ffca16",
-    note: "Engineered status ink; dark matches warning-11",
+    dark: "warning-11",
+    note: "Light ink is tuned off-ramp for 4.5:1",
   },
   {
     semantic: "warning-foreground",
@@ -176,9 +178,8 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "info",
-    light: "#0c6ec3",
-    dark: "#3b9eff",
-    note: "Light ≈ info-11 · dark ≈ info-10",
+    light: "info-11",
+    dark: "info-10",
   },
   {
     semantic: "info-muted",
@@ -187,15 +188,15 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "info-muted-foreground / info-ink",
-    light: "#0d74ce",
-    dark: "#70b8ff",
-    note: "Engineered status ink; dark matches info-11",
+    light: "#0c6ec3",
+    dark: "info-11",
+    note: "Light ink is tuned off-ramp for 4.5:1",
   },
   {
     semantic: "destructive",
     light: "#c1232a",
-    dark: "#ec5d5e",
-    note: "Dark matches destructive-10",
+    dark: "destructive-10",
+    note: "The light value is tuned off-ramp for 4.5:1",
   },
   {
     semantic: "destructive-muted",
@@ -204,21 +205,19 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "destructive-muted-foreground / destructive-ink",
-    light: "#ce2c31",
-    dark: "#ff9592",
-    note: "Matches destructive-11 in each theme",
+    light: "destructive-11",
+    dark: "destructive-11",
   },
   {
-    semantic: "chart-1",
-    light: "#007e7e",
-    dark: "#0eb39e",
-    note: "Aligns with primary",
+    semantic: "chart-1 / chart-2",
+    light: "primary · info-11",
+    dark: "primary · info-10",
   },
   {
-    semantic: "chart-2 … chart-5",
+    semantic: "chart-3 … chart-5",
     light: "literal categorical hex",
     dark: "literal categorical hex",
-    note: "Series identity only — never status",
+    note: "Series identity only, never status — each clears 3:1 on the page",
   },
 ];
 

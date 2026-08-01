@@ -11,11 +11,11 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary-hover",
         outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+          "border-input bg-background hover:bg-accent hover:text-foreground aria-expanded:bg-accent-strong aria-expanded:text-foreground dark:bg-input/30 dark:hover:bg-accent",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary-hover aria-expanded:bg-secondary-hover aria-expanded:text-secondary-foreground",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "hover:bg-accent hover:text-foreground aria-expanded:bg-accent-strong aria-expanded:text-foreground",
         destructive:
           "bg-destructive-muted text-destructive-muted-foreground hover:bg-destructive-muted-hover focus-visible:border-destructive focus-visible:ring-focus-ring-destructive",
         "destructive-solid":
@@ -23,7 +23,11 @@ const buttonVariants = cva(
         "destructive-ghost":
           "text-destructive hover:bg-destructive-muted hover:text-destructive-muted-foreground",
         success: "bg-success text-success-foreground hover:bg-success-hover",
-        warning: "bg-warning text-warning-foreground hover:bg-warning-hover",
+        /* The warning yellow is only 1.54:1 on the page, so the fill alone cannot
+           delimit the control. A border preserves Rajini's exact yellow while
+           giving the button a 5.17:1 boundary. */
+        warning:
+          "border-warning-ink bg-warning text-warning-foreground hover:bg-warning-hover",
         info: "bg-info text-info-foreground hover:bg-info-hover",
         link: "text-primary underline-offset-4 hover:underline",
       },

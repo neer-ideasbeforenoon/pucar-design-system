@@ -2,6 +2,82 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-01 — Contrast and token-derivation reconciliation
+
+Triggered by the "Aug 1st Iteration" review and its Claude-assisted audit section.
+Every claim in that document was re-measured against the repo; all three of its
+contrast figures reproduced exactly, and five more failures were found alongside
+them.
+
+### Divergences from the Rajini 2.0 master
+
+These change values the live Figma file specifies, so they need Abhiram's
+ratification. The Figma MCP could not be read during this pass (it requires a
+layer selected in the desktop app), so nothing here was cross-checked against the
+master.
+
+- **Neutral role assignments shifted one step.** `accent` and `secondary`
+  neutral-3 → neutral-4, `accent-strong` neutral-4 → neutral-5, `track`
+  neutral-5 → neutral-6, `border` neutral-7 → neutral-8, `sidebar-border`
+  neutral-5 → neutral-6. Radix Slate assumes step 1 is the app background; we set
+  `--background` to neutral-1 *and* pointed hovers at neutral-2/3, so every
+  interaction state sat 1.03–1.19:1 against the page. The ramp itself is
+  unchanged — only which step each role points at.
+- **`chart-4` darkened** from `#e2a336` (2.15:1) to `#bd7b00` (3.42:1) in light.
+  A chart series conveys meaning, so WCAG 1.4.11 applies. Dark is unchanged.
+- **Warning solid button gains a `warning-ink` border.** The Rajini yellow is
+  1.54:1 on the page, so the fill alone cannot delimit the control. Bordering it
+  preserves the exact brand yellow, which the alternatives did not.
+
+### Token architecture
+
+- `border-hairline`, `disabled-fill`, `halo` and both `focus-ring` tokens were
+  flattened hex carrying baked alpha — transcribed from Figma, which drops paint
+  opacity on a bound variable. They now derive via `color-mix` from their source
+  token. `scrim` stays literal: its pre-`color-mix` fallback would turn a 50%
+  backdrop opaque.
+- Twelve tokens that were literal hex duplicating an existing ramp step now alias
+  it (`brand-accent`, `warning`, the four status inks, the dark solids, `chart-1`,
+  `chart-2`). Genuinely off-ramp values — the brand teal, the light status solids
+  and inks tuned for 4.5:1, `surface-sunken` — stay literal and say why.
+- **The radius ladder now actually derives from `--radius`.** Two comments claimed
+  it did while all ten steps were hardcoded pixels; only `sonner` and
+  `input-group` ever read the knob. Steps are now `calc(var(--radius) * N)`.
+
+### Components
+
+Re-pointed to the token whose documented role they were already claiming:
+Button, Badge, Toggle, Table, Menubar, Navigation menu, Item, Attachment,
+Message scroller and Calendar now use `accent` for hover and `accent-strong` for
+pressed, engaged and selected. Progress, Skeleton, Tabs list and the Attachment
+thumbnail well now use `track`. `hover:bg-accent` had zero occurrences before this
+change and `bg-track` had zero anywhere. Alpha fills (`bg-muted/50`) on Card
+footer, Table footer and Item are now opaque per rule 6.
+
+### Governance
+
+- New `scripts/check-contrast.mjs`, wired into `npm run lint`. Measures 54 pairs
+  in both modes — text at 4.5:1, chart series, field borders and the focus ring at
+  3:1 — and fails the build below the floor. `ACCESSIBILITY.md` had asked humans to
+  "prove with a contrast checker, do not eyeball" since July; nothing enforced it.
+- The same script applies rule 1 to `globals.css`, which `check-tokens.mjs`
+  explicitly exempts from its own no-hardcoded-colour scan. That exemption is why
+  the baked-alpha primitives and duplicated literals were never caught.
+- AGENTS.md gains rule 9 (measure, never assert) and rule 10 (use the token the
+  role names), and now states plainly that a green gate is not a good design.
+
+### Known open items
+
+- The `foundations/colors` semantic mapping table is hand-maintained and had
+  drifted from `globals.css` in eleven rows, including `info` and `info-ink`
+  swapped. Corrected here, but it should be generated like the AGENTS.md token
+  block.
+- Not addressed in this pass: Toast renders every type identically because Sonner
+  gates per-type colour behind `richColors`, which is never set; Alert has only
+  `default` and `destructive` variants while the docs fake a success variant with
+  an inline class; Card has no perceptible boundary because `card` equals
+  `background` and the master is flat.
+
 ## 2026-07-31 — Rajini 2.0 live-contract reconciliation
 
 ### Foundations

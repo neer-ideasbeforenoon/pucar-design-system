@@ -91,18 +91,18 @@
   --color-halo: var(--halo);
   --color-hairline: var(--border-hairline);
 
-  /* Radius — derived from the single 10px --radius knob, confirmed against the live Figma
-     file's Spacing & radius page. Role assignment matters: controls (buttons, inputs) use
-     radius-lg, not radius-md. */
+  /* Radius — every step is a multiple of the single --radius knob (10px), confirmed against
+     the live Figma file's Spacing & radius page. Retuning the knob retunes the whole ladder.
+     Role assignment matters: controls (buttons, inputs) use radius-lg, not radius-md. */
   --radius-none: 0px;
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
-  --radius-2xl: 18px;
-  --radius-3xl: 22px;
-  --radius-4xl: 26px;
+  --radius-xs: calc(var(--radius) * 0.4);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
   --radius-full: 999px;
 
   /* Elevation — raised (genuinely lifted small boxes), overlay
@@ -222,17 +222,20 @@
 
   /* Engineered primitives — copied from the live Rajini 2.0 variable graph.
      Semantic roles below alias these instead of duplicating raw values. */
+  /* Values that are genuinely off-ramp stay literal: the brand teal, the three
+     status solids and inks that were tuned for 4.5:1, and the half-step well.
+     Anything that merely duplicates a ramp step aliases it instead. */
   --brand-solid: #007e7e;
   --success-solid: #217a3a;
-  --info-solid: #0d74ce;
+  --info-solid: var(--info-11);
   --destructive-solid: #c1232a;
-  --brand-accent: #12a594;
+  --brand-accent: var(--brand-9);
   --brand-tint-foreground: #0a6969;
-  --surface-sunken: #f4f4f7;
-  --success-ink: #2a7e3b;
+  --surface-sunken: #f4f4f7; /* tuned 2.5-step well, not a raw ramp step */
+  --success-ink: var(--success-11);
   --warning-ink: #9d5c00;
   --info-ink: #0c6ec3;
-  --destructive-ink: #ce2c31;
+  --destructive-ink: var(--destructive-11);
   --solid-foreground: #ffffff;
   --warning-on-solid: #3d2000;
 
@@ -245,12 +248,18 @@
   --elevation-modal-b: #0000001f;
   --state-hover-tint: #00000014;
   --state-hover-tint-on-warning: #00000014;
-  --focus-ring: #007e7e80;
-  --focus-ring-destructive: #c1232a33;
+  /* Figma flattens paint opacity on a bound variable, so the master stores these
+     as opaque hex. Derive them here instead so they track their source token —
+     the same tool the hover composites below already use.
+     Tradeoff: Lightning CSS wraps each in @supports and degrades it to the fully
+     opaque source on pre-2023 engines without color-mix. Scrim stays a literal
+     because that degradation would turn a 50% backdrop into an opaque one. */
+  --focus-ring: color-mix(in srgb, var(--brand-solid) 50%, transparent);
+  --focus-ring-destructive: color-mix(in srgb, var(--destructive-solid) 20%, transparent);
   --scrim: #00000080;
-  --border-hairline: #1c20241a;
-  --disabled-fill: #8b8d9880;
-  --halo: #12a59440;
+  --border-hairline: color-mix(in srgb, var(--neutral-12) 10%, transparent);
+  --disabled-fill: color-mix(in srgb, var(--neutral-9) 50%, transparent);
+  --halo: color-mix(in srgb, var(--brand-accent) 25%, transparent);
 
   --background: var(--neutral-1);
   --foreground: var(--neutral-12);
@@ -262,7 +271,7 @@
   /* Structural surfaces */
   --surface: var(--neutral-1);
   --surface-raised: var(--neutral-1);
-  --track: var(--neutral-5); /* recessed control tracks: tabs list, progress, slider */
+  --track: var(--neutral-6); /* recessed tracks and placeholder wells: tabs list, progress, slider, skeleton */
   --prefilled: var(--warning-2); /* machine-prefilled, human-unverified field fill */
 
   /* Brand — teal. Confirmed against the live "Rajini 2.0" Figma file. */
@@ -271,14 +280,14 @@
   --brand-muted: var(--brand-3);
   --brand-muted-foreground: var(--brand-tint-foreground);
 
-  --secondary: var(--neutral-3);
+  --secondary: var(--neutral-4);
   --secondary-foreground: var(--neutral-12);
   --secondary-hover: var(--accent-strong);
   --muted: var(--neutral-2);
   --muted-foreground: var(--neutral-11);
-  --accent: var(--neutral-3);
+  --accent: var(--neutral-4);
   --accent-foreground: var(--neutral-12);
-  --accent-strong: var(--neutral-4); /* one step past accent — pressed toggles, engaged triggers */
+  --accent-strong: var(--neutral-5); /* one step past accent — pressed toggles, engaged triggers */
 
   --destructive: var(--destructive-solid);
   --destructive-foreground: var(--solid-foreground);
@@ -290,7 +299,7 @@
   --success-muted: var(--success-3);
   --success-muted-foreground: var(--success-ink);
 
-  --warning: #ffc53d;
+  --warning: var(--warning-9);
   --warning-foreground: var(--warning-on-solid);
   --warning-muted: var(--warning-3);
   --warning-muted-foreground: var(--warning-ink);
@@ -312,17 +321,22 @@
   --info-hover: color-mix(in srgb, var(--info), black 8%);
   --info-muted-hover: color-mix(in srgb, var(--info-muted), black 8%);
 
-  --border: var(--neutral-7);
+  /* Structural borders and dividers. Radix Slate builds steps 6-8 below 3:1 on
+     purpose — a decorative border is exempt from WCAG 1.4.11. Any control whose
+     boundary is the only thing identifying it uses --input (neutral-9, 3.22:1). */
+  --border: var(--neutral-8);
   --input: var(--neutral-9);
   --ring: var(--brand-solid);
 
-  --chart-1: #007e7e;
-  --chart-2: #0d74ce;
+  /* Chart series carry meaning, so 1.4.11 applies: each must clear 3:1 on the
+     page. chart-4 is darkened from Rajini's #e2a336 (2.15:1) — see CHANGELOG. */
+  --chart-1: var(--brand-solid);
+  --chart-2: var(--info-11);
   --chart-3: #6e56cf;
-  --chart-4: #e2a336;
+  --chart-4: #bd7b00;
   --chart-5: #e93d82;
 
-  --radius: 0.625rem; /* the single 10px knob everything else is derived from */
+  --radius: 0.625rem; /* the single 10px knob the whole ladder is derived from */
 
   --shadow-raised: 0 1px 2px var(--elevation-raised-a), 0 1px 3px var(--elevation-raised-b);
   --shadow-overlay: 0 4px 8px -2px var(--elevation-overlay-a), 0 2px 4px -2px var(--elevation-overlay-b);
@@ -334,7 +348,7 @@
   --sidebar-primary-foreground: var(--solid-foreground);
   --sidebar-accent: var(--brand-3);
   --sidebar-accent-foreground: var(--brand-tint-foreground);
-  --sidebar-border: var(--neutral-5);
+  --sidebar-border: var(--neutral-6);
   --sidebar-ring: var(--brand-solid);
 }
 
@@ -417,17 +431,17 @@
   --destructive-11: #ff9592;
   --destructive-12: #ffd1d9;
 
-  --brand-solid: #0eb39e;
-  --success-solid: #46a758;
-  --info-solid: #3b9eff;
-  --destructive-solid: #ec5d5e;
-  --brand-accent: #12a594;
-  --brand-tint-foreground: #0bd8b6;
-  --surface-sunken: #1d1e21;
-  --success-ink: #71d083;
-  --warning-ink: #ffca16;
-  --info-ink: #70b8ff;
-  --destructive-ink: #ff9592;
+  --brand-solid: var(--brand-10);
+  --success-solid: var(--success-9);
+  --info-solid: var(--info-10);
+  --destructive-solid: var(--destructive-10);
+  --brand-accent: var(--brand-9);
+  --brand-tint-foreground: var(--brand-11);
+  --surface-sunken: #1d1e21; /* tuned 2.5-step well, not a raw ramp step */
+  --success-ink: var(--success-11);
+  --warning-ink: var(--warning-11);
+  --info-ink: var(--info-11);
+  --destructive-ink: var(--destructive-11);
   --solid-foreground: #0a0a0a;
   --warning-on-solid: #3d2000;
 
@@ -439,12 +453,12 @@
   --elevation-modal-b: #00000073;
   --state-hover-tint: #ffffff1a;
   --state-hover-tint-on-warning: #00000014;
-  --focus-ring: #0eb39e80;
-  --focus-ring-destructive: #ec5d5e66;
+  --focus-ring: color-mix(in srgb, var(--brand-solid) 50%, transparent);
+  --focus-ring-destructive: color-mix(in srgb, var(--destructive-solid) 40%, transparent);
   --scrim: #00000080;
-  --border-hairline: #edeef01a;
-  --disabled-fill: #696e7780;
-  --halo: #12a59440;
+  --border-hairline: color-mix(in srgb, var(--neutral-12) 10%, transparent);
+  --disabled-fill: color-mix(in srgb, var(--neutral-9) 50%, transparent);
+  --halo: color-mix(in srgb, var(--brand-accent) 25%, transparent);
 
   --background: var(--neutral-1);
   --foreground: var(--neutral-12);
@@ -455,7 +469,7 @@
 
   --surface: var(--neutral-1);
   --surface-raised: var(--neutral-1);
-  --track: var(--neutral-5);
+  --track: var(--neutral-6);
   --prefilled: var(--warning-2);
 
   --primary: var(--brand-solid);
@@ -463,14 +477,14 @@
   --brand-muted: var(--brand-3);
   --brand-muted-foreground: var(--brand-tint-foreground);
 
-  --secondary: var(--neutral-3);
+  --secondary: var(--neutral-4);
   --secondary-foreground: var(--neutral-12);
   --secondary-hover: var(--accent-strong);
   --muted: var(--neutral-2);
   --muted-foreground: var(--neutral-11);
-  --accent: var(--neutral-3);
+  --accent: var(--neutral-4);
   --accent-foreground: var(--neutral-12);
-  --accent-strong: var(--neutral-4);
+  --accent-strong: var(--neutral-5);
 
   --destructive: var(--destructive-solid);
   --destructive-foreground: var(--solid-foreground);
@@ -482,7 +496,7 @@
   --success-muted: var(--success-3);
   --success-muted-foreground: var(--success-ink);
 
-  --warning: #ffc53d;
+  --warning: var(--warning-9);
   --warning-foreground: var(--warning-on-solid);
   --warning-muted: var(--warning-3);
   --warning-muted-foreground: var(--warning-ink);
@@ -503,12 +517,12 @@
   --info-hover: color-mix(in srgb, var(--info), white 10%);
   --info-muted-hover: color-mix(in srgb, var(--info-muted), white 10%);
 
-  --border: var(--neutral-7);
+  --border: var(--neutral-8);
   --input: var(--neutral-9);
   --ring: var(--brand-solid);
 
-  --chart-1: #0eb39e;
-  --chart-2: #3b9eff;
+  --chart-1: var(--brand-solid);
+  --chart-2: var(--info-10);
   --chart-3: #9e8cff;
   --chart-4: #ffce6a;
   --chart-5: #ff8dab;
@@ -523,7 +537,7 @@
   --sidebar-primary-foreground: var(--solid-foreground);
   --sidebar-accent: var(--brand-3);
   --sidebar-accent-foreground: var(--brand-tint-foreground);
-  --sidebar-border: var(--neutral-5);
+  --sidebar-border: var(--neutral-6);
   --sidebar-ring: var(--brand-solid);
 }
 

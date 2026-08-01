@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint && npm run check:tokens && npm run check:ds",
+    "lint": "eslint && npm run check:tokens && npm run check:contrast && npm run check:ds",
     "check:tokens": "node scripts/check-tokens.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
     "check:ds": "node scripts/check-ds.mjs",
     "sync:tokens": "node scripts/sync-tokens.mjs"
   },
