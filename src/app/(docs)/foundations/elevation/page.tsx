@@ -73,6 +73,18 @@ export default function ElevationPage() {
       <DocsSection title="Rules">
         <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
           <li>
+            <span className="text-foreground">Grouped panels use Card.</span>{" "}
+            When content is a distinct, bounded unit (FAQ, form section, case
+            facts), compose{" "}
+            <code className="text-foreground">Card</code> with{" "}
+            <code className="text-foreground">border-border</code>.{" "}
+            <code className="text-foreground">muted</code> and{" "}
+            <code className="text-foreground">surface-raised</code> are only one
+            step above the page (~1.01:1) — they do not replace an edge. Nested
+            wells inside a card use{" "}
+            <code className="text-foreground">surface-sunken</code>.
+          </li>
+          <li>
             <span className="text-foreground">Depth is fill, not borders.</span>{" "}
             Nested wells use <code className="text-foreground">surface-sunken</code>{" "}
             with no border — the box-in-box ban. Chips and thumbnails are the

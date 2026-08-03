@@ -69,7 +69,7 @@ const semanticMapping: MappingRow[] = [
     semantic: "muted",
     light: "neutral-2",
     dark: "neutral-2",
-    note: "Resting surface — never an interaction state",
+    note: "Resting surface — never an interaction state or a standalone panel edge",
   },
   {
     semantic: "muted-foreground",
@@ -699,7 +699,8 @@ export default function ColorsPage() {
               {[
                 ["primary", "Highest-emphasis actions (teal brand)"],
                 ["secondary", "Supporting actions, light fills"],
-                ["muted", "Resting / de-emphasized surfaces — never a hover"],
+                ["muted", "Resting / de-emphasized surfaces — never a hover or a panel edge"],
+                ["card", "Flat grouped surface — border defines the panel; fill matches the page"],
                 ["accent", "Transient hover fills"],
                 ["accent-strong", "Pressed, engaged, and selected fills"],
                 ["surface-raised", "Elevation without a shadow"],

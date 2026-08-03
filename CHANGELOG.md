@@ -2,6 +2,36 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-03 — Spacing & radius foundations match Figma
+
+Rebuilt from the Abhiram Figma **Spacing & radius** page
+(`node 17:2`). The old spacing page was thin, named the wrong product, and did
+not teach the ladder agents must follow.
+
+- **Spacing** — full ladder table with visual scale bars; control-metrics
+  callouts (40px fields, 24px card padding, 24px chips, ≥40 touch); recipes;
+  Do/Don’t for off-ladder steps (`p-5`, `gap-10`, arbitraries). States clearly
+  that code ships no custom spacing tokens — Tailwind’s default scale is SoT.
+- **Radius** — horizontal swatches matching Figma roles; derivation multipliers
+  from the single `--radius` (10px) knob in `globals.css`; role table
+  (container xl · control lg · inset md/sm · chip full); corrected `full` to
+  `999px`.
+- **Laws / AGENTS.md** — new “Stay on the spacing ladder” law and rule **7a**
+  so coding agents compose on-ladder gaps/padding by default.
+- Nav order: Spacing before Radius.
+
+## 2026-08-03 — Grouped content surface guidance
+
+Closes the invisible grey-panel pattern found in Dristi accused onboarding.
+
+- **Laws** — new "Grouped content gets a border" section: Card + Description list
+  for bounded panels; `surface-sunken` for nested media wells; `bg-muted` alone is a
+  defect for self-contained groups.
+- **Card / Description list docs** — dontItems call out `rounded-xl bg-muted` as a
+  wrong stand-in for Card.
+- **Colors / Elevation / AGENTS.md** — muted is not a panel edge; Card border is;
+  `surface-raised` and `muted` stay ~1.01:1 against the page by design.
+
 ## 2026-08-01 — Colors mapping table role honesty
 
 The foundations/colors semantic → primitive table was teaching the wrong mental

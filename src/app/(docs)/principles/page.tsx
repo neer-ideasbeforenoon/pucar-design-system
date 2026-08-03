@@ -20,7 +20,7 @@ export default function PrinciplesPage() {
 
       <DocsSection
         title="1. Tokens over inventing"
-        description="Never hardcode a color, spacing, or radius value. Always use the Tailwind utility that maps to a token."
+        description="Never hardcode a color, spacing, or radius value. Colors and radius map to tokens; spacing uses Tailwind’s default ladder (no custom spacing tokens)."
       >
         <DoDont
           do={[

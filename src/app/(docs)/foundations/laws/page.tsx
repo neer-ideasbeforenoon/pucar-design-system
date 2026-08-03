@@ -70,13 +70,33 @@ export default function LawsPage() {
 
       <DocsSection
         title="Control metrics"
-        description="Default controls are 40px tall with radius-lg (10px)."
+        description="Default controls are 40px tall with radius-lg (10px). Heights stay on 32 / 36 / 40 / 44."
       >
         <DoDont
-          do={["h-10 on Input, Select trigger, Button default", "rounded-lg on controls"]}
+          do={[
+            "h-10 on Input, Select trigger, Button default",
+            "rounded-lg on controls; rounded-xl on containers",
+          ]}
           dont={[
             "Arbitrary heights like h-[42px]",
             "radius-md as the default control corner",
+          ]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="Stay on the spacing ladder"
+        description="4px grid, 8px rhythm. Allowed steps: 0.5 · 1 · 1.5 · 2 · 2.5 · 3 · 4 · 6 · 8 · 12 · 16. Micro steps (0.5 / 1.5 / 2.5) are for inside controls only. Code uses Tailwind’s default scale — no custom spacing tokens."
+      >
+        <DoDont
+          do={[
+            "p-6 card padding · gap-4 related stacks · gap-8 section breaks",
+            "p-2 / p-2.5 inside controls when the chrome needs it",
+          ]}
+          dont={[
+            "Off-ladder padding or gap: p-5, p-7, gap-5, gap-10",
+            // ds-tokens-ignore — anti-example in docs prose
+            "Arbitrary lengths: p-[13px], gap-[18px]",
           ]}
         />
       </DocsSection>
@@ -90,6 +110,24 @@ export default function LawsPage() {
           dont={[
             "Amber borders for prefilled",
             "Using warning as a stand-in for prefilled",
+          ]}
+        />
+      </DocsSection>
+
+      <DocsSection
+        title="Grouped content gets a border"
+        description="Self-contained panels need a visible edge. Muted fill alone is one neutral step above the page (~1.01:1) and reads as flat white."
+      >
+        <DoDont
+          do={[
+            "Card for FAQ blocks, form sections, and sidebar widgets",
+            "Description list inside Card for a single record's key-value fields",
+            "surface-sunken for nested media wells inside a Card (video placeholder, document preview)",
+          ]}
+          dont={[
+            "rounded-xl bg-muted as a stand-in for Card — no edge, wrong role",
+            "Hand-rolled dl grids when Description list exists",
+            "surface-raised or muted fill expecting it to read as a container without border",
           ]}
         />
       </DocsSection>

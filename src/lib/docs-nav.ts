@@ -22,8 +22,8 @@ export const docsNav: DocsNavSection[] = [
     items: [
       { title: "Colors", href: "/foundations/colors" },
       { title: "Typography", href: "/foundations/typography" },
-      { title: "Radius", href: "/foundations/radius" },
       { title: "Spacing", href: "/foundations/spacing" },
+      { title: "Radius", href: "/foundations/radius" },
       { title: "Elevation", href: "/foundations/elevation" },
       { title: "Icons", href: "/foundations/icons" },
       { title: "Accessibility", href: "/foundations/accessibility" },

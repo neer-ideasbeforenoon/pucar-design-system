@@ -103,6 +103,16 @@ action per view; depth via fill, not borders; status never conveyed by color alo
 default control height; 24px container padding; 40×40px minimum touch target. Full text:
 `src/app/(docs)/foundations/laws/page.tsx` and `src/app/(docs)/principles/page.tsx`.
 
+**7a. Stay on the spacing ladder.** 4px grid, 8px rhythm. Allowed Tailwind steps only:
+`0.5 · 1 · 1.5 · 2 · 2.5 · 3 · 4 · 6 · 8 · 12 · 16` (2–64px). Micro steps
+(`0.5` / `1.5` / `2.5`) live **inside controls only**. Off-ladder utilities
+(`p-5`, `p-7`, `gap-5`, `gap-10`, `mb-10`…) and raw-unit arbitraries
+(`p-[13px]`) are defects. Code ships **no custom spacing tokens** — Tailwind’s
+default scale is the source of truth. Defaults: control height `h-10` (40px);
+card padding `p-6` (24px), `p-4` for sm; section gaps `gap-8`+. Radius is a
+separate knob (`--radius: 0.625rem` → controls `rounded-lg`, containers
+`rounded-xl`). Full text: `/foundations/spacing` and `/foundations/radius`.
+
 **8. Responsive and accessible are requirements, not polish.** Product UI follows
 [`RESPONSIVE.md`](./RESPONSIVE.md) and [`ACCESSIBILITY.md`](./ACCESSIBILITY.md)
 (floor: WCAG 2.1 AA + WAI-ARIA 1.2). The docs site itself need not be responsive; the
@@ -121,6 +131,12 @@ neutral-8. Any control whose edge is the only thing identifying it uses `input` 
 pressed, engaged and selected fill, `track` is the recessed well, `muted` is a resting
 surface and never an interaction state. Reaching one step lighter than the named token is
 how the entire system ended up with invisible hovers.
+
+**Grouped content:** when a panel must read as its own unit (FAQ, form section, case
+facts), compose `Card` (flat fill + `border-border`). Do not use `bg-muted` or
+`bg-surface-raised` alone — they are one neutral step above the page (~1.01:1) and
+invisible on white. Key-value rows use `DescriptionList` inside `Card`. Nested media
+wells inside a card use `surface-sunken`.
 
 To document a rule violation deliberately — an anti-example in the docs, say — put
 `ds-tokens-ignore` in a comment on that line or the one above it.
@@ -208,7 +224,8 @@ The generator below owns the token *names*. This table owns their *meaning* — 
 | `chart-1` … `chart-5` | Categorical data viz — means "different series" only, never status |
 | `shadow-raised` / `shadow-overlay` / `shadow-modal` | Lifted boxes / popovers, menus, tooltips / dialogs, sheets |
 | `text-display` … `text-caption` | Type size tokens. Figma's 11 named styles are these 8 sizes plus weight and mono variants — see `/foundations/typography`. Never an arbitrary size for a heading. |
-| `radius-*` | Corner radius. Controls use `radius-lg`, containers use `radius-xl`. |
+| `radius-*` | Corner radius from one `--radius` knob (10px). Controls use `rounded-lg`, containers `rounded-xl`, insets `rounded-md`/`sm`, chips `rounded-full`. |
+| *(spacing)* | **Not a CSS token family.** Use Tailwind’s default scale on the ladder above — never invent `--spacing-*` variables. |
 
 **Brand:** primary is teal — `#007e7e` light, `#0eb39e` dark.
 

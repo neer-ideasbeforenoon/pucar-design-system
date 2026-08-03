@@ -769,7 +769,10 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "CardHeader / CardContent / CardFooter compose in that order; CardFooter's bottom padding collapses automatically so it doesn't double up with the card's own padding.",
     ],
     doItems: ["Use size=\"sm\" for compact, densely packed cards (a sidebar widget) rather than overriding padding by hand."],
-    dontItems: ["Nest a Card inside another Card — that's the box-in-box pattern the system's flat surfaces are designed to avoid."],
+    dontItems: [
+      "Nest a Card inside another Card — that's the box-in-box pattern the system's flat surfaces are designed to avoid.",
+      "Use bg-muted or bg-surface-raised alone when the group needs a visible edge — Card's border is what makes the panel readable on a white page.",
+    ],
     preview: (
       <Card className="w-full max-w-sm">
         <CardHeader>
@@ -1672,7 +1675,10 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "Keep terms short (one to three words); let values wrap onto multiple lines.",
       "Order rows by what the reader looks for first.",
     ],
-    dontItems: ["Use it for more than one record at a time — that's a table's job."],
+    dontItems: [
+      "Use it for more than one record at a time — that's a table's job.",
+      "Wrap rows in bg-muted instead of Card — key-value scrutiny panels belong in a bordered Card, not a one-step grey fill.",
+    ],
     preview: (
       <DescriptionList className="w-full max-w-md">
         <DescriptionRow>
