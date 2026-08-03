@@ -699,8 +699,8 @@ export default function ColorsPage() {
               {[
                 ["primary", "Highest-emphasis actions (teal brand)"],
                 ["secondary", "Supporting actions, light fills"],
-                ["muted", "Resting / de-emphasized surfaces — never a hover or a panel edge"],
-                ["card", "Flat grouped surface — border defines the panel; fill matches the page"],
+                ["muted", "Resting stage / de-emphasized surfaces (neutral-2) — preferred behind default Cards on multi-panel stages; never an unbordered panel edge"],
+                ["card", "Default flat grouped surface (neutral-1) — border defines the panel; fill matches the page unless the stage is muted"],
                 ["accent", "Transient hover fills"],
                 ["accent-strong", "Pressed, engaged, and selected fills"],
                 ["surface-raised", "Elevation without a shadow"],

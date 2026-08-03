@@ -116,18 +116,20 @@ export default function LawsPage() {
 
       <DocsSection
         title="Grouped content gets a border"
-        description="Self-contained panels need a visible edge. Muted fill alone is one neutral step above the page (~1.01:1) and reads as flat white."
+        description="Self-contained panels need a visible edge. Default Card fill is neutral-1 (same as the page) — the border defines the panel. For multi-panel stages (dialogs, wizards, review), put the stage on bg-muted (neutral-2) and keep default bg-card panels so the fill reads. Alternate: Card + bg-muted on a flat neutral-1 page. Muted alone without a border is still a defect."
       >
         <DoDont
           do={[
             "Card for FAQ blocks, form sections, and sidebar widgets",
             "Description list inside Card for a single record's key-value fields",
             "surface-sunken for nested media wells inside a Card (video placeholder, document preview)",
+            "bg-muted stage + default bg-card panels on multi-panel dialogs and wizards",
           ]}
           dont={[
             "rounded-xl bg-muted as a stand-in for Card — no edge, wrong role",
             "Hand-rolled dl grids when Description list exists",
             "surface-raised or muted fill expecting it to read as a container without border",
+            "Mute every product page by default — only stages that need card fills to read",
           ]}
         />
       </DocsSection>

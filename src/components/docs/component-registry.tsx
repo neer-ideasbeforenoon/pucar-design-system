@@ -762,16 +762,21 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "A settings panel, form section, or selectable unit that should read as its own bounded piece of the page.",
       "Avoid decorative cards that only wrap static copy with no interactive or grouped purpose — that's just a paragraph with an unnecessary border.",
     ],
-    tokens: ["card", "card-foreground", "muted-foreground", "border"],
+    tokens: ["card", "card-foreground", "muted-foreground", "border", "muted"],
     usageNotes: [
       "size: default (24px internal spacing) | sm (16px) — sm also shrinks CardTitle to text-sm.",
-      "The live Rajini Card master is flat: border + card surface, no shadow. Don't add shadow-raised unless a pattern explicitly calls for lift.",
+      "The live Rajini Card master is flat: border + card surface (neutral-1, same as the page), no shadow. Don't add shadow-raised unless a pattern explicitly calls for lift.",
       "CardHeader / CardContent / CardFooter compose in that order; CardFooter's bottom padding collapses automatically so it doesn't double up with the card's own padding.",
+      "For multi-panel stages (dialogs, wizards, review), put the stage on bg-muted and keep default bg-card panels. Alternate: Card + bg-muted on a flat neutral-1 page. Never unbordered muted as a Card stand-in. Do not mute every product page.",
     ],
-    doItems: ["Use size=\"sm\" for compact, densely packed cards (a sidebar widget) rather than overriding padding by hand."],
+    doItems: [
+      "Use size=\"sm\" for compact, densely packed cards (a sidebar widget) rather than overriding padding by hand.",
+      "On a muted stage, leave Card on default bg-card (neutral-1) so the panel fill contrasts with the stage.",
+    ],
     dontItems: [
       "Nest a Card inside another Card — that's the box-in-box pattern the system's flat surfaces are designed to avoid.",
-      "Use bg-muted or bg-surface-raised alone when the group needs a visible edge — Card's border is what makes the panel readable on a white page.",
+      "Use bg-muted or bg-surface-raised alone when the group needs a visible edge — Card's border is required.",
+      "Apply bg-muted to every page background by default — only stages where card fills must read against the chrome.",
     ],
     preview: (
       <Card className="w-full max-w-sm">
@@ -1236,9 +1241,16 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     usageNotes: [
       "type: single (default, one section open at a time) | multiple (several open at once); collapsible allows closing the last open item under type=\"single\".",
       "AccordionTrigger includes its own chevron and rotates it on open — don't add a second expand affordance.",
+      "Inside a Card, a fully collapsed accordion reads as empty stroked rows — set defaultValue to the first section when the job is \"compare these paths\" so body copy is visible on load.",
     ],
-    doItems: ["Write trigger text as the question or heading itself, not a generic \"Details\" label."],
-    dontItems: ["Bury a primary action or required form field inside a collapsed accordion section — closed content is easy to miss."],
+    doItems: [
+      "Write trigger text as the question or heading itself, not a generic \"Details\" label.",
+      "For short compare lists (about three paths), open the first item by default so the panel doesn't look hollow.",
+    ],
+    dontItems: [
+      "Bury a primary action or required form field inside a collapsed accordion section — closed content is easy to miss.",
+      "Invent selected-row fills or a second chevron — Accordion already owns open/closed affordance; use Radio Group if the person must pick one value.",
+    ],
     preview: (
       <Accordion type="single" collapsible className="w-full max-w-md">
         <AccordionItem value="item-1">
@@ -1670,10 +1682,12 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     usageNotes: [
       "Compose DescriptionRow with a DescriptionTerm and DescriptionDetails child.",
       "Term uses muted-foreground; details use foreground — the value is always the emphasized half of the row.",
+      "Put the list inside a bordered Card. Default Card fill is neutral-1. On multi-panel stages use a muted stage behind default Cards; on a flat page, Card + bg-muted is the alternate when the fill must show.",
     ],
     doItems: [
       "Keep terms short (one to three words); let values wrap onto multiple lines.",
       "Order rows by what the reader looks for first.",
+      "For a court case summary, include the fields the reader checks first (case number, parties, amount, identifiers, next hearing, court) — omit empty slots with a clear fallback, don't leave the panel sparse.",
     ],
     dontItems: [
       "Use it for more than one record at a time — that's a table's job.",

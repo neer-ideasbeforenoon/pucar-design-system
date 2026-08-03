@@ -2,6 +2,18 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-03 — Muted stage + flat Card (preferred for multi-panel stages)
+
+Locks the composition confirmed in Dristi accused onboarding: stage behind panels
+is `bg-muted` (neutral-2); Cards stay default `bg-card` (neutral-1) so the panel
+fill reads. Border still required — unbordered muted remains a defect.
+
+- **Laws / AGENTS.md / Card / Colors** — prefer muted stage + default Card for
+  multi-panel dialogs, wizards, and review stages. Alternate: neutral-1 stage +
+  Card with `bg-muted` when only one panel needs soft fill.
+- Default flat pages stay `background` / `bg-card` (both neutral-1); do not mute
+  every product page.
+
 ## 2026-08-03 — Spacing & radius foundations match Figma
 
 Rebuilt from the Abhiram Figma **Spacing & radius** page

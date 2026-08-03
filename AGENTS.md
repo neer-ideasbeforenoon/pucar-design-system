@@ -133,10 +133,14 @@ surface and never an interaction state. Reaching one step lighter than the named
 how the entire system ended up with invisible hovers.
 
 **Grouped content:** when a panel must read as its own unit (FAQ, form section, case
-facts), compose `Card` (flat fill + `border-border`). Do not use `bg-muted` or
-`bg-surface-raised` alone — they are one neutral step above the page (~1.01:1) and
-invisible on white. Key-value rows use `DescriptionList` inside `Card`. Nested media
-wells inside a card use `surface-sunken`.
+facts), compose `Card` (`border-border`). Default `bg-card` is neutral-1 — the same
+step as `background` / the page — so the **border** is what defines the panel on a
+flat stage. Do not use `bg-muted` or `bg-surface-raised` alone as a panel — without
+a border they are ~1.01:1 against the page and invisible on white. For multi-panel
+stages (dialogs, wizards, review), put the stage on `bg-muted` (neutral-2) and keep
+default Cards so panel fills read. Alternate on a flat page: Card with `bg-muted`.
+Never an unbordered muted box. Do not mute every product page. Key-value rows use
+`DescriptionList` inside `Card`. Nested media wells inside a card use `surface-sunken`.
 
 To document a rule violation deliberately — an anti-example in the docs, say — put
 `ds-tokens-ignore` in a comment on that line or the one above it.
