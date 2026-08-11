@@ -33,7 +33,7 @@ export function DocsSidebarNav({ onNavigate }: { onNavigate?: () => void }) {
                       "block rounded-md px-2 py-1.5 text-sm transition-colors",
                       active
                         ? "bg-accent font-medium text-accent-foreground"
-                        : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground"
                     )}
                   >
                     {item.title}

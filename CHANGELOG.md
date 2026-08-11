@@ -2,6 +2,40 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-11 — Page/card fill split (stronger)
+
+Default pages no longer share a fill with Card. Product UI needed panels to
+read without relying on border alone.
+
+### Divergence from the Rajini 2.0 master
+
+The live Figma Card master keeps card fill flat with the page (both
+`neutral-1`). This change puts the page on the tuned sunken well so default
+Cards pop clearly by fill.
+
+| Token | Was | Now (light only) |
+| --- | --- | --- |
+| `--background` / `--surface` | `neutral-1` | `surface-sunken` (`#f4f4f7`) |
+| `--card` / `--popover` | `neutral-1` | `neutral-1` (unchanged) |
+| `--muted` / `--surface-raised` | `neutral-2` | `neutral-2` (between sunken page and card) |
+| `--accent` / `--secondary` | `neutral-4` | `neutral-5` |
+| `--accent-strong` | `neutral-5` | `neutral-6` |
+
+**Light only.** Dark keeps the flat model (`background` / `card` / `surface` =
+`neutral-1`; accent/secondary stay at `neutral-4` / strong at `neutral-5`) —
+dark never had the invisible-panel problem. Subtle option (page → `neutral-2`)
+was tried first; stronger confirmed for light.
+
+- **Laws / AGENTS.md / Card / Colors** — default Card on the page has fill
+  contrast; border still required; unbordered muted remains a defect.
+- **Form chrome on the page** — Input, Select, Textarea, InputGroup, outline
+  Button/Toggle use `bg-card` so fields read as white against the sunken page
+  (transparent fills looked disabled; `bg-background` would match the page).
+- **Tabs** active pill uses `bg-card` (panel fill) instead of `bg-background`.
+- **Item** `outline` variant adds `bg-card` — border-only items were invisible
+  panels once the page left `neutral-1`.
+- Needs Abhiram ratification against the Figma master.
+
 ## 2026-08-03 — Muted stage + flat Card (preferred for multi-panel stages)
 
 Locks the composition confirmed in Dristi accused onboarding: stage behind panels

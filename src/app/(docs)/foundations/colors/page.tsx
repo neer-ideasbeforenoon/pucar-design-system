@@ -33,9 +33,10 @@ type MappingRow = {
  */
 const semanticMapping: MappingRow[] = [
   {
-    semantic: "background",
-    light: "neutral-1",
+    semantic: "background / surface",
+    light: "surface-sunken",
     dark: "neutral-1",
+    note: "Light: sunken page so Cards read by fill. Dark: flat with card (unchanged)",
   },
   {
     semantic: "foreground",
@@ -43,10 +44,10 @@ const semanticMapping: MappingRow[] = [
     dark: "neutral-12",
   },
   {
-    semantic: "card / popover / surface",
+    semantic: "card / popover",
     light: "neutral-1",
     dark: "neutral-1",
-    note: "Flat with the page — Figma master keeps card unraised",
+    note: "Panel fill — light diverges from flat Figma Card master; see CHANGELOG 2026-08-11",
   },
   {
     semantic: "card-foreground / popover-foreground",
@@ -57,19 +58,19 @@ const semanticMapping: MappingRow[] = [
     semantic: "surface-raised",
     light: "neutral-2",
     dark: "neutral-2",
-    note: "Elevation without shadow — same step as muted, different role",
+    note: "Between sunken page and card in light — same step as muted, different role",
   },
   {
     semantic: "surface-sunken",
     light: "#f4f4f7",
     dark: "#1d1e21",
-    note: "Tuned 2½-step well — not a raw ramp step",
+    note: "Tuned 2½-step well — light page fill; nested wells inside cards reuse it",
   },
   {
     semantic: "muted",
     light: "neutral-2",
     dark: "neutral-2",
-    note: "Resting surface — never an interaction state or a standalone panel edge",
+    note: "Resting surface — never a standalone panel edge",
   },
   {
     semantic: "muted-foreground",
@@ -119,9 +120,9 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "secondary",
-    light: "neutral-4",
+    light: "neutral-5",
     dark: "neutral-4",
-    note: "Supporting action fill — same step as accent, different role",
+    note: "Supporting action fill — same step as accent in each mode, different role",
   },
   {
     semantic: "secondary-foreground",
@@ -130,9 +131,9 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "accent",
-    light: "neutral-4",
+    light: "neutral-5",
     dark: "neutral-4",
-    note: "Transient hover fill — never a resting surface",
+    note: "Transient hover fill — light bumped for sunken page; dark unchanged",
   },
   {
     semantic: "accent-foreground",
@@ -141,7 +142,7 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "accent-strong",
-    light: "neutral-5",
+    light: "neutral-6",
     dark: "neutral-5",
     note: "Pressed, engaged, and selected fills",
   },
@@ -699,11 +700,11 @@ export default function ColorsPage() {
               {[
                 ["primary", "Highest-emphasis actions (teal brand)"],
                 ["secondary", "Supporting actions, light fills"],
-                ["muted", "Resting stage / de-emphasized surfaces (neutral-2) — preferred behind default Cards on multi-panel stages; never an unbordered panel edge"],
-                ["card", "Default flat grouped surface (neutral-1) — border defines the panel; fill matches the page unless the stage is muted"],
+                ["muted", "Resting stage (neutral-2) — between sunken page and card; never an unbordered panel edge"],
+                ["card", "Default panel fill (neutral-1) — against the surface-sunken page; keep the border"],
                 ["accent", "Transient hover fills"],
                 ["accent-strong", "Pressed, engaged, and selected fills"],
-                ["surface-raised", "Elevation without a shadow"],
+                ["surface-raised", "Elevation role — neutral-2 between page and card"],
                 ["track", "Recessed wells — tabs, progress, slider, skeleton"],
                 ["destructive", "Irreversible or dangerous actions"],
                 ["success / warning / info", "Status communication"],

@@ -765,18 +765,17 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     tokens: ["card", "card-foreground", "muted-foreground", "border", "muted"],
     usageNotes: [
       "size: default (24px internal spacing) | sm (16px) — sm also shrinks CardTitle to text-sm.",
-      "The live Rajini Card master is flat: border + card surface (neutral-1, same as the page), no shadow. Don't add shadow-raised unless a pattern explicitly calls for lift.",
+      "Card fill is neutral-1; the page is surface-sunken — default Cards read by fill. Keep the border; don't add shadow-raised unless a pattern explicitly calls for lift. (Diverges from flat Rajini Card master — see CHANGELOG 2026-08-11.)",
       "CardHeader / CardContent / CardFooter compose in that order; CardFooter's bottom padding collapses automatically so it doesn't double up with the card's own padding.",
-      "For multi-panel stages (dialogs, wizards, review), put the stage on bg-muted and keep default bg-card panels. Alternate: Card + bg-muted on a flat neutral-1 page. Never unbordered muted as a Card stand-in. Do not mute every product page.",
+      "For nested soft fill inside a card, use surface-sunken or Card + bg-muted. Never unbordered muted as a Card stand-in.",
     ],
     doItems: [
       "Use size=\"sm\" for compact, densely packed cards (a sidebar widget) rather than overriding padding by hand.",
-      "On a muted stage, leave Card on default bg-card (neutral-1) so the panel fill contrasts with the stage.",
+      "Leave Card on default bg-card (neutral-1) so the panel fill contrasts with the surface-sunken page.",
     ],
     dontItems: [
       "Nest a Card inside another Card — that's the box-in-box pattern the system's flat surfaces are designed to avoid.",
       "Use bg-muted or bg-surface-raised alone when the group needs a visible edge — Card's border is required.",
-      "Apply bg-muted to every page background by default — only stages where card fills must read against the chrome.",
     ],
     preview: (
       <Card className="w-full max-w-sm">
@@ -1682,7 +1681,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     usageNotes: [
       "Compose DescriptionRow with a DescriptionTerm and DescriptionDetails child.",
       "Term uses muted-foreground; details use foreground — the value is always the emphasized half of the row.",
-      "Put the list inside a bordered Card. Default Card fill is neutral-1. On multi-panel stages use a muted stage behind default Cards; on a flat page, Card + bg-muted is the alternate when the fill must show.",
+      "Put the list inside a bordered Card. Default Card fill is neutral-1 against the surface-sunken page — fill contrast is built in."
     ],
     doItems: [
       "Keep terms short (one to three words); let values wrap onto multiple lines.",

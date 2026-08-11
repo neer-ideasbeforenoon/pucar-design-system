@@ -261,16 +261,19 @@
   --disabled-fill: color-mix(in srgb, var(--neutral-9) 50%, transparent);
   --halo: color-mix(in srgb, var(--brand-accent) 25%, transparent);
 
-  --background: var(--neutral-1);
+  /* Stronger page/card split: page uses the sunken well so default Cards
+     (neutral-1) read clearly by fill. Diverges from flat Rajini Card master —
+     see CHANGELOG 2026-08-11. */
+  --background: var(--surface-sunken);
   --foreground: var(--neutral-12);
   --card: var(--neutral-1);
   --card-foreground: var(--neutral-12);
   --popover: var(--neutral-1);
   --popover-foreground: var(--neutral-12);
 
-  /* Structural surfaces — card/popover stay flat with the Figma master;
-     surface-raised is one step up for genuine elevation without a shadow. */
-  --surface: var(--neutral-1);
+  /* Structural base matches the page. muted / surface-raised stay neutral-2 —
+     between the sunken stage and the card panel. */
+  --surface: var(--surface-sunken);
   --surface-raised: var(--neutral-2);
   --track: var(--neutral-6); /* recessed tracks and placeholder wells: tabs list, progress, slider, skeleton */
   --prefilled: var(--warning-2); /* machine-prefilled, human-unverified field fill */
@@ -281,14 +284,16 @@
   --brand-muted: var(--brand-3);
   --brand-muted-foreground: var(--brand-tint-foreground);
 
-  --secondary: var(--neutral-4);
+  /* Interaction fills kept at n5 / n6 after the page step-down so hover stays
+     perceptible on both the sunken page and neutral-1 cards. */
+  --secondary: var(--neutral-5);
   --secondary-foreground: var(--neutral-12);
   --secondary-hover: var(--accent-strong);
   --muted: var(--neutral-2);
   --muted-foreground: var(--neutral-11);
-  --accent: var(--neutral-4);
+  --accent: var(--neutral-5);
   --accent-foreground: var(--neutral-12);
-  --accent-strong: var(--neutral-5); /* one step past accent — pressed toggles, engaged triggers */
+  --accent-strong: var(--neutral-6); /* one step past accent — pressed toggles, engaged triggers */
 
   --destructive: var(--destructive-solid);
   --destructive-foreground: var(--solid-foreground);
@@ -461,6 +466,8 @@
   --disabled-fill: color-mix(in srgb, var(--neutral-9) 50%, transparent);
   --halo: color-mix(in srgb, var(--brand-accent) 25%, transparent);
 
+  /* Dark stays flat: page and card share neutral-1 — the light-only sunken
+     split was not needed here. */
   --background: var(--neutral-1);
   --foreground: var(--neutral-12);
   --card: var(--neutral-1);

@@ -116,7 +116,7 @@ export default function LawsPage() {
 
       <DocsSection
         title="Grouped content gets a border"
-        description="Self-contained panels need a visible edge. Default Card fill is neutral-1 (same as the page) — the border defines the panel. For multi-panel stages (dialogs, wizards, review), put the stage on bg-muted (neutral-2) and keep default bg-card panels so the fill reads. Alternate: Card + bg-muted on a flat neutral-1 page. Muted alone without a border is still a defect."
+        description="Self-contained panels need a visible edge. In light mode, default Card fill is neutral-1 against a surface-sunken page — panels already read by fill. Dark stays flat (card = page); the border still defines the panel. Keep the Card border. bg-muted / surface-raised sit on neutral-2 — not a panel edge alone. Nested soft fill inside a card: surface-sunken or Card + bg-muted. Muted alone without a border is still a defect."
       >
         <DoDont
           do={[
