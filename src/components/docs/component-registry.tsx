@@ -762,16 +762,18 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "A settings panel, form section, or selectable unit that should read as its own bounded piece of the page.",
       "Avoid decorative cards that only wrap static copy with no interactive or grouped purpose — that's just a paragraph with an unnecessary border.",
     ],
-    tokens: ["card", "card-foreground", "muted-foreground", "border", "muted"],
+    tokens: ["card", "card-foreground", "muted-foreground", "border", "muted", "accent"],
     usageNotes: [
       "size: default (24px internal spacing) | sm (16px) — sm also shrinks CardTitle to text-sm.",
       "Card fill is neutral-1; the page is surface-sunken — default Cards read by fill. Keep the border; don't add shadow-raised unless a pattern explicitly calls for lift. (Diverges from flat Rajini Card master — see CHANGELOG 2026-08-11.)",
+      "Hover uses accent (same token as TableRow / Item) so selectable cards wash in light and dark. CardFooter follows via group-hover.",
       "CardHeader / CardContent / CardFooter compose in that order; CardFooter's bottom padding collapses automatically so it doesn't double up with the card's own padding.",
       "For nested soft fill inside a card, use surface-sunken or Card + bg-muted. Never unbordered muted as a Card stand-in.",
     ],
     doItems: [
       "Use size=\"sm\" for compact, densely packed cards (a sidebar widget) rather than overriding padding by hand.",
       "Leave Card on default bg-card (neutral-1) so the panel fill contrasts with the surface-sunken page.",
+      "For a selectable / linked card, rely on the built-in hover:bg-accent — don't invent a second wash.",
     ],
     dontItems: [
       "Nest a Card inside another Card — that's the box-in-box pattern the system's flat surfaces are designed to avoid.",

@@ -34,6 +34,11 @@ was tried first; stronger confirmed for light.
 - **Tabs** active pill uses `bg-card` (panel fill) instead of `bg-background`.
 - **Item** `outline` variant adds `bg-card` — border-only items were invisible
   panels once the page left `neutral-1`.
+- **Item** hover wash moves from nested `[a]:hover:bg-accent` onto the Item
+  itself (`hover:bg-accent`), matching `TableRow` — stretched row/card links
+  never painted the tile, only the text-sized anchor.
+- **Card** gets the same `hover:bg-accent` wash (footer follows via
+  `group-hover/card`) so selectable cards match table rows and Items.
 - Needs Abhiram ratification against the Figma master.
 
 ## 2026-08-03 — Muted stage + flat Card (preferred for multi-panel stages)
