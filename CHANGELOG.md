@@ -2,6 +2,12 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-13 — Tabs active label is primary
+
+Active `TabsTrigger` text uses `text-primary` (brand teal) instead of
+`text-foreground`. Hover no longer snaps the active label back to ink.
+The line variant's underline uses `brand-accent`, the non-text mark token.
+
 ## 2026-08-11 — Page/card fill split (stronger)
 
 Default pages no longer share a fill with Card. Product UI needed panels to

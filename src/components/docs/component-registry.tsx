@@ -729,9 +729,10 @@ export const componentRegistry: Record<string, ComponentDoc> = {
       "Alternate panels that share the same page chrome and don't need their own URL.",
       "Use Navigation Menu or plain links instead once each view is really its own route — tabs shouldn't be the only way to reach a page.",
     ],
-    tokens: ["muted", "background", "foreground"],
+    tokens: ["track", "card", "muted-foreground", "primary", "brand-accent"],
     usageNotes: [
       "TabsList variant: default (pill on muted, the usual choice) | line (underline, for quieter chrome).",
+      "The active trigger uses text-primary. Line variant's underline is brand-accent — a non-text mark, not a second text colour.",
       "Content panels aren't unmounted by default — state inside an inactive tab is preserved when switching back.",
     ],
     doItems: ["Keep tab labels to one or two words, and keep the count low enough to fit on one line."],

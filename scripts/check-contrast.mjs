@@ -28,6 +28,7 @@ const TEXT_PAIRS = [
   ["card-foreground", "card", "text on a card"],
   ["popover-foreground", "popover", "text in a popover"],
   ["primary-foreground", "primary", "label on a primary button"],
+  ["primary", "card", "active tab label on the pill"],
   ["secondary-foreground", "secondary", "label on a secondary button"],
   ["accent-foreground", "accent", "label on a hovered control"],
   ["destructive-foreground", "destructive", "label on a destructive solid"],
