@@ -10,11 +10,12 @@ import { cn } from "@/lib/utils"
  * Single-choice segmented control — a small, fixed set of mutually exclusive options
  * shown side by side (Yes / No, Complainant / Accused, OTP / Password).
  *
- * Selection reads as a raised chip on a recessed track, which is the system's own
- * treatment for "selected on a track": `Tabs` puts `bg-track` on its list and gives the
- * active trigger `bg-background` plus a shadow. `Toggle`'s `accent-strong` is the right
- * fill for a toggle sitting on a page, but on this track it measures 1.08:1 — an
- * invisible selection.
+ * The well is a *well*, not a track: `surface-sunken` with a hairline stroke, so the
+ * boundary is a whisper rather than a block of colour (owner ruling 2026-08-25 — the
+ * scrutiny-v4 exploration's slot recipe). `track` is reserved for tiny countable marks
+ * (progress, slider, skeleton) and never carries a control-sized surface. The selected
+ * chip lifts with `shadow-raised` over its own hairline; `accent-strong` is the right
+ * fill for a toggle on a page, but inside this well it would read as no selection.
  *
  * Two sizes, one control:
  * - `default` — the 40px form control. Use it inside forms, beside inputs.
@@ -34,7 +35,7 @@ const SegmentedControlContext = React.createContext<{
  * items can stay full height underneath it.
  */
 const segmentedControlVariants = cva(
-  "relative flex h-10 w-fit flex-row items-center gap-0 before:pointer-events-none before:absolute before:inset-x-0 before:rounded-lg before:bg-track",
+  "relative flex h-10 w-fit flex-row items-center gap-0 before:pointer-events-none before:absolute before:inset-x-0 before:rounded-lg before:border before:border-hairline before:bg-surface-sunken",
   {
     variants: {
       size: {
@@ -67,8 +68,8 @@ const segmentedControlPillVariants = cva(
     "pointer-events-none flex min-w-0 items-center justify-center rounded-[calc(var(--radius-lg)-var(--segment-inset))] border border-transparent transition-all",
     "group-hover/segment:bg-accent",
     "group-focus-visible/segment:border-ring group-focus-visible/segment:ring-3 group-focus-visible/segment:ring-ring/50",
-    "group-data-[state=on]/segment:bg-background group-data-[state=on]/segment:shadow-raised",
-    "group-data-[state=on]/segment:group-hover/segment:bg-background",
+    "group-data-[state=on]/segment:border-hairline group-data-[state=on]/segment:bg-card group-data-[state=on]/segment:shadow-raised",
+    "group-data-[state=on]/segment:group-hover/segment:bg-card",
     "dark:group-data-[state=on]/segment:bg-accent-strong dark:group-data-[state=on]/segment:group-hover/segment:bg-accent-strong",
   ),
   {

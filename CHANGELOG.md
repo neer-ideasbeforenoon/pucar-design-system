@@ -2,6 +2,31 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-25 — The neutrals go warm; wells stop being tracks
+
+Two rulings from the owner's scrutiny-v4-beige exploration, landed together
+because the second is what makes the first read right.
+
+**Warm neutral ramp (light mode).** Every light neutral step is replaced by a
+warm twin at locked luminance (max drift 2.4 points, on the track step the
+exploration itself pinned). The lightness ladder is untouched — only the
+temperature moves — so no layering relationship changes. Duty steps keep their
+measured ratios: neutral-9 3.42:1 on white, neutral-11 5.70:1, neutral-12
+17.35:1. The page returns to true white (`--background`/`--card`/`--surface`:
+#ffffff): panels read by hairline + raised shadow, and the 2026-08-11
+tinted-canvas page/card split is reverted — warmth replaces the grey stage as
+the answer to "white on white doesn't read". The raised shadow tint warms to
+match. Hover steps down to neutral-3 and pressed to neutral-4 (the warm hue
+shift carries perceptibility that pure luminance never did). Dark mode stays on
+the cool ramp; its warm twins are a recorded follow-up.
+
+**Track is for marks; wells are for controls.** `track` now means tiny
+countable marks only — progress, slider, skeleton. Control-sized wells stop
+using it: the Tabs list, the SegmentedControl well, and the Attachment tile
+become `surface-sunken` + a hairline stroke, the exploration's slot recipe —
+you feel the boundary rather than see a block of colour. The selected
+segmented chip lifts with `shadow-raised` over its own hairline edge.
+
 ## 2026-08-25 — Promotions from Dristi: segmented control, canvas tokens, two props
 
 Four things Dristi had built privately, promoted here so the app stops carrying
