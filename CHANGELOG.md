@@ -2,6 +2,76 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-25 — The neutrals go warm; wells stop being tracks
+
+Two rulings from the owner's scrutiny-v4-beige exploration, landed together
+because the second is what makes the first read right.
+
+**Warm neutral ramp (light mode).** Every light neutral step is replaced by a
+warm twin at locked luminance (max drift 2.4 points, on the track step the
+exploration itself pinned). The lightness ladder is untouched — only the
+temperature moves — so no layering relationship changes. Duty steps keep their
+measured ratios: neutral-9 3.42:1 on white, neutral-11 5.70:1, neutral-12
+17.35:1. The page returns to true white (`--background`/`--card`/`--surface`:
+#ffffff): panels read by hairline + raised shadow, and the 2026-08-11
+tinted-canvas page/card split is reverted — warmth replaces the grey stage as
+the answer to "white on white doesn't read". The raised shadow tint warms to
+match. Hover steps down to neutral-3 and pressed to neutral-4 (the warm hue
+shift carries perceptibility that pure luminance never did). Dark mode stays on
+the cool ramp; its warm twins are a recorded follow-up.
+
+**Track is for marks; wells are for controls.** `track` now means tiny
+countable marks only — progress, slider, skeleton. Control-sized wells stop
+using it: the Tabs list, the SegmentedControl well, and the Attachment tile
+become `surface-sunken` + a hairline stroke, the exploration's slot recipe —
+you feel the boundary rather than see a block of colour. The selected
+segmented chip lifts with `shadow-raised` over its own hairline edge.
+
+## 2026-08-25 — Promotions from Dristi: segmented control, canvas tokens, two props
+
+Four things Dristi had built privately, promoted here so the app stops carrying
+forks. All four came out of a component audit of the merged
+`scrutiny-back-adv` + `case-access-management` branches.
+
+**`SegmentedControl` (new).** Replaces two separate implementations that had
+grown in Dristi — one for filing forms, one for sign-in — which answered the
+touch-target question differently. One component, two sizes:
+
+- `default` — 40px well, 36px pill (2px inset), for forms.
+- `compact` — 32px well, 26px pill (3px inset), for secondary choices in dense
+  chrome.
+
+Both keep a **40px hit target**; only the visible well and pill shrink. That is
+the reason this exists rather than `ToggleGroup size="sm"`, whose 28px target is
+below the 40x40 floor. Measured on the running docs page: default 64x40,
+compact 55x40.
+
+Selection is a raised chip on a recessed track, following Tabs. Measured at
+1.28:1 against `track`, so the fill is deliberately *not* the only signal —
+`shadow-raised`, foreground text colour, and (compact) a weight step carry it
+too. Worth revisiting whether `track` should sit a step darker; that is a token
+question, not a component one.
+
+**`--brand-canvas` family (new).** The deep-teal plate behind full-height
+sign-in and marketing panels: `brand-canvas`, `-deep`, `-foreground`,
+`-muted-foreground`. Tuned stops rather than ramp steps — the light stop sits
+between dark brand-5 and brand-6, the deep stop below dark brand-1. Repeated
+verbatim in `.dark`: the plate is a fixed institutional surface and must not
+invert. Measured: white on canvas 8.78:1, muted pair 5.63:1.
+
+**`DocumentSlot`: `copy` and `disabled`.** `copy` overrides the built-in
+strings, so a slot can say "Add cheque" instead of "Choose file" and speak the
+caller's language; `disabled` locks it while a scan is in flight. Five call
+sites in Dristi already depend on both.
+
+**`StepperItem`: `onActivate` and `activateLabel`.** Makes a completed step
+navigable so a flow can offer back-navigation. The indicator becomes a button;
+the title mirrors it at `tabIndex={-1}` so the step exposes one stop, not two.
+Unset, the step stays a static marker exactly as before.
+
+Dristi's fork also carried an `alignment` variant on `StepperItem`. It is not
+promoted — no call site used it.
+
 ## 2026-08-13 — Tabs active label is primary
 
 Active `TabsTrigger` text uses `text-primary` (brand teal) instead of

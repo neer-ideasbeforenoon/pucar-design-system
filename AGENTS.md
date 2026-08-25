@@ -98,6 +98,13 @@ already installed. Compose them before adding a primitive.
 ink (`success-ink`). Never invent a fourth, and never fake one with alpha (`bg-destructive/10`).
 Use the opaque `-muted` token instead.
 
+**6a. A status tint needs its own solid as a stroke when it sits on another tint.** The
+`-muted` fills are pale by design, so a status tile on any non-white surface has almost no
+edge — a `success-muted` media tile on a `surface-sunken` row measures **1.01:1**, which is
+no boundary at all. Give the tile `border border-success` (the solid, an existing treatment
+— not a fourth): 2.72:1 against its own fill and 2.76:1 against the row. Applies to every
+status media tile, chip, and callout that does not sit directly on the white page.
+
 **7. Follow the Laws, not just the tokens.** Sentence case everywhere; one rationed teal
 action per view; depth via fill, not borders; status never conveyed by color alone; 40px
 default control height; 24px container padding; 40×40px minimum touch target. Full text:
@@ -125,7 +132,7 @@ carries text or meaning means adding its pair to `scripts/check-contrast.mjs`.
 Structural neutrals are deliberately *not* held to 3:1. Radix builds ramp steps 2–8 below
 that on purpose and WCAG 1.4.11 exempts a decorative boundary, so `border` sits at
 neutral-8. Any control whose edge is the only thing identifying it uses `input` (neutral-9,
-3.22:1) instead — that one *is* enforced.
+3.42:1 on the white page) instead — that one *is* enforced.
 
 **10. Use the token the role names.** `accent` is the hover fill, `accent-strong` is the
 pressed, engaged and selected fill, `track` is the recessed well, `muted` is a resting
@@ -133,14 +140,14 @@ surface and never an interaction state. Reaching one step lighter than the named
 how the entire system ended up with invisible hovers.
 
 **Grouped content:** when a panel must read as its own unit (FAQ, form section, case
-facts), compose `Card` (`border-border`). In light mode, default `bg-card` is
-neutral-1 against a `surface-sunken` page — fill contrast is built in. Dark stays
-flat (`card` = `background` = neutral-1); the border still defines the panel.
-Keep the border. `muted` / `surface-raised` sit on neutral-2 — do not use them
-alone as a panel without a border. Nested wells inside a card use `surface-sunken`
-or `Card` + `bg-muted`. Never an unbordered muted box. Key-value rows use
-`DescriptionList` inside `Card`. Form chrome on the page uses `bg-card` so fields
-read in light; in dark that coincides with the page and is fine.
+facts), compose `Card`. The page is white and `card` shares that white on purpose:
+a panel reads by its hairline edge and raised shadow, not by a fill difference —
+separation is a whisper stroke, never a block of colour (owner ruling 2026-08-25).
+Dark stays flat (`card` = `background` = neutral-1); the border still defines the
+panel there. `muted` / `surface-raised` sit on neutral-2 — do not use them alone as
+a panel without an edge. Nested wells inside a card use `surface-sunken`, with a
+hairline when the well holds interactive content. Never an unbordered muted box.
+Key-value rows use `DescriptionList` inside `Card`. Form chrome uses `bg-card`.
 
 To document a rule violation deliberately — an anti-example in the docs, say — put
 `ds-tokens-ignore` in a comment on that line or the one above it.
@@ -206,11 +213,13 @@ The generator below owns the token *names*. This table owns their *meaning* — 
 | --- | --- |
 | `background` / `foreground` | Page background (light: `surface-sunken`; dark: `neutral-1`) / default text |
 | `surface` / `surface-raised` / `surface-sunken` | Structural base (= page) / elevated stage (neutral-2) / recessed well (also the light page fill) |
-| `track` | Recessed tracks and placeholder wells — tabs list, progress, slider, skeleton |
+| `track` | Tiny countable marks only — progress, slider, skeleton. Control-sized wells (tabs list, segmented control) use `surface-sunken` + `hairline` instead: separation is a whisper stroke, not a block of colour |
 | `prefilled` | Machine-prefilled, human-unverified field fill |
 | `primary` / `primary-foreground` | Highest-emphasis actions (teal brand color) |
 | `brand-accent` | Bright teal for non-text marks (chart lines, active underlines) — never for text |
 | `brand-muted` / `brand-muted-foreground` | Brand-tinted chips that carry text |
+| `brand-canvas` / `-deep` / `-foreground` / `-muted-foreground` | The deep-teal plate behind full-height sign-in and marketing panels. `-deep` is the gradient's far stop. Identical in both modes on purpose — a fixed institutional surface, not a themed one. Never a chip, a button, or a page background. |
+| `paper` / `-foreground` / `-muted` / `-muted-foreground` / `-border` | The legal-document facsimile — the court-document preview and the e-signed PDF. Fixed cool-grey, identical in both modes and deliberately outside the neutral ramp: a printed complaint is a convention the reader recognises, and it does not go warm or dark because the product's palette did. Never for app chrome. |
 | `secondary` / `muted` / `accent` (+ `-foreground`) | Supporting actions / de-emphasized surfaces / transient hover fills |
 | `accent-strong` | One step past accent — pressed toggles, engaged triggers |
 | `destructive` (+ `-foreground`) | Irreversible or dangerous actions, solid treatment |
@@ -242,9 +251,9 @@ rendering environment; that substitution never applies to shipped code.
 <!-- BEGIN:generated-tokens -->
 <!-- Generated by `npm run sync:tokens` from src/app/globals.css. Do not edit by hand. -->
 
-**Color** (76) — use as `bg-*`, `text-*`, `border-*`, `ring-*`, `fill-*`, `stroke-*`.
+**Color** (85) — use as `bg-*`, `text-*`, `border-*`, `ring-*`, `fill-*`, `stroke-*`.
 
-`accent` · `accent-foreground` · `accent-strong` · `background` · `border` · `brand-accent` · `brand-muted` · `brand-muted-foreground` · `brand-muted-hover` · `card` · `card-foreground` · `chart-1` · `chart-2` · `chart-3` · `chart-4` · `chart-5` · `destructive` · `destructive-foreground` · `destructive-hover` · `destructive-ink` · `destructive-muted` · `destructive-muted-foreground` · `destructive-muted-hover` · `disabled-fill` · `focus-ring` · `focus-ring-destructive` · `foreground` · `hairline` · `halo` · `info` · `info-foreground` · `info-hover` · `info-ink` · `info-muted` · `info-muted-foreground` · `info-muted-hover` · `input` · `muted` · `muted-foreground` · `popover` · `popover-foreground` · `prefilled` · `primary` · `primary-foreground` · `primary-hover` · `ring` · `scrim` · `secondary` · `secondary-foreground` · `secondary-hover` · `sidebar` · `sidebar-accent` · `sidebar-accent-foreground` · `sidebar-border` · `sidebar-foreground` · `sidebar-primary` · `sidebar-primary-foreground` · `sidebar-ring` · `success` · `success-foreground` · `success-hover` · `success-ink` · `success-muted` · `success-muted-foreground` · `success-muted-hover` · `surface` · `surface-raised` · `surface-sunken` · `track` · `warning` · `warning-foreground` · `warning-hover` · `warning-ink` · `warning-muted` · `warning-muted-foreground` · `warning-muted-hover`
+`accent` · `accent-foreground` · `accent-strong` · `background` · `border` · `brand-accent` · `brand-canvas` · `brand-canvas-deep` · `brand-canvas-foreground` · `brand-canvas-muted-foreground` · `brand-muted` · `brand-muted-foreground` · `brand-muted-hover` · `card` · `card-foreground` · `chart-1` · `chart-2` · `chart-3` · `chart-4` · `chart-5` · `destructive` · `destructive-foreground` · `destructive-hover` · `destructive-ink` · `destructive-muted` · `destructive-muted-foreground` · `destructive-muted-hover` · `disabled-fill` · `focus-ring` · `focus-ring-destructive` · `foreground` · `hairline` · `halo` · `info` · `info-foreground` · `info-hover` · `info-ink` · `info-muted` · `info-muted-foreground` · `info-muted-hover` · `input` · `muted` · `muted-foreground` · `paper` · `paper-border` · `paper-foreground` · `paper-muted` · `paper-muted-foreground` · `popover` · `popover-foreground` · `prefilled` · `primary` · `primary-foreground` · `primary-hover` · `ring` · `scrim` · `secondary` · `secondary-foreground` · `secondary-hover` · `sidebar` · `sidebar-accent` · `sidebar-accent-foreground` · `sidebar-border` · `sidebar-foreground` · `sidebar-primary` · `sidebar-primary-foreground` · `sidebar-ring` · `success` · `success-foreground` · `success-hover` · `success-ink` · `success-muted` · `success-muted-foreground` · `success-muted-hover` · `surface` · `surface-raised` · `surface-sunken` · `track` · `warning` · `warning-foreground` · `warning-hover` · `warning-ink` · `warning-muted` · `warning-muted-foreground` · `warning-muted-hover`
 
 **Radius** (10) — use as `rounded-*`.
 
