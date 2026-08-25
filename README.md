@@ -123,6 +123,27 @@ stale token inventory.
 
 ---
 
+## Deployment
+
+The docs site deploys automatically from `main`. Merging a pull request rebuilds
+[pucar-design-system-five.vercel.app](https://pucar-design-system-five.vercel.app) — no manual
+step, and nothing to remember.
+
+This was not always true. Until 2026-08-25 the Vercel project had no Git connection, so the
+site only updated when someone ran a deploy from their own machine. It silently fell twelve
+days behind the code, and the docs spent that time describing a version of the system that no
+longer existed. If the site ever looks stale again, check that the Git connection is still in
+place (Vercel → project → Settings → Git) before assuming the documentation is wrong.
+
+To deploy by hand — a rollback, or a check before merging:
+
+```bash
+npx vercel --prod       # deploy the working tree to production
+npx vercel ls           # recent deployments, newest first
+```
+
+---
+
 ## Repository layout
 
 ```text
