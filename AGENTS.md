@@ -219,6 +219,7 @@ The generator below owns the token *names*. This table owns their *meaning* — 
 | `brand-accent` | Bright teal for non-text marks (chart lines, active underlines) — never for text |
 | `brand-muted` / `brand-muted-foreground` | Brand-tinted chips that carry text |
 | `brand-canvas` / `-deep` / `-foreground` / `-muted-foreground` | The deep-teal plate behind full-height sign-in and marketing panels. `-deep` is the gradient's far stop. Identical in both modes on purpose — a fixed institutional surface, not a themed one. Never a chip, a button, or a page background. |
+| `paper` / `-foreground` / `-muted` / `-muted-foreground` / `-border` | The legal-document facsimile — the court-document preview and the e-signed PDF. Fixed cool-grey, identical in both modes and deliberately outside the neutral ramp: a printed complaint is a convention the reader recognises, and it does not go warm or dark because the product's palette did. Never for app chrome. |
 | `secondary` / `muted` / `accent` (+ `-foreground`) | Supporting actions / de-emphasized surfaces / transient hover fills |
 | `accent-strong` | One step past accent — pressed toggles, engaged triggers |
 | `destructive` (+ `-foreground`) | Irreversible or dangerous actions, solid treatment |
