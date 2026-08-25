@@ -589,3 +589,20 @@
     @apply font-sans;
   }
 }
+
+/* Browser autofill paints an opaque highlight (often pale blue) that ignores the
+   field's rounded border and spills past the InputGroup hairline. Neutralise it with
+   the inset-shadow trick, keeping the DS field colours, so an autofilled value looks
+   like any other. Kept unlayered and `!important` on purpose: the DS InputGroup input
+   carries a `shadow-none` utility that would otherwise win the cascade. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--foreground);
+  -webkit-box-shadow: 0 0 0 1000px var(--background) inset !important;
+  box-shadow: 0 0 0 1000px var(--background) inset !important;
+  caret-color: var(--foreground);
+  border-radius: inherit;
+  transition: background-color 9999s ease-in-out 0s;
+}
