@@ -98,6 +98,13 @@ already installed. Compose them before adding a primitive.
 ink (`success-ink`). Never invent a fourth, and never fake one with alpha (`bg-destructive/10`).
 Use the opaque `-muted` token instead.
 
+**6a. A status tint needs its own solid as a stroke when it sits on another tint.** The
+`-muted` fills are pale by design, so a status tile on any non-white surface has almost no
+edge — a `success-muted` media tile on a `surface-sunken` row measures **1.01:1**, which is
+no boundary at all. Give the tile `border border-success` (the solid, an existing treatment
+— not a fourth): 2.72:1 against its own fill and 2.76:1 against the row. Applies to every
+status media tile, chip, and callout that does not sit directly on the white page.
+
 **7. Follow the Laws, not just the tokens.** Sentence case everywhere; one rationed teal
 action per view; depth via fill, not borders; status never conveyed by color alone; 40px
 default control height; 24px container padding; 40×40px minimum touch target. Full text:
