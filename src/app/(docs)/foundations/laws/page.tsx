@@ -116,20 +116,20 @@ export default function LawsPage() {
 
       <DocsSection
         title="Grouped content gets a border"
-        description="Self-contained panels need a visible edge. In light mode, default Card fill is neutral-1 against a surface-sunken page — panels already read by fill. Dark stays flat (card = page); the border still defines the panel. Keep the Card border. bg-muted / surface-raised sit on neutral-2 — not a panel edge alone. Nested soft fill inside a card: surface-sunken or Card + bg-muted. Muted alone without a border is still a defect."
+        description="Self-contained panels need a visible edge. The page is white and card shares that white on purpose — a panel reads by its hairline edge and raised shadow, not by a fill difference. Dark is flat the same way (card = page). Keep the Card edge. bg-muted / surface-raised sit on neutral-2 — not a panel edge alone. Nested soft fill inside a card: surface-sunken, with a hairline when the well holds interactive content. Muted alone without an edge is still a defect."
       >
         <DoDont
           do={[
             "Card for FAQ blocks, form sections, and sidebar widgets",
             "Description list inside Card for a single record's key-value fields",
             "surface-sunken for nested media wells inside a Card (video placeholder, document preview)",
-            "bg-muted stage + default bg-card panels on multi-panel dialogs and wizards",
+            "surface-sunken + a hairline for control-sized wells — the tabs list, a segmented control",
           ]}
           dont={[
             "rounded-xl bg-muted as a stand-in for Card — no edge, wrong role",
             "Hand-rolled dl grids when Description list exists",
             "surface-raised or muted fill expecting it to read as a container without border",
-            "Mute every product page by default — only stages that need card fills to read",
+            "Reach for bg-track on a control-sized well — track is for tiny countable marks only",
           ]}
         />
       </DocsSection>

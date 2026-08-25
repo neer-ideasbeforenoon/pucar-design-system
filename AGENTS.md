@@ -211,8 +211,8 @@ The generator below owns the token *names*. This table owns their *meaning* — 
 
 | Family | Use |
 | --- | --- |
-| `background` / `foreground` | Page background (light: `surface-sunken`; dark: `neutral-1`) / default text |
-| `surface` / `surface-raised` / `surface-sunken` | Structural base (= page) / elevated stage (neutral-2) / recessed well (also the light page fill) |
+| `background` / `foreground` | Page background (light: white; dark: `neutral-1`) / default text |
+| `surface` / `surface-raised` / `surface-sunken` | Structural base (= page, white in light) / elevated stage (neutral-2) / recessed well — nested wells inside panels and control wells (tabs, segmented), never the page |
 | `track` | Tiny countable marks only — progress, slider, skeleton. Control-sized wells (tabs list, segmented control) use `surface-sunken` + `hairline` instead: separation is a whisper stroke, not a block of colour |
 | `prefilled` | Machine-prefilled, human-unverified field fill |
 | `primary` / `primary-foreground` | Highest-emphasis actions (teal brand color) |
@@ -232,7 +232,7 @@ The generator below owns the token *names*. This table owns their *meaning* — 
 | `scrim` | Modal and drawer backdrops |
 | `disabled-fill` | Disabled control fill |
 | `halo` | Emphasis glow — e.g. Timeline's current state |
-| `card` / `popover` | Panel fills (neutral-1) — against the sunken page so default Cards read by fill |
+| `card` / `popover` | Panel fills — share the page white in light; a panel reads by its hairline edge and raised shadow, not by fill |
 | `sidebar-*` | Sidebar-scoped aliases; keep them in step with their base tokens |
 | `chart-1` … `chart-5` | Categorical data viz — means "different series" only, never status |
 | `shadow-raised` / `shadow-overlay` / `shadow-modal` | Lifted boxes / popovers, menus, tooltips / dialogs, sheets |

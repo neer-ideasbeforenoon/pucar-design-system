@@ -34,9 +34,9 @@ type MappingRow = {
 const semanticMapping: MappingRow[] = [
   {
     semantic: "background / surface",
-    light: "surface-sunken",
+    light: "#ffffff",
     dark: "neutral-1",
-    note: "Light: sunken page so Cards read by fill. Dark: flat with card (unchanged)",
+    note: "The page is white — panels read by hairline edge and raised shadow, not by fill",
   },
   {
     semantic: "foreground",
@@ -45,9 +45,9 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "card / popover",
-    light: "neutral-1",
+    light: "#ffffff",
     dark: "neutral-1",
-    note: "Panel fill — light diverges from flat Figma Card master; see CHANGELOG 2026-08-11",
+    note: "Shares the page white on purpose — the lift and the edge say panel, not the fill",
   },
   {
     semantic: "card-foreground / popover-foreground",
@@ -58,13 +58,13 @@ const semanticMapping: MappingRow[] = [
     semantic: "surface-raised",
     light: "neutral-2",
     dark: "neutral-2",
-    note: "Between sunken page and card in light — same step as muted, different role",
+    note: "Elevated stage — same step as muted, different role",
   },
   {
     semantic: "surface-sunken",
-    light: "#f4f4f7",
+    light: "#f5f4f1",
     dark: "#1d1e21",
-    note: "Tuned 2½-step well — light page fill; nested wells inside cards reuse it",
+    note: "Tuned warm 2½-step well — nested wells inside cards, and control wells (tabs, segmented) with a hairline",
   },
   {
     semantic: "muted",
@@ -81,7 +81,7 @@ const semanticMapping: MappingRow[] = [
     semantic: "track",
     light: "neutral-6",
     dark: "neutral-6",
-    note: "Recessed tracks and placeholder wells",
+    note: "Tiny countable marks only — progress, slider, skeleton. Control-sized wells use surface-sunken + hairline",
   },
   {
     semantic: "prefilled",
@@ -119,10 +119,46 @@ const semanticMapping: MappingRow[] = [
     note: "Light via brand-tint-foreground",
   },
   {
+    semantic: "brand-canvas / brand-canvas-deep",
+    light: "#0f544c / #05221f",
+    dark: "#0f544c / #05221f",
+    note: "Deep-teal plate behind full-height sign-in and marketing panels — identical in both modes on purpose, a fixed institutional surface that must not invert",
+  },
+  {
+    semantic: "brand-canvas-foreground",
+    light: "#ffffff",
+    dark: "#ffffff",
+    note: "Measured 8.78:1 on the plate",
+  },
+  {
+    semantic: "brand-canvas-muted-foreground",
+    light: "#a7d9d0",
+    dark: "#a7d9d0",
+    note: "Support text on the plate — measured 5.63:1",
+  },
+  {
+    semantic: "paper / paper-muted",
+    light: "#ffffff / #e0e1e6",
+    dark: "#ffffff / #e0e1e6",
+    note: "Legal-document facsimile — fixed cool grey, deliberately outside the neutral ramp and identical in both modes",
+  },
+  {
+    semantic: "paper-foreground / paper-muted-foreground",
+    light: "#1c2024 / #60646c",
+    dark: "#1c2024 / #60646c",
+    note: "Document ink — measured 16.39:1 and 5.94:1 on paper",
+  },
+  {
+    semantic: "paper-border",
+    light: "#b9bbc6",
+    dark: "#b9bbc6",
+    note: "Document rules and section edges",
+  },
+  {
     semantic: "secondary",
     light: "neutral-5",
     dark: "neutral-4",
-    note: "Supporting action fill — same step as accent in each mode, different role",
+    note: "Supporting action fill — coincides with accent in dark; in light it sits two steps above",
   },
   {
     semantic: "secondary-foreground",
@@ -131,9 +167,9 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "accent",
-    light: "neutral-5",
+    light: "neutral-3",
     dark: "neutral-4",
-    note: "Transient hover fill — light bumped for sunken page; dark unchanged",
+    note: "Transient hover fill — light steps down with the warm ramp; the hue shift carries perceptibility",
   },
   {
     semantic: "accent-foreground",
@@ -142,7 +178,7 @@ const semanticMapping: MappingRow[] = [
   },
   {
     semantic: "accent-strong",
-    light: "neutral-6",
+    light: "neutral-4",
     dark: "neutral-5",
     note: "Pressed, engaged, and selected fills",
   },
@@ -495,6 +531,33 @@ const surfaces = [
   },
 ];
 
+const fixedSurfaces = [
+  {
+    name: "Brand canvas",
+    token: "brand-canvas",
+    className: "bg-brand-canvas",
+    foregroundClassName: "text-brand-canvas-foreground",
+  },
+  {
+    name: "Brand canvas deep",
+    token: "brand-canvas-deep",
+    className: "bg-brand-canvas-deep",
+    foregroundClassName: "text-brand-canvas-foreground",
+  },
+  {
+    name: "Paper",
+    token: "paper",
+    className: "bg-paper",
+    foregroundClassName: "text-paper-foreground",
+  },
+  {
+    name: "Paper muted",
+    token: "paper-muted",
+    className: "bg-paper-muted",
+    foregroundClassName: "text-paper-foreground",
+  },
+];
+
 const muted = [
   {
     name: "Brand muted",
@@ -673,6 +736,17 @@ export default function ColorsPage() {
       </DocsSection>
 
       <DocsSection
+        title="Fixed surfaces"
+        description="Two families that do not follow the theme. Brand canvas is the deep-teal plate behind full-height sign-in and marketing panels; paper is the legal-document facsimile — the court-document preview and the e-signed PDF. Both are repeated verbatim in dark mode on purpose: a fixed institutional surface and a printed page do not invert because the product palette did. Never use either for app chrome."
+      >
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {fixedSurfaces.map((swatch) => (
+            <TokenSwatch key={swatch.token} {...swatch} />
+          ))}
+        </div>
+      </DocsSection>
+
+      <DocsSection
         title="Chart palette"
         description="Categorical series for data visualization. Chart 1 aligns with brand primary."
       >
@@ -700,15 +774,17 @@ export default function ColorsPage() {
               {[
                 ["primary", "Highest-emphasis actions (teal brand)"],
                 ["secondary", "Supporting actions, light fills"],
-                ["muted", "Resting stage (neutral-2) — between sunken page and card; never an unbordered panel edge"],
-                ["card", "Default panel fill (neutral-1) — against the surface-sunken page; keep the border"],
+                ["muted", "Resting surface (neutral-2) — never an unbordered panel edge"],
+                ["card", "Panel fill — shares the page white; the hairline edge and raised shadow define the panel"],
                 ["accent", "Transient hover fills"],
                 ["accent-strong", "Pressed, engaged, and selected fills"],
-                ["surface-raised", "Elevation role — neutral-2 between page and card"],
-                ["track", "Recessed wells — tabs, progress, slider, skeleton"],
+                ["surface-raised", "Elevation role — neutral-2, an elevated stage"],
+                ["track", "Tiny countable marks — progress, slider, skeleton. Control wells use surface-sunken + hairline"],
                 ["destructive", "Irreversible or dangerous actions"],
                 ["success / warning / info", "Status communication"],
                 ["border / input / ring", "Edges, fields, and focus"],
+                ["brand-canvas", "Deep-teal plate behind full-height sign-in and marketing panels — never app chrome"],
+                ["paper", "The legal-document facsimile — never app chrome"],
               ].map(([token, use]) => (
                 <tr key={token}>
                   <td className="px-4 py-2.5 font-mono text-xs text-foreground">

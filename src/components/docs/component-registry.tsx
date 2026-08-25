@@ -777,7 +777,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     ],
     doItems: [
       "Use size=\"sm\" for compact, densely packed cards (a sidebar widget) rather than overriding padding by hand.",
-      "Leave Card on default bg-card (neutral-1) so the panel fill contrasts with the surface-sunken page.",
+      "Leave Card on default bg-card — it shares the page white on purpose; the hairline edge and raised shadow are what say \"panel\".",
       "For a selectable / linked card, rely on the built-in hover:bg-accent — don't invent a second wash.",
     ],
     dontItems: [
@@ -1688,7 +1688,7 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     usageNotes: [
       "Compose DescriptionRow with a DescriptionTerm and DescriptionDetails child.",
       "Term uses muted-foreground; details use foreground — the value is always the emphasized half of the row.",
-      "Put the list inside a bordered Card. Default Card fill is neutral-1 against the surface-sunken page — fill contrast is built in."
+      "Put the list inside a bordered Card. Card shares the page white — the edge defines the panel, not a fill difference."
     ],
     doItems: [
       "Keep terms short (one to three words); let values wrap onto multiple lines.",
@@ -2360,19 +2360,21 @@ export const componentRegistry: Record<string, ComponentDoc> = {
     slug: "segmented-control",
     title: "Segmented Control",
     description:
-      "A small set of mutually exclusive options shown side by side, with the choice reading as a raised chip on a recessed track.",
+      "A small set of mutually exclusive options shown side by side, with the choice reading as a raised chip in a recessed well.",
     importPath: "@/components/ui/segmented-control",
     whenToUse: [
       "Two to four mutually exclusive options that all fit on one line and are worth keeping visible — Yes/No, Complainant/Accused, OTP/Password.",
       "Use Radio Group instead when the options need descriptions, when there are more than about four, or when they must stack on a narrow viewport.",
       "Use Tabs instead when choosing switches the panel of content below rather than setting a value.",
     ],
-    tokens: ["track", "background", "primary", "muted-foreground"],
+    tokens: ["surface-sunken", "hairline", "card", "foreground", "muted-foreground", "accent"],
     usageNotes: [
       "size: default is the 40px form control; compact is a 32px well for secondary choices in dense chrome.",
       "compact keeps a full 40px hit target — only the visible well shrinks. Reach for it instead of ToggleGroup size=\"sm\", whose 28px target is below the 40x40 floor.",
-      "Selection is a raised chip on the track, never an accent fill: accent-strong on bg-track measures 1.08:1 and reads as no selection at all.",
-      "The selected chip measures 1.28:1 against the track, so the fill alone is not the signal — shadow-raised, the foreground text colour and (in compact) the weight step all carry it. Keep all four when restyling.",
+      "The well is a well, not a track: surface-sunken with a hairline stroke. Never bg-track — track is for tiny countable marks (progress, slider, skeleton).",
+      "Selection is a raised chip — bg-card with shadow-raised over its own hairline — never an accent fill.",
+      "The chip measures 1.10:1 against the well in light and 1.13:1 in dark, so the fill is deliberately not the signal. shadow-raised, the hairline, the foreground text colour and the weight step to 600 all carry it. Keep every one of them when restyling.",
+      "The selected label carries weight, not teal, in both sizes: a segment is a value, not an action, and a form of six toggles would scatter the rationed brand colour across all of them.",
     ],
     doItems: [
       "Keep one option selected at all times — a segmented control with nothing chosen has no way to say what the current value is.",

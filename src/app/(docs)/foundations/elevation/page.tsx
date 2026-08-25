@@ -76,23 +76,22 @@ export default function ElevationPage() {
             <span className="text-foreground">Grouped panels use Card.</span>{" "}
             When content is a distinct, bounded unit (FAQ, form section, case
             facts), compose{" "}
-            <code className="text-foreground">Card</code> with{" "}
-            <code className="text-foreground">border-border</code>. Default{" "}
-            <code className="text-foreground">card</code> is neutral-1 against a
-            <code className="text-foreground"> surface-sunken</code> page, so
-            panels already read by fill.{" "}
+            <code className="text-foreground">Card</code>. The page is white and{" "}
+            <code className="text-foreground">card</code> shares that white on
+            purpose — a panel reads by its hairline edge and raised shadow, not
+            by a fill difference. Separation is a whisper stroke, never a block
+            of colour.{" "}
             <code className="text-foreground">muted</code> and{" "}
             <code className="text-foreground">surface-raised</code> sit on
-            neutral-2 between page and card — they do not replace an edge.
-            Nested wells inside a card reuse{" "}
-            <code className="text-foreground">surface-sunken</code>.
+            neutral-2 — they do not replace an edge. Nested wells inside a card
+            use <code className="text-foreground">surface-sunken</code>, with a
+            hairline when the well holds interactive content.
           </li>
           <li>
             <span className="text-foreground">Depth is fill, not borders.</span>{" "}
             Nested wells use <code className="text-foreground">surface-sunken</code>{" "}
             with no border — the box-in-box ban. Chips and thumbnails are the
-            border exception. Cards use the lighter panel fill and border
-            without a shadow. Apply{" "}
+            border exception. Apply{" "}
             <code className="text-foreground">shadow-raised</code> only when a
             pattern explicitly calls for physical lift.
           </li>

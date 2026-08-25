@@ -2,6 +2,44 @@
 
 All notable changes to the Pucar Design System docs and components.
 
+## 2026-08-25 — Docs site catches up with the warm ramp
+
+The warm-neutral PR changed the tokens and the AGENTS contract but never touched
+`src/app/(docs)/`, so the deployed site kept describing the tinted-canvas model
+that the same PR reverted. Everything below was stating something false to every
+reader of the live docs.
+
+**Foundations / colors.** `background` and `card` now read `#ffffff` instead of
+`surface-sunken` / `neutral-1`; `surface-sunken` corrects to the warm `#f5f4f1`;
+`accent` corrects to neutral-3 and `accent-strong` to neutral-4 (both were still
+listed a step high from the pre-warm ramp). The `track` row now says what the
+role narrowed to — tiny countable marks only. Notes that explained the
+page/card fill split are replaced by the edge-and-lift model.
+
+**`brand-canvas` and `paper` were invisible.** Nine tokens shipped with no
+presence on the docs site at all — not in the mapping table, not as swatches.
+Both families now have mapping rows with their measured ratios, a "Fixed
+surfaces" swatch section, and rows in Roles at a glance, with the
+does-not-invert rule stated on each.
+
+**Foundations / elevation, Laws, Principles.** The Card guidance and the
+grouped-content law dropped the fill-contrast claim for the hairline + raised
+shadow model. The grey ladder in Principles was off by a step from `accent`
+onward; it now reads muted (2) → surface-sunken (2½) → accent (3) →
+accent-strong (4) → secondary (5) → track (6) → border (8) → input (9).
+
+**SegmentedControl's own docs described the version before its correction.**
+The component moved to `surface-sunken` + hairline in the same PR, but its
+registry entry still said "raised chip on a recessed track", still listed
+`track` / `background` / `primary` as its tokens (the component uses none of
+the three — the teal was removed when the selected label went to weight 600),
+and still quoted 1.28:1 for a chip that now measures **1.10:1 in light and
+1.13:1 in dark**. Corrected, with the weaker measured separation stated plainly
+so the shadow, hairline, ink and weight all read as load-bearing.
+
+**AGENTS.md.** Three semantics-table rows still asserted the sunken page.
+
+
 ## 2026-08-25 — The neutrals go warm; wells stop being tracks
 
 Two rulings from the owner's scrutiny-v4-beige exploration, landed together

@@ -78,11 +78,11 @@ export default function PrinciplesPage() {
       >
         <DoDont
           do={[
-            "muted → surface-sunken (2½, wells) → accent (4, hover) → accent-strong (5, engaged) → track (6, recessed) → border (8) → input (9).",
+            "muted (2) → surface-sunken (2½, wells) → accent (3, hover) → accent-strong (4, engaged) → secondary (5) → track (6, tiny marks) → border (8) → input (9).",
             "Let interaction move one step down — a control never hovers to its own rest color.",
           ]}
           dont={[
-            "Reach for neutral-6 or any raw step in a component.",
+            "Reach for neutral-3 or any raw step in a component.",
             "Invent a new grey outside the ladder for a one-off hover state.",
           ]}
         />
