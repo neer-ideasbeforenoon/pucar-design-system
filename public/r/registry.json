@@ -433,6 +433,17 @@
       ]
     },
     {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "files": [
+        {
+          "path": "src/components/ui/segmented-control.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",

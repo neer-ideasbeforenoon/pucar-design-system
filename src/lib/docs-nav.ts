@@ -93,6 +93,7 @@ export const docsNav: DocsNavSection[] = [
       { title: "Select", href: "/components/select" },
       { title: "Separator", href: "/components/separator" },
       { title: "Sheet", href: "/components/sheet" },
+      { title: "Segmented Control", href: "/components/segmented-control" },
       { title: "Sidebar", href: "/components/sidebar" },
       { title: "Slider", href: "/components/slider" },
       { title: "Switch", href: "/components/switch" },

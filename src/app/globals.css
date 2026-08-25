@@ -82,6 +82,10 @@
   --color-brand-muted: var(--brand-muted);
   --color-brand-muted-foreground: var(--brand-muted-foreground);
   --color-brand-muted-hover: var(--brand-muted-hover);
+  --color-brand-canvas: var(--brand-canvas);
+  --color-brand-canvas-deep: var(--brand-canvas-deep);
+  --color-brand-canvas-foreground: var(--brand-canvas-foreground);
+  --color-brand-canvas-muted-foreground: var(--brand-canvas-muted-foreground);
 
   /* Interaction and accessibility primitives from Rajini 2.0. */
   --color-focus-ring: var(--focus-ring);
@@ -284,6 +288,16 @@
   --brand-muted: var(--brand-3);
   --brand-muted-foreground: var(--brand-tint-foreground);
 
+  /* Brand canvas — the deep-teal plate behind full-height sign-in and marketing
+     panels. Tuned stops rather than ramp steps: the light stop sits between dark
+     brand-5 and brand-6, the deep stop below dark brand-1. Repeated verbatim in
+     `.dark` on purpose — the plate is a fixed institutional surface, so it must not
+     invert when the rest of the page does. */
+  --brand-canvas: #0f544c;
+  --brand-canvas-deep: #05221f;
+  --brand-canvas-foreground: #ffffff;
+  --brand-canvas-muted-foreground: #a7d9d0;
+
   /* Interaction fills kept at n5 / n6 after the page step-down so hover stays
      perceptible on both the sunken page and neutral-1 cards. */
   --secondary: var(--neutral-5);
@@ -484,6 +498,12 @@
   --primary-foreground: var(--solid-foreground);
   --brand-muted: var(--brand-3);
   --brand-muted-foreground: var(--brand-tint-foreground);
+
+  /* Identical to `:root` on purpose — see the note there. The plate does not invert. */
+  --brand-canvas: #0f544c;
+  --brand-canvas-deep: #05221f;
+  --brand-canvas-foreground: #ffffff;
+  --brand-canvas-muted-foreground: #a7d9d0;
 
   --secondary: var(--neutral-4);
   --secondary-foreground: var(--neutral-12);
